@@ -15,15 +15,19 @@ def sendquery(pic):
        "features": [
           {
             "type": "LOGO_DETECTION",
-            "maxResults": "10"
+            "maxResults": "5"
           },
           {
             "type": "LABEL_DETECTION",
-             "maxResults": "10"
+             "maxResults": "5"
+          },
+          {
+            "type": "LANDMARK_DETECTION",
+            "maxResults": "5"
           },
           {
             "type": "TEXT_DETECTION",
-            "maxResults": "10"
+            "maxResults": "5"
           }
        ]
      }
