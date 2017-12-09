@@ -41,7 +41,7 @@ var photo;
   xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 if (photo) {
 
-  xhttp.send("photo="+encodeURIComponent(photo.substring(22)));
+  xhttp.send("photo="+encodeURIComponent(photo.substring(photo.indexOf(",")+1)));
   }
   else {
   alert("enter a photo");
