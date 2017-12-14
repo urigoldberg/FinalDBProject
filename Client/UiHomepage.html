@@ -1,61 +1,50 @@
 <!DOCTYPE html>
 <html>
-
     <head>
-        <!-- here you can pre-define styles for each header to be default -->
-        <style>
-            body{
-                background: linen;
-            }
-            h1{color: #801c2a; margin-left: 40px;}
-            p{border: 1px solid powderblue;
-                alignment: center;
-                vertical-align: center;
-                padding: 30px;
-                margin: 40px;}
-            #michaelid{ color: crimson;}
-        </style>
-
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
         <script>
-            function changetext(){
-                document.getElementById("testingid").innerText = "afterclick!";
-            }
         </script>
-
-        <title>Project 1 - Michael</title>
-
     </head>
+    <body>
+        <div class="jumbotron text-center">
+            <h1>Music Recommender</h1>
+            <p>Find your music & more!</p>
+        </div>
 
-    <body >
+        <nav class="navbar navbar-default">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="#">Page Selector</a>
+                </div>
+                <ul class="nav navbar-nav">
+                    <li class="active">
+                        <a href="UiHomepage.html">
+                            <h4 class="list-group-item-heading">HomePage</h4>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="imageToMusic.html">
+                            <h4 class="list-group-item-heading">Image to Music</h4>
+                            <small>Search for music that "sounds like" your picture</small>
+                        </a>
+                    </li>
+                    <li><a href="#">Page 2</a></li>
+                    <li><a href="#">Page 3</a></li>
+                </ul>
+            </div>
+        </nav>
 
-    <h1>This is a Heading</h1>
-
-    <p style="color: #3cffbe" title="blablabla" >This is a paragraph number 2.</p>
-    <h2>This is a Heading but smaller</h2>
-
-    <a href="https://www.w3schools.com" target="_blank">This is a link </a><br>
-
-    <hr>
-
-    <h1 > This is a header before the image</h1>
-
-    <p><b><strong><em> a lot <mark>of</mark> attributes <ins>and</ins> im using del <del>here</del>
-    </em></strong></b></p>
-
-    <!-- this is a comment! isn't it cool????-->
-
-    <p>this is a <sub>subscript<sub>recursive?</sub></sub> <q>with queues </q>text </p>
-
-    <!-- you can later use this id in the styles tab with # before-->
-
-    <p id ="testingid">this is a paragraph with an id of <q>michaelid</q></p>
-
-    <button onclick="changetext()">click me!</button>
-
-    <br><br><br>
-
-    <hr>
-
+        <div class="container-fluid">
+            <!-- inside this single row will be a side bar and another column for the main page-->
+            <div class="row">
+                <div class="col-sm-12">
+                    <h1 align="middle">Hi! welcome to music recommender!</h1>
+                </div>
+            </div>
+        </div>
     </body>
-
 </html>
