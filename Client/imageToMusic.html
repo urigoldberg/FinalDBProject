@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <script>
+            var pictureInserted = document.getElementById("defaultpic").valueOf();
+            <!-- this function toggeles classes check this because not working correctly-->
+            function changeButtonColor(){
+                $(this).toggleClass('btn btn-success');
+            }
+        </script>
+        <!-- here will be all the style changes -->
+        <style>
+        </style>
+
+    </head>
+    <body>
+
+        <div class="jumbotron text-center">
+            <h1>Music Recommender</h1>
+            <p>Find your music & more!</p>
+        </div>
+
+        <div class="container-fluid">
+            <!-- inside this single row will be a side bar and another column for the main page-->
+            <div class="row">
+                <!--the sidebar with pagination -->
+                <div class="col-sm-3">
+                    <h2>Choose a page:</h2>
+                    <div class="list-group">
+                        <a href="#" class="list-group-item">HomePage</a>
+                        <a href="imageToMusic.html" class="list-group-item active">
+                            <h4 class="list-group-item-heading">Image to Music</h4>
+                            <small>Search for music that "sounds like" your picture</small>
+                        </a>
+                        <a href="#" class="list-group-item">Third item</a>
+                    </div>
+                </div>
+                <!-- the main page-->
+                <div class="col-sm-9">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="thumbnail">
+                                <h3 align="middle">Please insert your picture:</h3>
+                                <img id ="defaultic" src ="pencil.jpg" class ="img-responsive"><br>
+                                <div align="middle">
+                                    <input id ="imageButton" type="button"
+                                           class="btn" value="Press here to select a picture"
+                                           onclick="changeButtonColor.call(this)">
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </body>
+</html>
