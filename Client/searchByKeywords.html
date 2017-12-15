@@ -6,10 +6,10 @@
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-        <script>
-        </script>
+        <script></script>
     </head>
     <body>
+
         <div class="jumbotron text-center">
             <h1>Music Recommender</h1>
             <p>Find your music & more!</p>
@@ -21,10 +21,9 @@
                     <a class="navbar-brand" href="#">Page Selector</a>
                 </div>
                 <ul class="nav navbar-nav">
-                    <li class="active">
+                    <li>
                         <a href="UiHomepage.html">
                             <h4 class="list-group-item-heading">HomePage</h4>
-                            <small>Home Page</small>
                         </a>
                     </li>
                     <li>
@@ -32,9 +31,10 @@
                             <h4 class="list-group-item-heading">Image to Music</h4>
                         </a>
                     </li>
-                    <li>
+                    <li class="active">
                         <a href="searchByKeywords.html">
                             <h4 class="list-group-item-heading">search By Keywords</h4>
+                            <small>Search for music that has selected keywords</small>
                         </a>
                     </li>
                     <li>
@@ -50,32 +50,12 @@
             <!-- inside this single row will be a side bar and another column for the main page-->
             <div class="row">
                 <div class="col-sm-12">
-                    <h1>Hi! welcome to music recommender!</h1>
-                    <p class="">We have a few Services you can use</p>
-                    <table class="table table-striped">
-                        <thead>
-                        <tr>
-                            <th>service</th>
-                            <th>Description</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr>
-                            <td>Image to music</td>
-                            <td>Insert an Image and we'll search for music that has objects within the obteind image</td>
-                        </tr>
-                        <tr>
-                            <td>Search by Keywords</td>
-                            <td>Enter keywords and well find music that has them in their lyrics / song name / band name</td>
-                        </tr>
-                        <tr>
-                            <td>Search by Geo Location</td>
-                            <td>Find music from around the world!</td>
-                        </tr>
-                        </tbody>
-                    </table>
+                    <div class="thumbnail" align="middle">
+                        <h1> please insert keywords to the selected textbox: </h1>
+                    </div>
                 </div>
             </div>
         </div>
+
     </body>
 </html>
