@@ -6,6 +6,12 @@
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <style>
+            .bg-1{
+                background-color: #c9302c;
+                color: rgba(0, 0, 0, 0.71);
+            }
+        </style>
         <script>
             var photo;
             function encodeImageFileAsURL() {
@@ -52,9 +58,17 @@
     </head>
     <body>
 
-        <div class="jumbotron text-center">
-            <h1>Music Recommender</h1>
-            <p>Find your music & more!</p>
+        <!-- HEADER -->
+        <div class="jumbotron bg-1 text-center">
+            <div class="row">
+                <div class ="col-sm-4">
+                    <img src="do.jpg" class="img-circle" width="250" height="250">
+                </div>
+                <div class="col-lg-8">
+                    <h1 align="left">Music Recommender</h1>
+                    <p align="left">Find your music & more!</p>
+                </div>
+            </div>
         </div>
 
         <nav class="navbar navbar-default">
