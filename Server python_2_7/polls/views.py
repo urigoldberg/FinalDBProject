@@ -51,45 +51,51 @@ def searchByGeoLocation(requests):
 
 
 
+# services
+@csrf_exempt
+def pictureService(request):
+    
+    #get query
+    if (request.POST and "photo" in request.POST.keys()):
+        json = (sendGoogleQuery(request.POST.get("photo","")))
+        # parse json to string array
+        # build query
+        # build respones
+        #return response
+        return HttpResponse(mockResponse.mockResponse)
+        
+    #Path = os.path.join(os.getcwd(),'polls', 'Client', 'htmlphoto.html')
+    return HttpResponse(str(request))
 
 
 
 
 
 
-
-
-
-def index(request):
-    return HttpResponse("Hello, world. You're at the polls index.")
-
-def main(request):
-    page = "UiHomepage.html"
-    objPath = os.path.join(os.getcwd(),'polls', 'static', page)
-    obj = open(objPath,'r').read()
-#    print(request.META['PATH_INFO'])
-#    #print ( request.META['PATH_INFO'] + "\n" + request.META['QUERY_STRING'])
-#    if  not (request.META['QUERY_STRING'] == ""):
-#        page = request.META['QUERY_STRING'].replace("\\main\\")
-#        print(page)
+#def index(request):
+#    return HttpResponse("Hello, world. You're at the polls index.")
+#
+#def main(request):
+#    page = "UiHomepage.html"
 #    objPath = os.path.join(os.getcwd(),'polls', 'static', page)
 #    obj = open(objPath,'r').read()
-    return HttpResponse(obj)
-
+##    print(request.META['PATH_INFO'])
+##    #print ( request.META['PATH_INFO'] + "\n" + request.META['QUERY_STRING'])
+##    if  not (request.META['QUERY_STRING'] == ""):
+##        page = request.META['QUERY_STRING'].replace("\\main\\")
+##        print(page)
+##    objPath = os.path.join(os.getcwd(),'polls', 'static', page)
+##    obj = open(objPath,'r').read()
+#    return HttpResponse(obj)
+#
+#        
         
-        
-        
-    print(request.build_absolute_uri())
-    print(request.build_absolute_uri('/')[:-1].strip("/"))
-    print ( request.META['PATH_INFO'] + "\n" + request.META['QUERY_STRING'])
+#        
+#    print(request.build_absolute_uri())
+#    print(request.build_absolute_uri('/')[:-1].strip("/"))
+#    print ( request.META['PATH_INFO'] + "\n" + request.META['QUERY_STRING'])
 
-def imageToMusic(request):
-    mockHtmlPath = os.path.join(os.getcwd(),'polls', 'static', 'imageToMusic.html')
-    mockHtml = open(mockHtmlPath,'r').read()
-    return HttpResponse(mockHtml)
 
-def index1(request):
-    return HttpResponse("fdgdsgffdsg")
 
 def test(request):
     for artist in Artists.objects.raw('SELECT ID FROM DbMysql12.Artists where ID = 0;'):
@@ -123,17 +129,4 @@ def mockHTML(request):
 
 
 
-@csrf_exempt
-def pictureService(request):
-    
-    #get query
-    if (request.POST and "photo" in request.POST.keys()):
-        json = (sendGoogleQuery(request.POST.get("photo","")))
-        # parse json to string array
-        # build query
-        # build respones
-        #return response
-        return HttpResponse(mockResponse.mockResponse)
-        
-    #Path = os.path.join(os.getcwd(),'polls', 'Client', 'htmlphoto.html')
-    return HttpResponse(str(request))
+
