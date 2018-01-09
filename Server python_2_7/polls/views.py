@@ -58,7 +58,7 @@ def searchByKeywords(requests):
     return resp
 
 def searchByGeoLocation(requests):
-    if not request.COOKIES.has_key('user' ):
+    if not requests.COOKIES.has_key('user' ):
         return redirect('Login.html')
     user, resp = getCoockieAndResponse(requests, "searchByGeoLocation.html")
     return resp
@@ -83,8 +83,6 @@ def SignInfunc(request):
     else:
         resp = SignInFailed()
     return resp
-    
-
 
 
 @csrf_exempt
