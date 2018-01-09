@@ -23,12 +23,11 @@ function encodeImageFileAsURL() {
 
 function loadDoc() {
     var xhttp = new XMLHttpRequest();
-    xhttp.responseType = "json";
+    //xhttp.responseType = "json";
     xhttp.onreadystatechange = function() {
         if (this.readyState === 4 && this.status === 200) {
-            alert("the response is: "+ this.response);
-            document.getElementById("demo").innerHTML = this.responseText;
-            var responseArr = JSON.parse(this.response);
+            alert("the response is: "+ this.responseText);
+            var responseArr = JSON.parse(this.responseText);
             //initializing table head and opening body tag
             var finalTable = "<table class=\"table table-striped\"><thead><tr><th>Artist</th><th>Song name</th></tr></thead><tbody>";
             for(i=0;i<responseArr.length;i++){
@@ -51,8 +50,6 @@ function loadDoc() {
         alert("Please enter a photo!");
     }
 }
-
-
 
 // When the user clicks anywhere outside of the modal, close it
 window.onclick = function(event) {
