@@ -12,15 +12,16 @@ import os
 # cookies stuff
 
 def getCoockieAndResponse(request, pageName, message = "", show = ""):
-    cookie = request.COOKIES['user']
+    user = request.COOKIES['user']
     objPath = os.path.join(os.getcwd(),'polls', 'static', pageName)
     obj = open(objPath,'r').read()
-    context = Context({"username": cookie, "message": message, "show": show })
+    context = Context({"username": user, "message": message, "show": show })
     resp = HttpResponse(Template(obj).render(context))
-    resp.set_cookie("user",cookie)
-    return cookie, resp
+    return user, resp
 
 def setCoockieAndResponse(pageName, username, message = None):
+    '''Set cookie contains username, in order to present it in some
+    pages and get details about him/her from usersTable if necessary'''
     resp = redirect(pageName)
     resp.set_cookie("user",username)
     return resp
