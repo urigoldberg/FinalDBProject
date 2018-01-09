@@ -35,6 +35,11 @@ def getCoockieAndResponse(request, pageName):
     resp = HttpResponse(Template(obj).render(context))
     return cookie, resp
 
+def Login(request):
+    objPath = os.path.join(os.getcwd(),'polls', 'static', 'Login.html')
+    obj = open(objPath,'r').read()
+    return HttpResponse(obj)
+
 def default(request):
     return redirect('Login.html')
 

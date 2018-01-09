@@ -21,6 +21,7 @@ urlpatterns = [
     url(r'^$',views.default),
     
     # main urls
+    url(r'^Login.html',views.Login),
     url(r'^UiHomepage.html',views.UiHomepage),
     url(r'^imageToMusic.html',views.imageToMusic),
     url(r'^searchByKeywords.html',views.searchByKeywords),
