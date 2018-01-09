@@ -18,15 +18,13 @@
                 var filesSelected = document.getElementById("inputFileToLoad").files;
                 if (filesSelected.length > 0) {
                     var fileToLoad = filesSelected[0];
-
                     var fileReader = new FileReader();
-
                     fileReader.onload = function(fileLoadedEvent) {
                         var srcData = fileLoadedEvent.target.result; // <--- data: base64
                         var newImage = document.createElement('img');
                         newImage.src = srcData;
                         photo = srcData;
-                        debugger;
+                        //debugger;
                         //document.getElementById("imgTest").innerHTML = newImage.outerHTML;
                         document.getElementById("change").src = newImage.src;
                         alert("Converted Base64 version is " + document.getElementById("imgTest").innerHTML);
@@ -46,7 +44,6 @@
                 xhttp.open("POST", "mock", true);
                 xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
                 if (photo) {
-
                     xhttp.send("photo="+encodeURIComponent(photo.substring(22)));
                 }
                 else {
@@ -70,7 +67,7 @@
                 </div>
             </div>
         </div>
-
+        <!-- NAVIGATION BAR -->
         <nav class="navbar navbar-default">
             <div class="container-fluid">
                 <div class="navbar-header">
@@ -109,8 +106,7 @@
                     <div class="thumbnail" align="middle">
                         <h3 align="middle">Please insert your picture:</h3>
                         <div id="imgTest"><img id="change" src ="pencil.jpg" class ="img-rounded" height="300" width="300"></div><br>
-                        <!-- the input button
-                        <input id="inputFileToLoad" type="file" onchange="encodeImageFileAsURL();" /><br>-->
+                        <!-- the input button-->
                         <label class="btn btn-default btn-file">
                             Browse <input id="inputFileToLoad" type="file" style="display: none;" onchange="encodeImageFileAsURL();">
                         </label><br><br>
