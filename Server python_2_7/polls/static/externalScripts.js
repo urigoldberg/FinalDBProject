@@ -94,3 +94,4 @@ function loadDoc() {
         alert("enter a photo");
     }
 }
+
