@@ -30,7 +30,7 @@ def index1(request):
 
 def test(request):
     for artist in Artists.objects.raw('SELECT ID FROM DbMysql12.Artists where ID = 0;'):
-        print(artist)
+        print(artist.id)
 #    db = MySQLdb.connect(user='DbMysql12', db='DbMysql12',  passwd='DbMysql12', host='localhost', port = 3305)
 #    cursor = db.cursor()
 #    cursor.execute('SELECT title FROM DbMySql12.Seed;')
@@ -41,7 +41,7 @@ def test(request):
 #    c = connections['DbMysql12'].cursor()
 #    c.execute("SELECT title FROM DbMySql12.Seed;")
 #    rows = c.fetchall()
-    return HttpResponse(str(names))
+    return HttpResponse(str(artist))
     
     
 @csrf_exempt
@@ -56,3 +56,8 @@ def mockHTML(request):
             #return HttpResponse(request.POST.get("photo",""))
         else:
             return HttpResponse("this is a mock")
+
+def main(request):
+    
+    #Path = os.path.join(os.getcwd(),'polls', 'Client', 'htmlphoto.html')
+    return HttpResponse(str(request))

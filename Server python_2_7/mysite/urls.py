@@ -23,5 +23,6 @@ urlpatterns = [
     url(r'^polls/test', views.test),
     url(r'^admin/', admin.site.urls),
     url(r'^polls/', views.index),
+    url(r'^main*', views.main)
 
 ]
