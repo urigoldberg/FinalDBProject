@@ -8,11 +8,10 @@
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
         <link rel="stylesheet" type="text/css" href="static/recommenderStyles.css">
         <script src="static/externalScripts.js"></script>
-        <script>
-
-
-        </script>
     </head>
+    <script>
+        window.onload = usermessage;
+    </script>
     <body>
         <!-- HEADER -->
         <div class="jumbotron bg-1 text-center">
@@ -31,11 +30,12 @@
             <h2>Modal Login Form</h2>
             <button onclick="document.getElementById('Login').style.display='block'" style="width:auto;">Login</button><br>
             <button onclick="document.getElementById('SignIn').style.display='block'" style="width:auto;">Sign in</button>
+
             <div id="Login" class="modal">
-                <form class="modal-content animate" action="SignIn">
+                <form class="modal-content animate" action="LoginUser">
                     <div class="imgcontainer">
                         <span onclick="document.getElementById('Login').style.display='none'" class="close" title="Close Modal">&times;</span>
-                        <img src="static/img_avatar2.png" alt="Avatar" class="avatar img-circle">
+                        <img src="static/avatar.png" alt="Avatar" class="avatar img-circle">
                     </div>
 
                     <div class="container">
@@ -55,11 +55,12 @@
                     </div>
                 </form>
             </div>
+
             <div id="SignIn" class="modal">
                 <form class="modal-content animate" action="SignIn">
                     <div class="imgcontainer">
                         <span onclick="document.getElementById('SignIn').style.display='none'" class="close" title="Close Modal">&times;</span>
-                        <img src="static/img_avatar2.png" alt="Avatar" class="avatar img-circle">
+                        <img src="static/avatar.png" alt="Avatar" class="avatar img-circle">
                     </div>
 
                     <div class="container">
