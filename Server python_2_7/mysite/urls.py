@@ -20,6 +20,7 @@ from polls import views
 urlpatterns = [
     url(r'^polls/mockHTML',views.mockHTML),
     url(r'^polls/index1', views.index1),
+    url(r'^polls/test', views.test),
     url(r'^admin/', admin.site.urls),
     url(r'^polls/', views.index),
 

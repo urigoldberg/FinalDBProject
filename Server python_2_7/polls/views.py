@@ -4,8 +4,23 @@ from django.http import HttpResponse
 from django.shortcuts import render
 from polls.GoogleVisionApi.googleVisionSendPost import *
 from django.views.decorators.csrf import csrf_exempt
+from django.db import connections
+from django.shortcuts import render
+from polls.models import *
+import MySQLdb
 import os
 
+
+
+
+
+#def book_list(request):
+#    db = MySQLdb.connect(user='me', db='mydb',  passwd='secret', host='localhost')
+#    cursor = db.cursor()
+#    cursor.execute('SELECT name FROM books ORDER BY name')
+#    names = [row[0] for row in cursor.fetchall()]
+#    db.close()
+#    return render(request, 'book_list.html', {'names': names})
 
 def index(request):
     return HttpResponse("Hello, world. You're at the polls index.")
@@ -13,6 +28,22 @@ def index(request):
 def index1(request):
     return HttpResponse("fdgdsgffdsg")
 
+def test(request):
+    for artist in Artists.objects.raw('SELECT ID FROM DbMysql12.Artists where ID = 0;'):
+        print(artist)
+#    db = MySQLdb.connect(user='DbMysql12', db='DbMysql12',  passwd='DbMysql12', host='localhost', port = 3305)
+#    cursor = db.cursor()
+#    cursor.execute('SELECT title FROM DbMySql12.Seed;')
+#    names = [row[0] for row in cursor.fetchall()]
+#    print(names)
+#    print(cursor.description)
+#    db.close()
+#    c = connections['DbMysql12'].cursor()
+#    c.execute("SELECT title FROM DbMySql12.Seed;")
+#    rows = c.fetchall()
+    return HttpResponse(str(names))
+    
+    
 @csrf_exempt
 def mockHTML(request):
     if request.method == 'GET':
