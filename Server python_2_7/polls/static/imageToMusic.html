@@ -35,13 +35,14 @@
             }
 
             function loadDoc() {
-                var xhttp = new XMLHttpRequest();
-                xhttp.onreadystatechange = function() {
+                var xhttp = new XMLHttpRequest(),
+                responseType = "json",
+                onreadystatechange = function() {
                     if (this.readyState == 4 && this.status == 200) {
                         document.getElementById("demo").innerHTML = this.responseText;
                     }
                 };
-                xhttp.open("POST", "mock", true);
+                xhttp.open("POST", "pictureQuery", true);
                 xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
                 if (photo) {
                     xhttp.send("photo="+encodeURIComponent(photo.substring(22)));
@@ -49,6 +50,7 @@
                 else {
                     alert("enter a photo");
                 }
+                xhttp.response
             }
 
         </script>
