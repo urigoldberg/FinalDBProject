@@ -2,6 +2,7 @@
 from __future__ import unicode_literals
 from django.http import HttpResponse
 from django.shortcuts import render
+from django.template import Context, Template
 from polls.GoogleVisionApi.googleVisionSendPost import *
 from polls.sqlQueryBuilder import queriesBuilder,mockResponse
 from django.views.decorators.csrf import csrf_exempt
@@ -26,30 +27,41 @@ import os
 
 # pages:
 
+def getCoockieAndResponse(request, pageName):
+    cookie = request.COOKIES['user']
+    objPath = os.path.join(os.getcwd(),'polls', 'static', pageName)
+    obj = open(objPath,'r').read()
+    context = Context({"username": cookie})
+    resp = HttpResponse(Template(obj).render(context))
+    return cookie, resp
+
 def default(request):
-    return redirect('UiHomepage.html')
+    return redirect('Login.html')
 
 def UiHomepage(requests):
-    objPath = os.path.join(os.getcwd(),'polls', 'static', "UiHomepage.html")
-    obj = open(objPath,'r').read()
-    resp = HttpResponse(obj)
-    resp.set_cookie('name','uri')
+    if not request.COOKIES.has_key('user' ):
+        return redirect('Login.html')
+    user, resp = getCoockieAndResponse(requests, "UiHomepage.html")
     return resp
+    
 
 def imageToMusic(requests):
-    objPath = os.path.join(os.getcwd(),'polls', 'static', "imageToMusic.html")
-    obj = open(objPath,'r').read()
-    return HttpResponse(obj)
+    if not request.COOKIES.has_key('user' ):
+        return redirect('Login.html')
+    user, resp = getCoockieAndResponse(requests, "imageToMusic.html")
+    return resp
 
 def searchByKeywords(requests):
-    objPath = os.path.join(os.getcwd(),'polls', 'static', "searchByKeywords.html")
-    obj = open(objPath,'r').read()
-    return HttpResponse(obj)
+    if not request.COOKIES.has_key('user' ):
+        return redirect('Login.html')
+    user, resp = getCoockieAndResponse(requests, "searchByKeywords.html")
+    return resp
 
 def searchByGeoLocation(requests):
-    objPath = os.path.join(os.getcwd(),'polls', 'static', "searchByGeoLocation.html")
-    obj = open(objPath,'r').read()
-    return HttpResponse(obj)
+    if not request.COOKIES.has_key('user' ):
+        return redirect('Login.html')
+    user, resp = getCoockieAndResponse(requests, "searchByGeoLocation.html")
+    return resp
 
 
 
