@@ -27,11 +27,22 @@ function loadDoc() {
     xhttp.onreadystatechange = function() {
         if (this.readyState === 4 && this.status === 200) {
             alert("the response is: "+ this.responseText);
-            var responseArr = JSON.parse(this.responseText);
+            // var responseArr = JSON.parse(this.responseText);
             //initializing table head and opening body tag
+            // var finalTable = "<table class=\"table table-striped\"><thead><tr><th>Artist</th><th>Song name</th></tr></thead><tbody>";
+            // for(i=0;i<responseArr.length;i++){
+            //     finalTable+="<tr><th>" + responseArr.first +"</th><th>"+responseArr.second+"</th></tr>";
+            // }
+            // finalTable+= "</tbody></table>";
+            // //alert(responseArr.size);
+            // console.log("grasssss tasts bad!!");
+            // document.getElementById("imgTest").innerHTML = finalTable;
+            // document.getElementById("browsebutton").hidden = true;
+            // document.getElementById("loadbutton").hidden = true;
+
             var finalTable = "<table class=\"table table-striped\"><thead><tr><th>Artist</th><th>Song name</th></tr></thead><tbody>";
-            for(i=0;i<responseArr.length;i++){
-                finalTable+="<tr><th>" + responseArr.first +"</th><th>"+responseArr.second+"</th></tr>";
+            for(i=0;i<5;i++){
+                finalTable+="<tr><th>" + "artist"+i +"</th><th>"+"name"+i+"</th></tr>";
             }
             finalTable+= "</tbody></table>";
             //alert(responseArr.size);
