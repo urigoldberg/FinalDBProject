@@ -33,7 +33,13 @@ def getCoockieAndResponse(request, pageName):
     obj = open(objPath,'r').read()
     context = Context({"username": cookie})
     resp = HttpResponse(Template(obj).render(context))
+    resp.set_cookie("user",cookie)
     return cookie, resp
+
+def setCoockieAndResponse(pageName, username):
+    resp = redirect(pageName)
+    resp.set_cookie("user",username)
+    return resp
 
 def Login(request):
     objPath = os.path.join(os.getcwd(),'polls', 'static', 'Login.html')
@@ -71,6 +77,28 @@ def searchByGeoLocation(requests):
 
 
 # services
+@csrf_exempt
+def SignIn(request):
+    if (request.POST and "photo" in request.POST.keys()):
+        pass
+    name = "name"
+    password = "password"
+    # update db with details
+    resp = setCoockieAndResponse("UiHomepage.html",name )
+    return resp
+
+@csrf_exempt
+def Login(request):
+    if (request.POST and "photo" in request.POST.keys()):
+        pass
+    name = "name"
+    password = "password"
+    # check if details are OK
+    resp = setCoockieAndResponse("UiHomepage.html",name )
+    return resp
+    
+
+
 @csrf_exempt
 def pictureService(request):
     
