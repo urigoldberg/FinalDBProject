@@ -3,6 +3,7 @@ from __future__ import unicode_literals
 from django.http import HttpResponse
 from django.shortcuts import render
 from polls.GoogleVisionApi.googleVisionSendPost import *
+from polls.sqlQueryBuilder import queriesBuilder,mockResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.db import connections
 from django.shortcuts import render
@@ -52,12 +53,21 @@ def mockHTML(request):
         return HttpResponse(mockHtml)
     else:
         if (request.POST and "photo" in request.POST.keys()):
-            return HttpResponse(sendquery(request.POST.get("photo","")))
+            return HttpResponse(sendGoogleQuery(request.POST.get("photo","")))
             #return HttpResponse(request.POST.get("photo",""))
         else:
             return HttpResponse("this is a mock")
 
-def main(request):
+def pictureService(request):
     
+    #get query
+    if (request.POST and "photo" in request.POST.keys()):
+        json = (sendGoogleQuery(request.POST.get("photo","")))
+        # parse json to string array
+        # build query
+        # build respones
+        #return response
+        return HttpResponse(mockResponse.mockResponse)
+        
     #Path = os.path.join(os.getcwd(),'polls', 'Client', 'htmlphoto.html')
     return HttpResponse(str(request))

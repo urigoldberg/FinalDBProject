@@ -5,7 +5,7 @@ except ImportError:
         pip.main(['install', 'requests'])
         import requests
 # create JSON FILE. uses mock for no
-def sendquery(pic):
+def sendGoogleQuery(pic):
         data = """{
           "requests": [
             {
