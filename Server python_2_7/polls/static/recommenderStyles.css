@@ -1,3 +1,17 @@
+
+/*Geo Location*/
+
+#map-canvas {
+    width: 350px;
+    height: 350px;
+}
+#info {
+    position: absolute;
+    font-family: arial, sans-serif;
+    font-size: 18px;
+    font-weight: bold;
+}
+
 .img-change{
     max-height: 700px;
     max-width: 50%;
