@@ -95,10 +95,11 @@ def pictureService(request):
         # build query
         # build respones
         #return response
+        print(mockResponse.mockResponse)
         return HttpResponse(mockResponse.mockResponse)
         
     #Path = os.path.join(os.getcwd(),'polls', 'Client', 'htmlphoto.html')
-    return HttpResponse(str(request))
+    return HttpResponse("asasas")
 
 
 
