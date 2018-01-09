@@ -28,8 +28,8 @@
 
         <div class="container-fluid">
             <h2>Modal Login Form</h2>
-            <button onclick="document.getElementById('Login').style.display='block'" style="width:auto;">Login</button><br>
-            <button onclick="document.getElementById('SignIn').style.display='block'" style="width:auto;">Sign in</button>
+            <button class="loginbutton" onclick="document.getElementById('Login').style.display='block'" style="width:auto;">Login</button><br>
+            <button class="loginbutton" onclick="document.getElementById('SignIn').style.display='block'" style="width:auto;">Sign in</button>
 
             <div id="Login" class="modal">
                 <form class="modal-content animate" action="LoginUser">
@@ -45,7 +45,7 @@
                         <label><b>Password</b></label>
                         <input type="password" placeholder="Enter Password" name="password" required>
 
-                        <button type="submit">Login</button>
+                        <button type="submit" class="loginbutton">Login</button>
                         <input type="checkbox" checked="checked"> Remember me
                     </div>
 
@@ -70,7 +70,7 @@
                         <label><b>Password</b></label>
                         <input type="password" placeholder="Enter Password" name="password" required>
 
-                        <button type="submit">Sign In</button>
+                        <button type="submit" class="loginbutton">Sign In</button>
                         <input type="checkbox" checked="checked"> Remember me
                     </div>
 

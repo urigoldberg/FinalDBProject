@@ -14,11 +14,10 @@
 
 .img-change{
     max-height: 700px;
-    max-width: 50%;
+    max-width: 25%;
 }
 
 .bg-1{
-    /*background-color: #c9302c;*/
     background-color: #4CAF50;
     color: rgba(0, 0, 0, 0.71);
 }
@@ -26,6 +25,10 @@
 .img-circle{
     max-width: 250px;
     max-height: 250px;
+}
+
+.imagetable{
+    max-width: 50%;
 }
 
 
@@ -39,15 +42,20 @@ input[type=text], input[type=password] {
     box-sizing: border-box;
 }
 
+#loadingsign{
+    max-width: 20px;
+    max-height: 20px;
+}
+
 /* Set a style for all buttons */
-button {
+.loginbutton {
     background-color: #4CAF50;
     color: white;
     padding: 14px 20px;
     margin: 8px 0;
     border: none;
     cursor: pointer;
-    /*width: 100%;*/
+    width: 100%;
 }
 
 button:hover {
