@@ -26,7 +26,7 @@ function loadDoc() {
     xhttp.responseType = "json";
     xhttp.onreadystatechange = function() {
         if (this.readyState === 4 && this.status === 200) {
-            alert("the response is: "+ this.response);
+            alert("the response is: "+ this.responseText);
             document.getElementById("demo").innerHTML = this.responseText;
             var responseArr = JSON.parse(this.response);
             //initializing table head and opening body tag
