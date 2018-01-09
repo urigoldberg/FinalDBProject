@@ -39,20 +39,20 @@ def default(request):
     return redirect('Login.html')
 
 def UiHomepage(requests):
-    if not request.COOKIES.has_key('user' ):
+    if not requests.COOKIES.has_key('user' ):
         return redirect('Login.html')
     user, resp = getCoockieAndResponse(requests, "UiHomepage.html")
     return resp
     
 
 def imageToMusic(requests):
-    if not request.COOKIES.has_key('user' ):
+    if not requests.COOKIES.has_key('user' ):
         return redirect('Login.html')
     user, resp = getCoockieAndResponse(requests, "imageToMusic.html")
     return resp
 
 def searchByKeywords(requests):
-    if not request.COOKIES.has_key('user' ):
+    if not requests.COOKIES.has_key('user' ):
         return redirect('Login.html')
     user, resp = getCoockieAndResponse(requests, "searchByKeywords.html")
     return resp
