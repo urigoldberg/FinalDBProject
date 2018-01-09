@@ -1,76 +1,65 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-        <script></script>
-        <style>
-            .bg-1{
-                background-color: #c9302c;
-                color: rgba(0, 0, 0, 0.71);
-            }
-        </style>
-    </head>
-    <body>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="static/recommenderStyles.css">
+</head>
+<body>
 
-        <!-- HEADER -->
-        <div class="jumbotron bg-1 text-center">
-            <div class="row">
-                <div class ="col-sm-4">
-                    <img src="do.jpg" class="img-circle" width="250" height="250">
-                </div>
-                <div class="col-lg-8">
-                    <h1 align="left">Music Recommender</h1>
-                    <p align="left">Find your music & more!</p>
-                </div>
-            </div>
+<!-- HEADER -->
+<div class="jumbotron bg-1 text-center">
+    <div class="row">
+        <div class ="col-sm-4">
+            <img src="do.jpg" class="img-circle">
         </div>
-        <!-- NAVIGATION BAR -->
-        <nav class="navbar navbar-default">
-            <div class="container-fluid">
-                <div class="navbar-header">
-                    <a class="navbar-brand" href="#">Page Selector</a>
-                </div>
-                <ul class="nav navbar-nav">
-                    <li>
-                        <a href="UiHomepage.html">
-                            <h4 class="list-group-item-heading">HomePage</h4>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="imageToMusic.html">
-                            <h4 class="list-group-item-heading">Image to Music</h4>
-                        </a>
-                    </li>
-                    <li >
-                        <a href="searchByKeywords.html">
-                            <h4 class="list-group-item-heading">search By Keywords</h4>
-
-                        </a>
-                    </li>
-                    <li class="active">
-                        <a href="searchByGeoLocation.html">
-                            <h4 class="list-group-item-heading">search by Geo Location</h4>
-                            <small>Search for music far away!</small>
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        </nav>
-
-        <div class="container-fluid">
-            <!-- inside this single row will be a side bar and another column for the main page-->
-            <div class="row">
-                <div class="col-sm-12">
-                    <div class="thumbnail" align="middle">
-                        <h1> please select locations from which to search from:  </h1>
-                    </div>
-                </div>
-            </div>
+        <div class="col-lg-8">
+            <h1 align="left">Music Recommender</h1>
+            <p align="left">Find your music & more!</p>
         </div>
+    </div>
+</div>
+<!-- NAVIGATION BAR -->
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <ul class="nav navbar-nav">
+            <li>
+                <a href="UiHomepage.html">
+                    <h4 class="list-group-item-heading">HomePage</h4>
+                </a>
+            </li>
+            <li>
+                <a href="imageToMusic.html">
+                    <h4 class="list-group-item-heading">Image to Music</h4>
+                </a>
+            </li>
+            <li >
+                <a href="searchByKeywords.html">
+                    <h4 class="list-group-item-heading">search By Keywords</h4>
 
-    </body>
+                </a>
+            </li>
+            <li class="active">
+                <a href="searchByGeoLocation.html">
+                    <h4 class="list-group-item-heading">search by Geo Location</h4>
+                    <small>Search for music far away!</small>
+                </a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<div class="container-fluid">
+    <!-- inside this single row will be a side bar and another column for the main page-->
+    <div class="row">
+        <div class="col-sm-12">
+            <p> please select locations from which to search from:</p>
+        </div>
+    </div>
+</div>
+
+</body>
 </html>

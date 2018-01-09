@@ -1,0 +1,14 @@
+.img-change{
+    max-height: 700px;
+    max-width: 50%;
+}
+
+.bg-1{
+    background-color: #c9302c;
+    color: rgba(0, 0, 0, 0.71);
+}
+
+.img-circle{
+    max-width: 250px;
+    max-height: 250px;
+}
