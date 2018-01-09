@@ -31,8 +31,10 @@ import os
 
 
 def Login(request):
+    context = Context({"message": "", "show": "false" })
     objPath = os.path.join(os.getcwd(),'polls', 'static', 'Login.html')
     obj = open(objPath,'r').read()
+    resp = HttpResponse(Template(obj).render(context))
     return HttpResponse(obj)
 
 def default(request):
