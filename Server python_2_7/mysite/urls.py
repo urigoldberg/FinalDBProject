@@ -22,13 +22,16 @@ urlpatterns = [
     
     # main urls
     url(r'^Login.html',views.Login),
+    
     url(r'^UiHomepage.html',views.UiHomepage),
     url(r'^imageToMusic.html',views.imageToMusic),
     url(r'^searchByKeywords.html',views.searchByKeywords),
     url(r'^searchByGeoLocation.html',views.searchByGeoLocation),
     
     # services
-    url(r'^polls/pictureQuery',views.pictureService),
+    url(r'^pictureQuery',views.pictureService),
+    url(r'^SignIn*',views.Loginfunc),
+    
     
     # tests and mocks to be deleted
     

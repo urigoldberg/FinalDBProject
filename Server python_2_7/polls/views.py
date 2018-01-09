@@ -88,11 +88,12 @@ def SignIn(request):
     return resp
 
 @csrf_exempt
-def Login(request):
-    if (request.POST and "photo" in request.POST.keys()):
-        pass
-    name = "name"
-    password = "password"
+def Loginfunc(request):
+    if (request.POST and "username" in request.POST.keys()):
+        name = "name"
+        password = "password"
+    if (request.GET):
+        name, password = request.GET['username'],request.GET['password']
     # check if details are OK
     resp = setCoockieAndResponse("UiHomepage.html",name )
     return resp
