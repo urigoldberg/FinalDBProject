@@ -5,6 +5,7 @@ from django.shortcuts import render
 from django.template import Context, Template
 from polls.GoogleVisionApi.googleVisionSendPost import *
 from polls.sqlQueryBuilder import queriesBuilder,mockResponse
+from polls.loginManage.loginFunctions import *
 from django.views.decorators.csrf import csrf_exempt
 from django.db import connections
 from django.shortcuts import redirect
@@ -27,19 +28,7 @@ import os
 
 # pages:
 
-def getCoockieAndResponse(request, pageName):
-    cookie = request.COOKIES['user']
-    objPath = os.path.join(os.getcwd(),'polls', 'static', pageName)
-    obj = open(objPath,'r').read()
-    context = Context({"username": cookie})
-    resp = HttpResponse(Template(obj).render(context))
-    resp.set_cookie("user",cookie)
-    return cookie, resp
 
-def setCoockieAndResponse(pageName, username):
-    resp = redirect(pageName)
-    resp.set_cookie("user",username)
-    return resp
 
 def Login(request):
     objPath = os.path.join(os.getcwd(),'polls', 'static', 'Login.html')
@@ -73,7 +62,6 @@ def searchByGeoLocation(requests):
     return resp
 
 
-
 # services
 @csrf_exempt
 def SignIn(request):
@@ -86,16 +74,15 @@ def SignIn(request):
     return resp
 
 @csrf_exempt
-def Loginfunc(request):
-    if (request.POST and "username" in request.POST.keys()):
-        name = "name"
-        password = "password"
-    if (request.GET):
-        name, password = request.GET['username'],request.GET['password']
-    # check if details are OK
-    resp = setCoockieAndResponse("UiHomepage.html",name )
+def SignInfunc(request):
+    name, password = request.GET['username'],request.GET['password']
+    if (signNewUser(name,password)):
+        resp = setCoockieAndResponse("UiHomepage.html",name )
+    else:
+        resp = SignInFailed()
     return resp
     
+
 
 
 @csrf_exempt
