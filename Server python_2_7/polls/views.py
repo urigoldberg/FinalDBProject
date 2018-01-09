@@ -32,7 +32,9 @@ def default(request):
 def UiHomepage(requests):
     objPath = os.path.join(os.getcwd(),'polls', 'static', "UiHomepage.html")
     obj = open(objPath,'r').read()
-    return HttpResponse(obj)
+    resp = HttpResponse(obj)
+    resp.set_cookie('name','uri')
+    return resp
 
 def imageToMusic(requests):
     objPath = os.path.join(os.getcwd(),'polls', 'static', "imageToMusic.html")
