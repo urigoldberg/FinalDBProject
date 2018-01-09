@@ -30,22 +30,22 @@ def default(request):
     return redirect('UiHomepage.html')
 
 def UiHomepage(requests):
-    objPath = os.path.join(os.getcwd(),'polls', 'main', "UiHomepage.html")
+    objPath = os.path.join(os.getcwd(),'polls', 'static', "UiHomepage.html")
     obj = open(objPath,'r').read()
     return HttpResponse(obj)
 
 def imageToMusic(requests):
-    objPath = os.path.join(os.getcwd(),'polls', 'main', "imageToMusic.html")
+    objPath = os.path.join(os.getcwd(),'polls', 'static', "imageToMusic.html")
     obj = open(objPath,'r').read()
     return HttpResponse(obj)
 
 def searchByKeywords(requests):
-    objPath = os.path.join(os.getcwd(),'polls', 'main', "searchByKeywords.html")
+    objPath = os.path.join(os.getcwd(),'polls', 'static', "searchByKeywords.html")
     obj = open(objPath,'r').read()
     return HttpResponse(obj)
 
 def searchByGeoLocation(requests):
-    objPath = os.path.join(os.getcwd(),'polls', 'main', "searchByGeoLocation.html")
+    objPath = os.path.join(os.getcwd(),'polls', 'static', "searchByGeoLocation.html")
     obj = open(objPath,'r').read()
     return HttpResponse(obj)
 
