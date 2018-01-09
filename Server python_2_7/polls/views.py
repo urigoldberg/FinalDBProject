@@ -54,8 +54,6 @@ def UiHomepage(requests):
         return redirect('Login.html')
     user, resp = getCoockieAndResponse(requests, "UiHomepage.html")
     return resp
-    
-
 def imageToMusic(requests):
     if not requests.COOKIES.has_key('user' ):
         return redirect('Login.html')
