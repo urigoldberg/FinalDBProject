@@ -95,3 +95,15 @@ function loadDoc() {
     }
 }
 
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+    var loginmodal = document.getElementById('Login');
+    var signinmodel = document.getElementById('SignIn');
+    if (event.target == loginmodal ) {
+        loginmodal.style.display = "none";
+    }
+    if (event.target == signinmodel ) {
+        signinmodel.style.display = "none";
+    }
+}
+
