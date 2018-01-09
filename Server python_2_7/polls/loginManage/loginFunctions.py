@@ -40,7 +40,8 @@ def signNewUser (username, password):
     If the username available - add it to usersTable and return True, otherwise return False 
     """
     # TBD
-
+    if (username == "itai"):
+        return False
     return True
 
 def SignInFailed():
