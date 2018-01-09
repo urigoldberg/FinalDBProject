@@ -40,14 +40,10 @@
                 onreadystatechange = function() {
                     if (this.readyState == 4 && this.status == 200) {
                         //document.getElementById("demo").innerHTML = this.responseText;
-						alert(this.responseText);
+						alert(response.Text);
                     }
                 };
-<<<<<<< HEAD
                 xhttp.open("POST", "polls/pictureQuery", true);
-=======
-                xhttp.open("POST", "pictureQuery", true);
->>>>>>> 473f4840edad0af2387e2f4bbe901168bdf09e11
                 xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
                 if (photo) {
                     xhttp.send("photo="+encodeURIComponent(photo.substring(22)));
