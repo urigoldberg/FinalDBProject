@@ -10,80 +10,80 @@
 </head>
 <body>
 
-<!-- HEADER -->
-<div class="jumbotron bg-1 text-center">
-    <div class="row">
-        <div class ="col-sm-4">
-            <img src="static/do.jpg" class="img-circle">
-        </div>
-        <div class="col-lg-8">
-            <h1 align="left">Music Recommender</h1>
-            <p align="left">Find your music & more!</p>
+    <!-- HEADER -->
+    <div class="jumbotron bg-1 text-center">
+        <div class="row">
+            <div class ="col-sm-4">
+                <img src="static/do.jpg" class="img-circle">
+            </div>
+            <div class="col-lg-8">
+                <h1 align="left">Music Recommender</h1>
+                <p align="left">Find your music & more!</p>
+            </div>
         </div>
     </div>
-</div>
-<!-- NAVIGATION BAR -->
-<nav class="navbar navbar-default">
+    <!-- NAVIGATION BAR -->
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <ul class="nav navbar-nav">
+                <li>
+                    <a href="UiHomepage.html">
+                        <h4 class="list-group-item-heading">HomePage</h4>
+                    </a>
+                </li>
+                <li>
+                    <a href="imageToMusic.html">
+                        <h4 class="list-group-item-heading">Image to Music</h4>
+                    </a>
+                </li>
+                <li >
+                    <a href="searchByKeywords.html">
+                        <h4 class="list-group-item-heading">search By Keywords</h4>
+
+                    </a>
+                </li>
+                <li class="active">
+                    <a href="searchByGeoLocation.html">
+                        <h4 class="list-group-item-heading">search by Geo Location</h4>
+                        <small>Search for music far away!</small>
+                    </a>
+                </li>
+                <li>
+                    <a href="Login.html">
+                        <h4 class="list-group-item-heading">Login</h4>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
     <div class="container-fluid">
-        <ul class="nav navbar-nav">
-            <li>
-                <a href="UiHomepage.html">
-                    <h4 class="list-group-item-heading">HomePage</h4>
-                </a>
-            </li>
-            <li>
-                <a href="imageToMusic.html">
-                    <h4 class="list-group-item-heading">Image to Music</h4>
-                </a>
-            </li>
-            <li >
-                <a href="searchByKeywords.html">
-                    <h4 class="list-group-item-heading">search By Keywords</h4>
-
-                </a>
-            </li>
-            <li class="active">
-                <a href="searchByGeoLocation.html">
-                    <h4 class="list-group-item-heading">search by Geo Location</h4>
-                    <small>Search for music far away!</small>
-                </a>
-            </li>
-            <li>
-                <a href="Login.html">
-                    <h4 class="list-group-item-heading">Login</h4>
-                </a>
-            </li>
-        </ul>
-    </div>
-</nav>
-
-<div class="container-fluid">
-    <!-- inside this single row will be a side bar and another column for the main page-->
-    <div class="row">
-        <div class="col-sm-12">
-            <p> please select locations from which to search from:</p>
+        <!-- inside this single row will be a side bar and another column for the main page-->
+        <div class="row">
+            <div class="col-sm-12">
+                <h4> please select locations from which to search from:</h4>
+            </div>
         </div>
     </div>
-</div>
 
-<div id="map" style="width:400px;height:400px;background:yellow"></div>
+    <div id="map" style="width:400px;height:400px;background:yellow"></div>
 
-<script>
-function myMap() {
-var mapOptions = {
-    center: new google.maps.LatLng(51.5, -0.12),
-    zoom: 10,
-    mapTypeId: google.maps.MapTypeId.HYBRID
-}
-var map = new google.maps.Map(document.getElementById("map"), mapOptions);
-}
-</script>
+    <script>
+    function myMap() {
+    var mapOptions = {
+        center: new google.maps.LatLng(51.5, -0.12),
+        zoom: 10,
+        mapTypeId: google.maps.MapTypeId.HYBRID
+    }
+    var map = new google.maps.Map(document.getElementById("map"), mapOptions);
+    }
+    </script>
 
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyANLwIhKR5250mq9107j4R0hC1RG4T9J9c&callback=myMap"></script>
-<!--
-To use this code on your website, get a free API key from Google.
-Read more at: https://www.w3schools.com/graphics/google_maps_basic.asp
--->
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyANLwIhKR5250mq9107j4R0hC1RG4T9J9c&callback=myMap"></script>
+    <!--
+    To use this code on your website, get a free API key from Google.
+    Read more at: https://www.w3schools.com/graphics/google_maps_basic.asp
+    -->
 
 </body>
 </html>

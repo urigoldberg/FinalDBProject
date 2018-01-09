@@ -60,12 +60,13 @@
             <!-- inside this single row will be a side bar and another column for the main page-->
             <div class="row">
                 <div class="col-sm-12">
-                    <h3 id="imageToTextHeader">Please insert your picture:</h3>
+                    <h4 id="imageToTextHeader">Please insert your picture:</h4>
                     <div id="imgTest"><img id="change" src ="static/pencil.jpg" class ="img-rounded img-change"></div><br>
                     <!-- the input button-->
                     <label id="browsebutton" class="btn btn-default btn-file browsebutton">
                         Browse <input id="inputFileToLoad" type="file" style="display: none;" onchange="encodeImageFileAsURL();">
                     </label><br>
+                    <!--the button to request data-->
                     <button id="loadbutton" class ="btn btn-default" onclick="loadDoc()" style="visibility: hidden">Find songs from picture!</button>
                     <img id="loadingsign" src="static/loading.gif" style ="visibility: hidden">
                     <br>

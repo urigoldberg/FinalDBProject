@@ -1,10 +1,9 @@
 .img-change{
     max-height: 700px;
-    max-width: 50%;
+    max-width: 25%;
 }
 
 .bg-1{
-    /*background-color: #c9302c;*/
     background-color: #4CAF50;
     color: rgba(0, 0, 0, 0.71);
 }
