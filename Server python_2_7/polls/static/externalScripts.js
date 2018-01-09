@@ -10,46 +10,45 @@ function encodeImageFileAsURL() {
             var newImage = document.createElement('img');
             newImage.src = srcData;
             photo = srcData;
-            //debugger;
-            //document.getElementById("imgTest").innerHTML = newImage.outerHTML;
             document.getElementById("change").src = newImage.src;
-            //alert("Converted Base64 version is " + document.getElementById("imgTest").innerHTML);
-            //console.log("Converted Base64 version is " + document.getElementById("imgTest").innerHTML);
             console.log("Converted Base64 length is: " + document.getElementById("imgTest").innerHTML.length);
         };
         fileReader.readAsDataURL(fileToLoad);
+        document.getElementById("loadbutton").style.visibility ="visible";
+        document.getElementById("browsebutton").innerText = "Change picture";
     }
 }
 
 function loadDoc() {
     var xhttp = new XMLHttpRequest();
-    //xhttp.responseType = "json";
+    document.getElementById("loadingsign").style.visibility="visible";
     xhttp.onreadystatechange = function() {
         if (this.readyState === 4 && this.status === 200) {
-            alert("the response is: "+ this.responseText);
-            // var responseArr = JSON.parse(this.responseText);
-            //initializing table head and opening body tag
-            // var finalTable = "<table class=\"table table-striped\"><thead><tr><th>Artist</th><th>Song name</th></tr></thead><tbody>";
-            // for(i=0;i<responseArr.length;i++){
-            //     finalTable+="<tr><th>" + responseArr.first +"</th><th>"+responseArr.second+"</th></tr>";
-            // }
-            // finalTable+= "</tbody></table>";
-            // //alert(responseArr.size);
-            // console.log("grasssss tasts bad!!");
-            // document.getElementById("imgTest").innerHTML = finalTable;
-            // document.getElementById("browsebutton").hidden = true;
-            // document.getElementById("loadbutton").hidden = true;
-
-            var finalTable = "<table class=\"table table-striped\"><thead><tr><th>Artist</th><th>Song name</th></tr></thead><tbody>";
-            for(i=0;i<5;i++){
-                finalTable+="<tr><th>" + "artist"+i +"</th><th>"+"name"+i+"</th></tr>";
+            var responseArr = JSON.parse(this.responseText);
+            console.log("initializing table head and opening body tag");
+            var finalTable = "<table class=\"table table-striped imagetable\">" +
+                "<thead>" +
+                "<tr><th>Artist</th>" +
+                "<th>Song name</th>" +
+                "<th>YouTube link</th></tr>" +
+                "</thead>" +
+                "<tbody>";
+            for(i=0;i<responseArr.rows.length;i++){
+                finalTable+=
+                    "<tr>" +
+                    "<th>" + responseArr.rows[i].SongName +
+                    "</th><th>"+responseArr.rows[i].Artist+"</th>" +
+                    "<th>"+responseArr.rows[i].YoutubeLink+"</th>" +
+                    "</tr>";
             }
             finalTable+= "</tbody></table>";
-            //alert(responseArr.size);
-            console.log("grasssss tasts bad!!");
             document.getElementById("imgTest").innerHTML = finalTable;
-            document.getElementById("browsebutton").hidden = true;
-            document.getElementById("loadbutton").hidden = true;
+            document.getElementById("imageToTextHeader").innerText = "The Following songs were found:";
+            console.log("before hiding buttons");
+            document.getElementById("browsebutton").style.visibility = "hidden";
+            document.getElementById("loadbutton").style.visibility = "hidden";
+            document.getElementById("loadingsign").style.visibility="hidden";
+
         }
     };
     xhttp.open("POST", "pictureQuery", true);
