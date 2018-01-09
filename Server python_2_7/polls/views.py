@@ -6,6 +6,7 @@ from polls.GoogleVisionApi.googleVisionSendPost import *
 from polls.sqlQueryBuilder import queriesBuilder,mockResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.db import connections
+from django.shortcuts import redirect
 from django.shortcuts import render
 from polls.models import *
 import MySQLdb
@@ -23,8 +24,69 @@ import os
 #    db.close()
 #    return render(request, 'book_list.html', {'names': names})
 
+# pages:
+
+def default(request):
+    return redirect('UiHomepage.html')
+
+def UiHomepage(requests):
+    objPath = os.path.join(os.getcwd(),'polls', 'static', "UiHomepage.html")
+    obj = open(objPath,'r').read()
+    return HttpResponse(obj)
+
+def imageToMusic(requests):
+    objPath = os.path.join(os.getcwd(),'polls', 'static', "imageToMusic.html")
+    obj = open(objPath,'r').read()
+    return HttpResponse(obj)
+
+def searchByKeywords(requests):
+    objPath = os.path.join(os.getcwd(),'polls', 'static', "searchByKeywords.html")
+    obj = open(objPath,'r').read()
+    return HttpResponse(obj)
+
+def searchByGeoLocation(requests):
+    objPath = os.path.join(os.getcwd(),'polls', 'static', "searchByGeoLocation.html")
+    obj = open(objPath,'r').read()
+    return HttpResponse(obj)
+
+
+
+
+
+
+
+
+
+
+
+
 def index(request):
     return HttpResponse("Hello, world. You're at the polls index.")
+
+def main(request):
+    page = "UiHomepage.html"
+    objPath = os.path.join(os.getcwd(),'polls', 'static', page)
+    obj = open(objPath,'r').read()
+#    print(request.META['PATH_INFO'])
+#    #print ( request.META['PATH_INFO'] + "\n" + request.META['QUERY_STRING'])
+#    if  not (request.META['QUERY_STRING'] == ""):
+#        page = request.META['QUERY_STRING'].replace("\\main\\")
+#        print(page)
+#    objPath = os.path.join(os.getcwd(),'polls', 'static', page)
+#    obj = open(objPath,'r').read()
+    return HttpResponse(obj)
+
+        
+        
+        
+    print(request.build_absolute_uri())
+    print(request.build_absolute_uri('/')[:-1].strip("/"))
+    print ( request.META['PATH_INFO'] + "\n" + request.META['QUERY_STRING'])
+
+def imageToMusic(request):
+    mockHtmlPath = os.path.join(os.getcwd(),'polls', 'static', 'imageToMusic.html')
+    mockHtml = open(mockHtmlPath,'r').read()
+    return HttpResponse(mockHtml)
 
 def index1(request):
     return HttpResponse("fdgdsgffdsg")
@@ -58,6 +120,10 @@ def mockHTML(request):
         else:
             return HttpResponse("this is a mock")
 
+
+
+
+@csrf_exempt
 def pictureService(request):
     
     #get query

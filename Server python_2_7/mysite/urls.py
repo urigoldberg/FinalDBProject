@@ -18,12 +18,23 @@ from django.contrib import admin
 from polls import views
 
 urlpatterns = [
+    url(r'^$',views.default),
+    
+    # main urls
+    url(r'^UiHomepage.html',views.UiHomepage),
+    url(r'^imageToMusic.html',views.imageToMusic),
+    url(r'^searchByKeywords.html',views.searchByKeywords),
+    url(r'^searchByGeoLocation.html',views.searchByGeoLocation),
+    
+    # services
+    url(r'^static/pictureQuery',views.pictureService),
     url(r'^polls/mockHTML',views.mockHTML),
     url(r'^polls/pictureQuery',views.pictureService),
     url(r'^polls/index1', views.index1),
     url(r'^polls/test', views.test),
     url(r'^admin/', admin.site.urls),
     url(r'^polls/', views.index),
+    url(r'^main*/', views.main),
    # url(r'^main*', views.main)
 
 ]
