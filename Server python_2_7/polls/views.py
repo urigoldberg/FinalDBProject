@@ -90,7 +90,7 @@ def pictureService(request):
     
     #get query
     if (request.POST and "photo" in request.POST.keys()):
-        json = (sendGoogleQuery(request.POST.get("photo","")))
+        #json = (sendGoogleQuery(request.POST.get("photo","")))
         # parse json to string array
         # build query
         # build respones
