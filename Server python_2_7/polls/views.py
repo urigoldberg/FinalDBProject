@@ -1,35 +1,26 @@
 # -*- coding: utf-8 -*-
+import MySQLdb
+import os
+
 from __future__ import unicode_literals
 from django.http import HttpResponse
 from django.shortcuts import render
 from django.template import Context, Template
-from polls.BL.GoogleVisionApiBL.googleVisionSendPost import *
-from polls.Validators.validatorsUtils import *
-from polls.BL.sqlQueryBuilderBL import queriesBuilder,mockResponse
-from polls.BL.loginManageBL.loginFunctions import *
 from django.views.decorators.csrf import csrf_exempt
 from django.db import connections
 from django.shortcuts import redirect
 from django.shortcuts import render
+
 from polls.models import *
-import MySQLdb
-import os
+from polls.Validators.validatorsUtils import *
 
+from polls.BL.GoogleVisionApiBL.googleVisionSendPost import *
+from polls.BL.sqlQueryBuilderBL import queriesBuilder,mockResponse
+from polls.BL.loginManageBL.loginFunctions import *
 
-
-
-
-#def book_list(request):
-#    db = MySQLdb.connect(user='me', db='mydb',  passwd='secret', host='localhost')
-#    cursor = db.cursor()
-#    cursor.execute('SELECT name FROM books ORDER BY name')
-#    names = [row[0] for row in cursor.fetchall()]
-#    db.close()
-#    return render(request, 'book_list.html', {'names': names})
-
-# pages:
-
-
+####################################
+####### views functions GET ########
+####################################
 
 def Login(request):
     objPath = os.path.join(os.getcwd(),'polls', 'static', "Login.html")
@@ -65,7 +56,11 @@ def searchByGeoLocation(requests):
     return resp
 
 
-# services
+
+####################################
+####### views functions POST #######
+####################################
+    
 @csrf_exempt
 def LoginUserfunc(request):
     
