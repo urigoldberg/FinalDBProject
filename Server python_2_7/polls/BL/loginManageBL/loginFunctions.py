@@ -5,7 +5,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.db import connections
 from django.shortcuts import redirect
 from django.shortcuts import render
-from ..DAL.LoginDAL import *
+from ..DAL.mainDAL import *
 import os
 
 

@@ -1,6 +1,8 @@
 import MySQLdb
 import os
 
+######CLASS###########
+
 class DBconnection():
     configPath = os.path.join(os.getcwd(),'polls', 'BL', "DAL","config")
     config = open(configPath,"r").read()
@@ -71,15 +73,57 @@ class DBconnection():
             return False
         
         
-        
-        
     
     def close(self):
         if (self._open):
             self._db.close()
             self._open = False
         
+        
+#############LOGIN######################
     
+def addNewUserDAL(username, password):
+    query = """insert into DbMysql12.users_table values ('"""+username+"""','"""+password+"""');"""
+    con = DBconnection()
+    if (con.insertQuery(query)):
+        con.close()
+        return True
     
+    con.close()
+    print(con._exception)
+    return False
+
+
+def getUserPasswordUsernameDAL(username):
+    query = "select password from DbMysql12.users_table where user_name = '"+username+"';";
+    con = DBconnection()
+    if (con.selectQuery(query) and con._rowsReturned == 1):
+        con.close()
+        return con._results[0][0]
+    return None
+ 
     
+###########GOOGLE API####################
+def googleApiSearchSongsByKeyWord(keyword):
+    #this is the real query we should be using once we change Lyrics.seed_id to Lyrics.song_id
+    #query = 'select s.song_name, s.artist_name, lyr.num_occurrences from (SELECT song_id,((LENGTH(lyrics) - LENGTH(REPLACE(lyrics,'+keyword+', ''))) / LENGTH(' + keyword + ') ) as num_occurrences FROM Lyrics) lyr inner join Songs s on lyr.song_id = s.song_id order by num_occurrences desc limit 3'
+    query = """SELECT 
+    se.title, se.artist_name, lyr.num_occurrences
+FROM
+    (SELECT 
+        seed_id,
+            ((LENGTH(lyrics) - LENGTH(REPLACE(lyrics, '"""+keyword+"""', ''))) / LENGTH('"""+keyword+"""')) AS num_occurrences
+    FROM
+        DbMysql12.Lyrics) lyr
+        INNER JOIN
+    DbMysql12.Seed se ON lyr.seed_id = se.id
+ORDER BY num_occurrences DESC
+LIMIT 3;"""
+    con = DBconnection()
+    if (con.selectQuery(query) and con._rowsReturned > 0):
+        con.close()
+        return con._results
+    return None
+
+
     

@@ -1,6 +1,4 @@
 # -*- coding: utf-8 -*-
-import MySQLdb
-import os
 
 from __future__ import unicode_literals
 from django.http import HttpResponse
@@ -11,12 +9,17 @@ from django.db import connections
 from django.shortcuts import redirect
 from django.shortcuts import render
 
+import MySQLdb
+import os
+
 from polls.models import *
 from polls.Validators.validatorsUtils import *
 
 from polls.BL.GoogleVisionApiBL.googleVisionSendPost import *
+from polls.BL.GoogleVisionApiBL.getSongsByKeywordFromGoogleApi import *
 from polls.BL.sqlQueryBuilderBL import queriesBuilder,mockResponse
 from polls.BL.loginManageBL.loginFunctions import *
+
 
 ####################################
 ####### views functions GET ########
@@ -37,6 +40,7 @@ def UiHomepage(requests):
         return redirect('Login.html')
     user, resp = getCoockieAndResponse(requests, "UiHomepage.html")
     return resp
+
 def imageToMusic(requests):
     if not requests.COOKIES.has_key('user' ):
         return redirect('Login.html')
@@ -97,18 +101,17 @@ def SignInfunc(request):
 
 @csrf_exempt
 def pictureService(request):
-    
     #get query
     if (request.POST and "photo" in request.POST.keys()):
         json = (sendGoogleQuery(request.POST.get("photo","")))
-        #your function
+        responseJson = get_songs_related_to_keywords(json)
         #answerJson = ...
         # parse json to string array
         # build query
         # build respones
         #return response
-        print(mockResponse.mockResponse)
-        return HttpResponse(mockResponse.mockResponse)
+
+        return HttpResponse(responseJson)
         
     #Path = os.path.join(os.getcwd(),'polls', 'Client', 'htmlphoto.html')
     return HttpResponse("asasas")
