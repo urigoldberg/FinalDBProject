@@ -15,6 +15,7 @@ function encodeImageFileAsURL() {
         };
         fileReader.readAsDataURL(fileToLoad);
         document.getElementById("browsebutton").innerText = "Change picture";
+        $("#loadbutton").fadeIn(1500);
     }
 }
 
@@ -26,16 +27,29 @@ function createTableFromResponse(responseArr) {
         "<th>YouTube link</th></tr>" +
         "</thead>" +
         "<tbody>";
-    for (i = 0; i < responseArr.rows.length; i++) {
+    for (i = 0; i < responseArr.Results.length; i++) {
         finalTable +=
             "<tr>" +
-            "<th>" + responseArr.rows[i].SongName +
-            "</th><th>" + responseArr.rows[i].Artist + "</th>" +
-            "<th>" + responseArr.rows[i].YoutubeLink + "</th>" +
+            "<th>" + responseArr.Results[i].song_name +
+            "</th><th>" + responseArr.Results[i].artist_name + "</th>" +
+            "<th>" + responseArr.Results[i].youtube_link + "</th>" +
             "</tr>";
     }
     finalTable += "</tbody></table>";
     return finalTable;
+}
+
+function fadeInTable(finalTable) {
+    document.getElementById("imgTest").style.display = "none";
+    document.getElementById("imgTest").innerHTML = finalTable;
+    $("#imgTest").fadeIn(1500);
+}
+
+function fadeOutButtons() {
+    console.log("before hiding buttons");
+    document.getElementById("browsebutton").style.visibility = "hidden";
+    document.getElementById("loadbutton").style.visibility = "hidden";
+    document.getElementById("loadingsign").style.visibility = "hidden";
 }
 
 function loadDoc() {
@@ -43,21 +57,13 @@ function loadDoc() {
     document.getElementById("loadingsign").style.visibility="visible";
     xhttp.onreadystatechange = function() {
         if (this.readyState === 4 && this.status === 200) {
+            debugger;
             var responseArr = JSON.parse(this.responseText);
             console.log("initializing table head and opening body tag");
-
             var finalTable = createTableFromResponse(responseArr);
-            debugger;
-            document.getElementById("imgTest").style.display = "none";
-            document.getElementById("imgTest").innerHTML = finalTable;
-            $("#imgTest").fadeIn(2000);
-
-            document.getElementById("imageToTextHeader").innerText = "The Following songs were found:";
-            console.log("before hiding buttons");
-            document.getElementById("browsebutton").style.visibility = "hidden";
-            document.getElementById("loadbutton").style.visibility = "hidden";
-            document.getElementById("loadingsign").style.visibility="hidden";
-
+            fadeInTable(finalTable);
+            document.getElementById("imageToTextHeader").innerText = "By extracting the keyword "+responseArr.keyword+" the Following songs were found:";
+            fadeOutButtons();
         }
     };
     xhttp.open("POST", "pictureQuery", true);
