@@ -17,8 +17,9 @@ def get_songs_related_to_keywords(jsons):
 #            cnt += 1
 #            if (cnt == 5): 
 #                break
-        keyword = str(decoded['responses'][0]['labelAnnotations'][0]['description'])
-        rows = googleApiSearchSongsByKeyWord(keyword)
+        #keyword = str(decoded['responses'][0]['labelAnnotations'][0]['description'])
+        keywords = [word['description'] for word in decoded['responses'][0]['labelAnnotations']]
+        rows = googleApiSearchSongsByKeyWord(keywords)
         
         for row in rows:
             song_name = str.format('"%s"' % row[0])
