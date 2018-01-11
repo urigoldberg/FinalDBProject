@@ -8,6 +8,16 @@
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
         <link rel="stylesheet" type="text/css" href="static/recommenderStyles.css">
         <script src="static/externalScripts.js"></script>
+
+        <!--handle fade in of button-->
+        <script>
+            $(document).ready(function(){
+                $("#inputFileToLoad").change(function(){
+                    $("#loadbutton").fadeIn(2000);
+                });
+            });
+        </script>
+
     </head>
     <body>
         <!-- HEADER -->
@@ -65,9 +75,9 @@
                     <!-- the input button-->
                     <label id="browsebutton" class="btn btn-default btn-file browsebutton">
                         Browse <input id="inputFileToLoad" type="file" style="display: none;" onchange="encodeImageFileAsURL();">
-                    </label><br>
+                    </label><br><br>
                     <!--the button to request data-->
-                    <button id="loadbutton" class ="btn btn-default" onclick="loadDoc()" style="visibility: hidden">Find songs from picture!</button>
+                    <button id="loadbutton" class ="btn btn-default" onclick="loadDoc()" style="display: none">Find songs from picture!</button>
                     <img id="loadingsign" src="static/loading.gif" style ="visibility: hidden">
                     <br>
                 </div>

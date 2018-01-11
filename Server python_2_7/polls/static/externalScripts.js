@@ -14,9 +14,28 @@ function encodeImageFileAsURL() {
             console.log("Converted Base64 length is: " + document.getElementById("imgTest").innerHTML.length);
         };
         fileReader.readAsDataURL(fileToLoad);
-        document.getElementById("loadbutton").style.visibility ="visible";
         document.getElementById("browsebutton").innerText = "Change picture";
     }
+}
+
+function createTableFromResponse(responseArr) {
+    var finalTable = "<table class=\"table table-striped imagetable\">" +
+        "<thead>" +
+        "<tr><th>Artist</th>" +
+        "<th>Song name</th>" +
+        "<th>YouTube link</th></tr>" +
+        "</thead>" +
+        "<tbody>";
+    for (i = 0; i < responseArr.rows.length; i++) {
+        finalTable +=
+            "<tr>" +
+            "<th>" + responseArr.rows[i].SongName +
+            "</th><th>" + responseArr.rows[i].Artist + "</th>" +
+            "<th>" + responseArr.rows[i].YoutubeLink + "</th>" +
+            "</tr>";
+    }
+    finalTable += "</tbody></table>";
+    return finalTable;
 }
 
 function loadDoc() {
@@ -26,23 +45,13 @@ function loadDoc() {
         if (this.readyState === 4 && this.status === 200) {
             var responseArr = JSON.parse(this.responseText);
             console.log("initializing table head and opening body tag");
-            var finalTable = "<table class=\"table table-striped imagetable\">" +
-                "<thead>" +
-                "<tr><th>Artist</th>" +
-                "<th>Song name</th>" +
-                "<th>YouTube link</th></tr>" +
-                "</thead>" +
-                "<tbody>";
-            for(i=0;i<responseArr.rows.length;i++){
-                finalTable+=
-                    "<tr>" +
-                    "<th>" + responseArr.rows[i].SongName +
-                    "</th><th>"+responseArr.rows[i].Artist+"</th>" +
-                    "<th>"+responseArr.rows[i].YoutubeLink+"</th>" +
-                    "</tr>";
-            }
-            finalTable+= "</tbody></table>";
+
+            var finalTable = createTableFromResponse(responseArr);
+            debugger;
+            document.getElementById("imgTest").style.display = "none";
             document.getElementById("imgTest").innerHTML = finalTable;
+            $("#imgTest").fadeIn(2000);
+
             document.getElementById("imageToTextHeader").innerText = "The Following songs were found:";
             console.log("before hiding buttons");
             document.getElementById("browsebutton").style.visibility = "hidden";
