@@ -21,7 +21,7 @@ def validateLength(arrOfStrings, minLength, maxLength):
 ########## signIN \ Login ############################
 ######################################################
 
-def validateSignIn(request, message):
+def validateLoginSignIn(request, message):
     # request has un + password
     if not (request.GET and "username" in request.GET and "password" in request.GET):
         message += ["invalid request, please try again"]

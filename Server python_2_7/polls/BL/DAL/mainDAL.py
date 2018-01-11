@@ -13,7 +13,7 @@ class DBconnection():
     _port = int(details[4].split(":")[1])
     _succ = False
     _results = None
-    _rowsReturnedNum = -1
+    _rowsReturned = -1
     _exception = None
     _open = False
 
@@ -38,7 +38,7 @@ class DBconnection():
         try:
             self._rowsReturned = self.cursor.execute(query)
             self._succ = True
-            _results = self.cursor.fetchall()
+            self._results = self.cursor.fetchall()
             return True
         
         # fail

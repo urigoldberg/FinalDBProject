@@ -68,19 +68,26 @@ def searchByGeoLocation(requests):
 # services
 @csrf_exempt
 def LoginUserfunc(request):
+    
+    # validate
     message = []
+    if not (validateLoginSignIn(request,message)):
+        return SignInLoginFailed(message[0])
+    
     name, password = request.GET['username'],request.GET['password']
-    name = "name"
-    password = "password"
-    # update db with details
-    resp = setCoockieAndResponse("UiHomepage.html",name )
+
+    # BL
+    if (loginUser(name,password)):
+        resp = setCoockieAndResponse("UiHomepage.html",name )
+    else:
+        resp = SignInLoginFailed("user or password are incorrect, please try again")
     return resp
 
 @csrf_exempt
 def SignInfunc(request):
     # validate
     message = []
-    if not (validateSignIn(request,message)):
+    if not (validateLoginSignIn(request,message)):
         return SignInFailed(message[0])
     
     name, password = request.GET['username'],request.GET['password']

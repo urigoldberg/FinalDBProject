@@ -34,9 +34,15 @@ def signNewUser (username, password):
     This function checks if usersTable contains username with the same name.
     If the username available - add it to usersTable and return True, otherwise return False 
     """
-    if (addNewUser(username,password)):
+    if (addNewUserDAL(username,password)):
         return True
     return False
+
+
+def loginUser (username, password):
+    correctPassword = getUserPasswordUsernameDAL(username)
+    return correctPassword == password
+    
 
 def SignInLoginFailed(message):
     objPath = os.path.join(os.getcwd(),'polls', 'static', "Login.html")
