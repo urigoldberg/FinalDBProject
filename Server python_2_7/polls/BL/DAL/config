@@ -1,0 +1,5 @@
+user:DbMysql12
+db:DbMysql12
+passwd:DbMysql12
+host:localhost
+port:3305

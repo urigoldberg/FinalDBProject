@@ -31,6 +31,8 @@ urlpatterns = [
     # services
     url(r'^pictureQuery',views.pictureService),
     url(r'^SignIn*',views.SignInfunc),
+    url(r'^LoginUser*',views.LoginUserfunc),
+    
     
     
     # tests and mocks to be deleted

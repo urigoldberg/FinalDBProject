@@ -5,6 +5,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.db import connections
 from django.shortcuts import redirect
 from django.shortcuts import render
+from ..DAL.LoginDAL import *
 import os
 
 
@@ -27,27 +28,19 @@ def setCoockieAndResponse(pageName, username, message = None):
     return resp
 
 # sign in stuff
-    
-def SignInFailed():
-    objPath = os.path.join(os.getcwd(),'polls', 'static', "Login.html")
-    obj = open(objPath,'r').read()
-    context = Context({"message": "What a shit of a username", "show": "true" })
-    resp = HttpResponse(Template(obj).render(context))
-    return resp
 
 def signNewUser (username, password):
     """Create a new user.
     This function checks if usersTable contains username with the same name.
     If the username available - add it to usersTable and return True, otherwise return False 
     """
-    # TBD
-    if (username == "itai"):
-        return False
-    return True
+    if (addNewUser(username,password)):
+        return True
+    return False
 
-def SignInFailed():
+def SignInLoginFailed(message):
     objPath = os.path.join(os.getcwd(),'polls', 'static', "Login.html")
     obj = open(objPath,'r').read()
-    context = Context({"message": "What a shit of a username", "show": "true" })
+    context = Context({"message": message, "show": "true" })
     resp = HttpResponse(Template(obj).render(context))
     return resp

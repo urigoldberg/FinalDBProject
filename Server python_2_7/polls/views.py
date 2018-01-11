@@ -3,9 +3,10 @@ from __future__ import unicode_literals
 from django.http import HttpResponse
 from django.shortcuts import render
 from django.template import Context, Template
-from polls.GoogleVisionApi.googleVisionSendPost import *
-from polls.sqlQueryBuilder import queriesBuilder,mockResponse
-from polls.loginManage.loginFunctions import *
+from polls.BL.GoogleVisionApiBL.googleVisionSendPost import *
+from polls.Validators.validatorsUtils import *
+from polls.BL.sqlQueryBuilderBL import queriesBuilder,mockResponse
+from polls.BL.loginManageBL.loginFunctions import *
 from django.views.decorators.csrf import csrf_exempt
 from django.db import connections
 from django.shortcuts import redirect
@@ -66,9 +67,9 @@ def searchByGeoLocation(requests):
 
 # services
 @csrf_exempt
-def SignIn(request):
-    if (request.POST and "photo" in request.POST.keys()):
-        pass
+def LoginUserfunc(request):
+    message = []
+    name, password = request.GET['username'],request.GET['password']
     name = "name"
     password = "password"
     # update db with details
@@ -77,11 +78,18 @@ def SignIn(request):
 
 @csrf_exempt
 def SignInfunc(request):
+    # validate
+    message = []
+    if not (validateSignIn(request,message)):
+        return SignInFailed(message[0])
+    
     name, password = request.GET['username'],request.GET['password']
+    
+    # BL
     if (signNewUser(name,password)):
         resp = setCoockieAndResponse("UiHomepage.html",name )
     else:
-        resp = SignInFailed()
+        resp = SignInLoginFailed("user alreay exists")
     return resp
 
 
@@ -90,7 +98,9 @@ def pictureService(request):
     
     #get query
     if (request.POST and "photo" in request.POST.keys()):
-        #json = (sendGoogleQuery(request.POST.get("photo","")))
+        json = (sendGoogleQuery(request.POST.get("photo","")))
+        #your function
+        #answerJson = ...
         # parse json to string array
         # build query
         # build respones
@@ -132,19 +142,23 @@ def pictureService(request):
 
 
 def test(request):
-    for artist in Artists.objects.raw('SELECT ID FROM DbMysql12.Artists where ID = 0;'):
-        print(artist.id)
-#    db = MySQLdb.connect(user='DbMysql12', db='DbMysql12',  passwd='DbMysql12', host='localhost', port = 3305)
-#    cursor = db.cursor()
-#    cursor.execute('SELECT title FROM DbMySql12.Seed;')
-#    names = [row[0] for row in cursor.fetchall()]
-#    print(names)
-#    print(cursor.description)
-#    db.close()
+#    for artist in Artists.objects.raw('SELECT ID FROM DbMysql12.Artists where ID = 0;'):
+#        print(artist.id)
+    db = MySQLdb.connect(user='DbMysql12', db='DbMysql12',  passwd='DbMysql12', host='localhost', port = 3305)
+    cursor = db.cursor()
+    a = cursor.execute('SELECTs * FROM users_table LIMIT 3;')
+    print ("a is " + str(a))
+    #print(cursor.execute("""insert into DbMysql12.users_table values ('urig','shcdshory');"""))
+    #names = [row[0] for row in cursor.fetchall()]
+    #print(names)
+    #db.commit()
+    print(cursor.fetchall())
+    print(cursor.description)
+    db.close()
 #    c = connections['DbMysql12'].cursor()
 #    c.execute("SELECT title FROM DbMySql12.Seed;")
 #    rows = c.fetchall()
-    return HttpResponse(str(artist))
+    return HttpResponse(str("asa"))
     
     
 @csrf_exempt
