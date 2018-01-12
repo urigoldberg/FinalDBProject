@@ -20,23 +20,33 @@ function encodeImageFileAsURL() {
 }
 
 function createTableFromResponse(responseArr) {
-    var finalTable = "<table class=\"table table-striped imagetable\">" +
-        "<thead>" +
-        "<tr><th>Artist</th>" +
-        "<th>Song name</th>" +
-        "<th>YouTube link</th></tr>" +
-        "</thead>" +
-        "<tbody>";
-    for (i = 0; i < responseArr.Results.length; i++) {
-        finalTable +=
-            "<tr>" +
-            "<th>" + responseArr.Results[i].song_name +
-            "</th><th>" + responseArr.Results[i].artist_name + "</th>" +
-            "<th>" + responseArr.Results[i].youtube_link + "</th>" +
-            "</tr>";
+    var numofRows = responseArr.Results.length;
+    var columnNames = [];
+     // debugger;
+    for (var colName in responseArr.Results[0]) {
+        if (colName) {
+            columnNames.push(colName);
+        }
     }
-    finalTable += "</tbody></table>";
-    return finalTable;
+    var numofCols = columnNames.length;
+    var finaltable = "<table class=\"table table-striped imagetable\"><thead><tr>";
+    //insert column names in table
+    for(var col in columnNames){
+        finaltable += "<th>"+columnNames[col]+"</th>"
+    }
+    //filling table rows
+    finaltable+="</tr></thead></tbody>";
+    for (i = 0; i < numofRows; i++){
+        finaltable+="<tr>";
+        for(j=0;j<numofCols;j++){
+            // debugger;
+            var val = responseArr.Results[i][columnNames[j]];
+            finaltable+="<th>"+val+"</th>";
+        }
+        finaltable+="</tr>";
+    }
+    finaltable += "</tbody></table>";
+    return finaltable;
 }
 
 function fadeInTable(finalTable) {
@@ -45,25 +55,30 @@ function fadeInTable(finalTable) {
     $("#imgTest").fadeIn(1500);
 }
 
-function fadeOutButtons() {
+function fadeOutButtons(elementId, elementId2, elementId3) {
+    elementId3 = elementId3 || "loadingsign";
+    elementId2 = elementId2 || "loadbutton";
+    elementId = elementId || "browsebutton";
     console.log("before hiding buttons");
-    document.getElementById("browsebutton").style.visibility = "hidden";
-    document.getElementById("loadbutton").style.visibility = "hidden";
-    document.getElementById("loadingsign").style.visibility = "hidden";
+    document.getElementById(elementId).style.visibility = "hidden";
+    document.getElementById(elementId2).style.visibility = "hidden";
+    document.getElementById(elementId3).style.visibility = "hidden";
 }
 
 function loadDoc() {
     var xhttp = new XMLHttpRequest();
     document.getElementById("loadingsign").style.visibility="visible";
+    // debugger;
     xhttp.onreadystatechange = function() {
         if (this.readyState === 4 && this.status === 200) {
-            debugger;
+            // debugger;
             var responseArr = JSON.parse(this.responseText);
             console.log("initializing table head and opening body tag");
             var finalTable = createTableFromResponse(responseArr);
             fadeInTable(finalTable);
+            // debugger;
             document.getElementById("imageToTextHeader").innerText = "By extracting the keyword "+responseArr.keyword+" the Following songs were found:";
-            fadeOutButtons();
+            fadeOutButtons("browsebutton", "loadbutton", "loadingsign");
         }
     };
     xhttp.open("POST", "pictureQuery", true);
@@ -91,6 +106,30 @@ window.onclick = function(event) {
 function usermessage(message,show){
     if(show){
         alert(message);
+    }
+}
+
+function searchKeyword(keyword){
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+        if (this.readyState === 4 && this.status === 200) {
+            // debugger;
+            var responseArr = JSON.parse(this.responseText);
+            console.log("initializing table head and opening body tag");
+            var finalTable = createTableFromResponse(responseArr);
+            fadeInTable(finalTable);
+            // debugger;
+            document.getElementById("imageToTextHeader").innerText = "By extracting the keyword "+responseArr.keyword+" the Following songs were found:";
+            fadeOutButtons("keywordToSearch","getSongsButton");
+        }
+    };
+    xhttp.open("POST", "keywordQuery", true);
+    xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    if (keyword) {
+        xhttp.send(keyword);
+    }
+    else {
+        alert("Please enter a keyword!");
     }
 }
 
