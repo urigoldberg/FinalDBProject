@@ -62,7 +62,7 @@ def searchByKeywords(requests):
 def searchByGeoLocation(requests):
     if not basicSec(requests):
         return redirect('Login.html')
-    user, resp = getCoockieAndResponse(requests, "searchByGeoLocation.html")
+    user, resp = getCookieAndResponse(requests, "searchByGeoLocation.html")
     return resp
 
 
