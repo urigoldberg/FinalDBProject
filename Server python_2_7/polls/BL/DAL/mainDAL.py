@@ -97,7 +97,7 @@ def addNewUserDAL(username, password):
 def getUserPasswordUsernameDAL(username):
     query = "select password from DbMysql12.users_table where user_name = '"+username+"';";
     con = DBconnection()
-    if (con.selectQuery(query) and con._rowsReturned == 1):
+    if (con.doSelectQuery(query) and con._rowsReturned == 1):
         con.close()
         return con._results[0][0]
     return None
@@ -133,7 +133,7 @@ def googleApiSearchSongsByKeyWord(keywords):
     """
     con = DBconnection()
     query += ") t where t.num_occurrences > 0 order by t.num_occurrences desc;"
-    if (con.selectQuery(query) and con._rowsReturned > 0):
+    if (con.doSelectQuery(query) and con._rowsReturned > 0):
         con.close()
         return con._results 
     return None
@@ -151,7 +151,7 @@ def geographical_filtering(json):
         ORDER BY distance;"""
 
     con = DBconnection()
-    if (con.selectQuery(query) and con._rowsReturned > 0):
+    if (con.doSelectQuery(query) and con._rowsReturned > 0):
         con.close()
         return con._columns,con._results
     return None,None
