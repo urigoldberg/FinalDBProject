@@ -48,8 +48,13 @@
                         </a>
                     </li>
                     <li>
+                        <a href="match4all.html.html">
+                            <h4 class="list-group-item-heading">Match 4 All</h4>
+                        </a>
+                    </li>
+                    <li>
                         <a href="Login.html">
-                            <h4 class="list-group-item-heading">Login</h4>
+                            <h4 class="list-group-item-heading">Logout</h4>
                         </a>
                     </li>
                 </ul>
@@ -59,7 +64,7 @@
         <div class="container-fluid">
             <!-- inside this single row will be a side bar and another column for the main page-->
             <div class="row">
-                <div class="col-sm-12">
+                <div class="col-sm-8">
                     <h4 id="imageToTextHeader">Please insert your picture:</h4>
                     <div id="imgTest"><img id="change" src ="static/pencil.jpg" class ="img-rounded img-change"></div><br>
                     <!-- the input button-->
@@ -70,6 +75,15 @@
                     <button id="loadbutton" class ="btn btn-default" onclick="loadDoc()" style="display: none">Find songs from picture!</button>
                     <img id="loadingsign" src="static/loading.gif" style ="visibility: hidden">
                     <br>
+                </div>
+                <!--side bar-->
+                <div class="col-sm-4">
+                    <h4> Instructions:</h4>
+                    <ol>
+                        <li>Select an Image from your computer using "Browse" button</li>
+                        <li>Push "Find songs from picture"</li>
+                        <li>We'll find keywords from your song and return songs with the keywords in them</li>
+                    </ol>
                 </div>
             </div>
         </div>

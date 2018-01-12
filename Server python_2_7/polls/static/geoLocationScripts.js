@@ -21,7 +21,7 @@ function initialize() {
 	getLocation();
     var myLatLng = new google.maps.LatLng(userLat,userLong);
     var mapOptions = {
-        zoom: 10,
+        zoom: 5,
         center: myLatLng,
         mapTypeId: google.maps.MapTypeId.RoadMap
     };
@@ -39,11 +39,9 @@ function initialize() {
     ];
 
     // Construct the polygon
-    bermudaTriangle = new google.maps.Circle({
-        //paths: triangleCoords,
-        center: myLatLng,
-		radius: 10000,
-		draggable: true,
+    bermudaTriangle = new google.maps.Polygon({
+        paths: triangleCoords,
+        draggable: true,
         editable: true,
         strokeColor: '#FF0000',
         strokeOpacity: 0.8,
@@ -53,10 +51,10 @@ function initialize() {
     });
 	
     bermudaTriangle.setMap(map);
-    //google.maps.event.addListener(bermudaTriangle, "dragend", getPolygonCoords);
-    //google.maps.event.addListener(bermudaTriangle.getPath(), "insert_at", getPolygonCoords);
-    //google.maps.event.addListener(bermudaTriangle.getPath(), "remove_at", getPolygonCoords);
-    //google.maps.event.addListener(bermudaTriangle.getPath(), "set_at", getPolygonCoords);
+    google.maps.event.addListener(bermudaTriangle, "dragend", getPolygonCoords);
+    google.maps.event.addListener(bermudaTriangle.getPath(), "insert_at", getPolygonCoords);
+    google.maps.event.addListener(bermudaTriangle.getPath(), "remove_at", getPolygonCoords);
+    google.maps.event.addListener(bermudaTriangle.getPath(), "set_at", getPolygonCoords);
 }
 
 function getPolygonCoords() {
@@ -66,10 +64,4 @@ function getPolygonCoords() {
         htmlStr += bermudaTriangle.getPath().getAt(i).toUrlValue(5) + "<br>";
     }
     document.getElementById('info').innerHTML = htmlStr;
-}
-
-function getParams() {
-	var s = "{ 'lat':'"+bermudaTriangle.center.lat()+"' ,'lan':"+bermudaTriangle.center.lng() + "','radius': '"+ bermudaTriangle.radius + "'}";
-	console.log(s);
-	return s;
 }

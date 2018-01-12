@@ -7,6 +7,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <link rel="stylesheet" type="text/css" href="static/recommenderStyles.css">
+    <script src="static/externalScripts.js"></script>
 </head>
 <body>
 
@@ -47,6 +48,16 @@
                     <h4 class="list-group-item-heading">search by Geo Location</h4>
                 </a>
             </li>
+            <li>
+                <a href="match4all.html.html">
+                    <h4 class="list-group-item-heading">Match 4 All</h4>
+                </a>
+            </li>
+            <li>
+                <a href="Login.html">
+                    <h4 class="list-group-item-heading">Logout</h4>
+                </a>
+            </li>
         </ul>
     </div>
 </nav>
@@ -54,14 +65,23 @@
 <div class="container-fluid">
     <!-- inside this single row will be a side bar and another column for the main page-->
     <div class="row">
-        <div class="col-sm-12">
-            <p><medium>please insert keywords to the selected textbox:</medium></p>
+        <div class="col-sm-8">
+            <h4>please insert a keyword into the selected textbox:</h4>
             <form>
                 <div class="form-group">
-                    <label for="pwd">enter a keyword:</label>
-                    <input type="password" class="form-control" id="pwd">
+                    <input id="keywordToSearch" type="text" class="form-control" id="pwd">
+                    <button id="getSongsButton" class ="btn btn-default" onclick="searchKeyword(document.getElementById('keywordToSearch').innerText)">Find songs from keyword!</button>
                 </div>
             </form>
+        </div>
+        <!--side bar-->
+        <div class="col-sm-4">
+            <h4> Instructions:</h4>
+            <ol>
+                <li>Insert a Keyword into the form</li>
+                <li>Push "Find songs from keyword"</li>
+                <li>We'll return songs with the keyword in them</li>
+            </ol>
         </div>
     </div>
 </div>
