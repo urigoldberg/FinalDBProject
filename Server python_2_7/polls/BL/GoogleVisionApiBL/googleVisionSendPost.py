@@ -33,4 +33,6 @@ def sendGoogleQuery(pic):
         APIKEY = "AIzaSyB5gD9fZjNN0pdXWNAVbyJo4Cqamoje7hk"
         response = requests.post(url='https://vision.googleapis.com/v1/images:annotate?key='+APIKEY,
             data=data,    headers={'Content-Type': 'application/json'},verify=False)
-        return(response.text)
+        if (response):
+            return(response.text)
+        return None

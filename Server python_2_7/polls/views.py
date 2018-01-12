@@ -104,6 +104,8 @@ def pictureService(request):
     #get query
     if (request.POST and "photo" in request.POST.keys()):
         json = (sendGoogleQuery(request.POST.get("photo","")))
+        if (json is None):
+            return None
         responseJson = get_songs_related_to_keywords(json)
         return HttpResponse(responseJson)
         
@@ -112,7 +114,7 @@ def pictureService(request):
 @csrf_exempt
 def GeoService(request):
     #get query
-    if (request.POST and "geo" in request.POST.keys()):
+    if (request.POST and "geo" in request.POST.keys() and ):
         json = (sendGoogleQuery(request.POST.get("photo","")))
         responseJson = get_songs_related_to_keywords(json)
         return HttpResponse(responseJson)
