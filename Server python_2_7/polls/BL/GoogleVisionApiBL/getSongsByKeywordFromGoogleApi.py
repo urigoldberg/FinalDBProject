@@ -1,11 +1,12 @@
 import json
 import MySQLdb
+from collections import OrderedDict
 from ..DAL.mainDAL import *
 
-
+    
 def get_songs_related_to_keywords(jsons):
 
-    res = '{ "Results": ['    
+       
     keyword = None
     
     try:
@@ -18,19 +19,15 @@ def get_songs_related_to_keywords(jsons):
 #            if (cnt == 5): 
 #                break
         #keyword = str(decoded['responses'][0]['labelAnnotations'][0]['description'])
-        keywords = [word['description'] for word in decoded['responses'][0]['labelAnnotations']]
+        array = [str(word['description']) for word in decoded['responses'][0]['labelAnnotations']]
+        keywords = list(OrderedDict.fromkeys(array))[:5]
         rows = googleApiSearchSongsByKeyWord(keywords)
         
-        for row in rows:
-            song_name = str.format('"%s"' % row[0])
-            artist_name = str.format('"%s"' % row[1])
-            res += '{ "song_name":' + song_name + ',"artist_name":' + artist_name + ',"youtube_link":' + '"noooo"' + '},'
-
         
     except (ValueError, KeyError, TypeError):
         print ("JSON format error")
-    keyword = str.format('"%s"' % keyword)
-    return res[:len(res)-1] + '] , "keyword":'+keyword+'}'
+    
+    return rows
 
     
 #

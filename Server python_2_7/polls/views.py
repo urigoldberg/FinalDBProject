@@ -105,12 +105,6 @@ def pictureService(request):
     if (request.POST and "photo" in request.POST.keys()):
         json = (sendGoogleQuery(request.POST.get("photo","")))
         responseJson = get_songs_related_to_keywords(json)
-        #answerJson = ...
-        # parse json to string array
-        # build query
-        # build respones
-        #return response
-
         return HttpResponse(responseJson)
         
     #Path = os.path.join(os.getcwd(),'polls', 'Client', 'htmlphoto.html')

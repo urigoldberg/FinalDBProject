@@ -72,7 +72,9 @@ class DBconnection():
             self._exception = (e.message)
             return False
         
-        
+    def getJsonColumns(self): 
+#        num_fields = len(self.cursor.description)
+        return [i[0] for i in self.cursor.description]
     
     def close(self):
         if (self._open):
@@ -102,21 +104,26 @@ def getUserPasswordUsernameDAL(username):
         return con._results[0][0]
     return None
  
+
     
+
 ###########GOOGLE API####################
 def googleApiSearchSongsByKeyWord(keywords):
     #this is the real query we should be using once we change Lyrics.seed_id to Lyrics.song_id
     #query = 'select s.song_name, s.artist_name, lyr.num_occurrences from (SELECT song_id,((LENGTH(lyrics) - LENGTH(REPLACE(lyrics,'+keyword+', ''))) / LENGTH(' + keyword + ') ) as num_occurrences FROM Lyrics) lyr inner join Songs s on lyr.song_id = s.song_id order by num_occurrences desc limit 3'
-    query = ""
+    res = '{ "Results": [' 
+    
+    query = "select t.* from ("
+    if len(keywords) == 0:
+        return None
     
     for index,keyword in enumerate(keywords):
-        if index > 5:
-            break
         if not index == 0:
             query += "union all "
-        numOfAppear = 5 - index
-        query += """SELECT 
-        se.title, se.artist_name, lyr.num_occurrences
+        numOfAppear = 5 - index + 1
+        # TO DO - DUPLICATED ROWS
+        query += """select * from (SELECT 
+        se.title, se.artist_name, lyr.num_occurrences, '"""+keyword+"""' as keyword
     FROM
         (SELECT 
             seed_id,
@@ -126,11 +133,23 @@ def googleApiSearchSongsByKeyWord(keywords):
             INNER JOIN
         DbMysql12.Seed se ON lyr.seed_id = se.id
     ORDER BY num_occurrences DESC
-    LIMIT """+str(numOfAppear)+""";"""
+    LIMIT """+str(numOfAppear) +""") as tbl"""+str(index) +""" 
+    """
     con = DBconnection()
+    query += ") t where t.num_occurrences > 0 order by t.num_occurrences desc;"
     if (con.selectQuery(query) and con._rowsReturned > 0):
         con.close()
-        return con._results
+        
+        
+        for row in con._results:
+            song_name = str.format('"%s"' % row[0])
+            artist_name = str.format('"%s"' % row[1])
+            match = str.format('"%s"' % row[3])
+            res += '{ "Song Name":' + song_name + ',"Artist":' + artist_name + ',"YouTube Link":' + '"noooo"' + ', "Matching Keyword":'+match+'},'
+
+#        keyword = str.format('"%s"' % str(keywords))
+        return res[:len(res)-1] + ']}'
+#        return res[:len(res)-1] + '] , "keyword":'+keyword+'}'
     return None
 
 
