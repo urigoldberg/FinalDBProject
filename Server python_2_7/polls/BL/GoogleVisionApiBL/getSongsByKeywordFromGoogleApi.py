@@ -22,12 +22,17 @@ def get_songs_related_to_keywords(jsons):
         array = [str(word['description']) for word in decoded['responses'][0]['labelAnnotations']]
         keywords = list(OrderedDict.fromkeys(array))[:5]
         rows = googleApiSearchSongsByKeyWord(keywords)
-        
+        for row in rows:
+            song_name = str.format('"%s"' % row[0])
+            artist_name = str.format('"%s"' % row[1])
+            match = str.format('"%s"' % row[3])
+            res += '{ "Song Name":' + song_name + ',"Artist":' + artist_name + ',"YouTube Link":' + '"noooo"' + ', "Matching Keyword":'+match+'},'
+        return res[:len(res)-1] + ']}'
         
     except (ValueError, KeyError, TypeError):
         print ("JSON format error")
     
-    return rows
+    return None
 
     
 #
