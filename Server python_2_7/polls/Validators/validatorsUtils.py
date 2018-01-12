@@ -39,3 +39,27 @@ def validateLoginSignIn(request, message):
         return False
     
     return True
+
+
+######################################################
+########## Geo ############################
+######################################################
+
+def validateGeo(request, message):
+    # request has un + password
+    if not (request.POST and "geo" in request.POST.keys()):
+        message += ["invalid request, please try again"]
+        return False
+    
+    username, password = request.GET["username"], request.GET["password"]
+    
+    if not validateLength([username,username], 5, 20):
+        message += ["username & password must contain at least 5 characters, and not more than 20"]
+        return False
+    
+    # request doesn't contain illegal characters - against sql injections
+    if not (sqlInjectionChars([username,username])):
+        message += ["invalid request, please try again"]
+        return False
+    
+    return True
