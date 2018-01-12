@@ -106,11 +106,9 @@ def getUserPasswordUsernameDAL(username):
     
 
 ###########GOOGLE API####################
-def googleApiSearchSongsByKeyWord(keywords):
-    #this is the real query we should be using once we change Lyrics.seed_id to Lyrics.song_id
-    #query = 'select s.song_name, s.artist_name, lyr.num_occurrences from (SELECT song_id,((LENGTH(lyrics) - LENGTH(REPLACE(lyrics,'+keyword+', ''))) / LENGTH(' + keyword + ') ) as num_occurrences FROM Lyrics) lyr inner join Songs s on lyr.song_id = s.song_id order by num_occurrences desc limit 3'
-    res = '{ "Results": [' 
     
+def googleApiSearchSongsByKeyWord(keywords):
+    #this is the real query we should be using once we change Lyrics.seed_id to Lyrics.song_id    
     query = "select t.* from ("
     if len(keywords) == 0:
         return None
@@ -137,17 +135,7 @@ def googleApiSearchSongsByKeyWord(keywords):
     query += ") t where t.num_occurrences > 0 order by t.num_occurrences desc;"
     if (con.selectQuery(query) and con._rowsReturned > 0):
         con.close()
-        
-        
-        for row in con._results:
-            song_name = str.format('"%s"' % row[0])
-            artist_name = str.format('"%s"' % row[1])
-            match = str.format('"%s"' % row[3])
-            res += '{ "Song Name":' + song_name + ',"Artist":' + artist_name + ',"YouTube Link":' + '"noooo"' + ', "Matching Keyword":'+match+'},'
-
-#        keyword = str.format('"%s"' % str(keywords))
-        return res[:len(res)-1] + ']}'
-#        return res[:len(res)-1] + '] , "keyword":'+keyword+'}'
+        return con._results 
     return None
 
 ###########Geographical####################

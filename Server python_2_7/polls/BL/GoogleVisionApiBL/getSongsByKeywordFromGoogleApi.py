@@ -6,7 +6,7 @@ from ..DAL.mainDAL import *
     
 def get_songs_related_to_keywords(jsons):
 
-       
+    res = '{ "Results": [' 
     keyword = None
     
     try:
