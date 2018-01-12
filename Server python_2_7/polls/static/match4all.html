@@ -66,14 +66,32 @@
         <!-- inside this single row will be a side bar and another column for the main page-->
         <div class="row">
             <div class="col-sm-8">
-                <h4>please insert a keyword into the selected textbox:</h4>
+
+                <div id="big">
+                    
+                </div>
                 <form>
                     <div class="form-group">
-                        <input id="keywordToSearch" type="text" class="form-control" id="pwd">
-                        <button id="getSongsButton" class ="btn btn-default" onclick="searchKeyword(document.getElementById('keywordToSearch').innerText)">Find songs from keyword!</button>
+                        <label for="sel1">Select list (select one):</label>
+                        <select class="form-control" id="sel1">
+                            <option>Artist</option>
+                            <option>Song name</option>
+                            <option>Genere</option>
+                        </select>
                     </div>
                 </form>
+
+                <div class="form-group">
+                    <input id="keywordToSearch" type="text" class="form-control" value="write keyword here">
+                </div>
+
+                <button id="addAnotherButton" class ="btn btn-default" onclick="">Add another keyword</button><br>
+
+
+                <button id="getSongsButton" class ="btn btn-default" onclick="searchKeyword(document.getElementById('keywordToSearch').innerText)">Find songs from keyword!</button>
+
             </div>
+
             <!--side bar-->
             <div class="col-sm-4">
                 <h4> Instructions:</h4>
