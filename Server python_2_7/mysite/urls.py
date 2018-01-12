@@ -39,7 +39,6 @@ urlpatterns = [
     
     
     # tests and mocks to be deleted
-    
     url(r'^polls/mockHTML',views.mockHTML),
     url(r'^polls/test', views.test),
 #    url(r'^admin/', admin.site.urls),

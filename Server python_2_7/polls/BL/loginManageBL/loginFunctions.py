@@ -33,8 +33,8 @@ def setCoockieAndResponse(pageName, username, message = None):
     resp.set_cookie("bs",h.hexdigest())
     return resp
 
-# sign in stuff
 
+# sign in stuff
 def signNewUser (username, password):
     """Create a new user.
     This function checks if usersTable contains username with the same name.
@@ -44,12 +44,10 @@ def signNewUser (username, password):
         return True
     return False
 
-
 def loginUser (username, password):
     correctPassword = getUserPasswordUsernameDAL(username)
     return correctPassword == password
     
-
 def SignInLoginFailed(message):
     objPath = os.path.join(os.getcwd(),'polls', 'static', "Login.html")
     obj = open(objPath,'r').read()
