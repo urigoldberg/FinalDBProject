@@ -1,8 +1,17 @@
 import re
+import hashlib
 
 ######################################################
 ########## general validations #######################
 ######################################################
+
+def basicSec(request):
+    if not requests.COOKIES.has_key('user'):
+        return False
+    h = hashlib.new('ripemd160')
+    user = requests.COOKIES['user']
+    h.update(
+    
 
 def sqlInjectionChars(arrOfStrings):
     for s in arrOfStrings:

@@ -34,6 +34,7 @@ urlpatterns = [
     url(r'^pictureQuery',views.pictureService),
     url(r'^SignIn*',views.SignInfunc),
     url(r'^LoginUser*',views.LoginUserfunc),
+    url(r'^GeoLocation',views.pictureService),
     
     
     
