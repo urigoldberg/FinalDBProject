@@ -7,79 +7,79 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <link rel="stylesheet" type="text/css" href="static/recommenderStyles.css">
-<script src="static/geoLocationScripts.js"></script>
+    <script src="static/geoLocationScripts.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyANLwIhKR5250mq9107j4R0hC1RG4T9J9c&callback=myMap"></script>
 </head>
 <body onload="initialize()">
 
-
-<!-- HEADER -->
-<div class="jumbotron bg-1 text-center">
-    <div class="row">
-        <div class ="col-sm-4">
-            <img src="static/do.jpg" class="img-circle">
-        </div>
-        <div class="col-lg-8">
-            <h1 align="left">Music Recommender</h1>
-            <p align="left">Find your music & more!</p>
+    <!-- HEADER -->
+    <div class="jumbotron bg-1 text-center">
+        <div class="row">
+            <div class ="col-sm-4">
+                <img src="static/do.jpg" class="img-circle">
+            </div>
+            <div class="col-lg-8">
+                <h1 align="left">Music Recommender</h1>
+                <p align="left">Find your music & more!</p>
+            </div>
         </div>
     </div>
-</div>
-<!-- NAVIGATION BAR -->
-<nav class="navbar navbar-default">
+    <!-- NAVIGATION BAR -->
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <ul class="nav navbar-nav">
+                <li>
+                    <a href="UiHomepage.html">
+                        <h4 class="list-group-item-heading">HomePage</h4>
+                    </a>
+                </li>
+                <li>
+                    <a href="imageToMusic.html">
+                        <h4 class="list-group-item-heading">Image to Music</h4>
+                    </a>
+                </li>
+                <li >
+                    <a href="searchByKeywords.html">
+                        <h4 class="list-group-item-heading">search By Keywords</h4>
+
+                    </a>
+                </li>
+                <li class="active">
+                    <a href="searchByGeoLocation.html">
+                        <h4 class="list-group-item-heading">search by Geo Location</h4>
+                        <small>Search for music far away!</small>
+                    </a>
+                </li>
+                <li>
+                    <a href="Login.html">
+                        <h4 class="list-group-item-heading">Logout</h4>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
     <div class="container-fluid">
-        <ul class="nav navbar-nav">
-            <li>
-                <a href="UiHomepage.html">
-                    <h4 class="list-group-item-heading">HomePage</h4>
-                </a>
-            </li>
-            <li>
-                <a href="imageToMusic.html">
-                    <h4 class="list-group-item-heading">Image to Music</h4>
-                </a>
-            </li>
-            <li >
-                <a href="searchByKeywords.html">
-                    <h4 class="list-group-item-heading">search By Keywords</h4>
+        <!-- inside this single row will be a side bar and another column for the main page-->
+        <div class="row">
+            <div class="col-sm-12" align="middle">
+                <h4> please select locations from which to search from:</h4>
+                <!--
+                To use this code on your website, get a free API key from Google.
+                Read more at: https://www.w3schools.com/graphics/google_maps_basic.asp
+                -->
+                <!--<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyANLwIhKR5250mq9107j4R0hC1RG4T9J9c&libraries=drawing&callback=initMap" async defer></script>-->
+                <div id="map-canvas">
+                </div>
 
-                </a>
-            </li>
-            <li class="active">
-                <a href="searchByGeoLocation.html">
-                    <h4 class="list-group-item-heading">search by Geo Location</h4>
-                    <small>Search for music far away!</small>
-                </a>
-            </li>
-            <li>
-                <a href="Login.html">
-                    <h4 class="list-group-item-heading">Logout</h4>
-                </a>
-            </li>
-        </ul>
-    </div>
-</nav>
+                <div id="info">
+                </div>
 
-<div class="container-fluid">
-    <!-- inside this single row will be a side bar and another column for the main page-->
-    <div class="row">
-        <div class="col-sm-12">
-            <p> please select locations from which to search from:</p>
+            </div>
         </div>
     </div>
-</div>
 
 
-
-
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyANLwIhKR5250mq9107j4R0hC1RG4T9J9c&callback=myMap"></script>
-<!--
-To use this code on your website, get a free API key from Google.
-Read more at: https://www.w3schools.com/graphics/google_maps_basic.asp
---><!--<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyANLwIhKR5250mq9107j4R0hC1RG4T9J9c&libraries=drawing&callback=initMap" async defer></script>-->
-    <div id="map-canvas">
-    </div>
-    <div id="info">
-    </div>
 
 
 </body>
