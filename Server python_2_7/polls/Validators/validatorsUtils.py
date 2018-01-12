@@ -5,12 +5,15 @@ import hashlib
 ########## general validations #######################
 ######################################################
 
-def basicSec(request):
-    if not requests.COOKIES.has_key('user'):
+def basicSec(requests):
+    if not (requests.COOKIES.has_key('user') and (requests.COOKIES.has_key('bs'))):
         return False
     h = hashlib.new('ripemd160')
     user = requests.COOKIES['user']
-    h.update(
+    bs = requests.COOKIES['bs']
+    h.update(username+"basicSec")
+    
+    return h.hexdigest() == bs
     
 
 def sqlInjectionChars(arrOfStrings):

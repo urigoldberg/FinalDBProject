@@ -20,7 +20,6 @@ from polls.BL.GoogleVisionApiBL.getSongsByKeywordFromGoogleApi import *
 from polls.BL.sqlQueryBuilderBL import queriesBuilder,mockResponse
 from polls.BL.loginManageBL.loginFunctions import *
 
-
 ####################################
 ####### views functions GET ########
 ####################################
@@ -36,31 +35,31 @@ def default(request):
     return redirect('Login.html')
 
 def UiHomepage(requests):
-    if not requests.COOKIES.has_key('user' ):
+    if not basicSec(requests):
         return redirect('Login.html')
     user, resp = getCoockieAndResponse(requests, "UiHomepage.html")
     return resp
 
 def match4all(requests):
-    if not requests.COOKIES.has_key('user' ):
+    if not basicSec(requests):
         return redirect('Login.html')
     user, resp = getCoockieAndResponse(requests, "match4all.html")
     return resp
 
 def imageToMusic(requests):
-    if not requests.COOKIES.has_key('user' ):
+    if not basicSec(requests):
         return redirect('Login.html')
     user, resp = getCoockieAndResponse(requests, "imageToMusic.html")
     return resp
 
 def searchByKeywords(requests):
-    if not requests.COOKIES.has_key('user' ):
+    if not basicSec(requests):
         return redirect('Login.html')
     user, resp = getCoockieAndResponse(requests, "searchByKeywords.html")
     return resp
 
 def searchByGeoLocation(requests):
-    if not requests.COOKIES.has_key('user' ):
+    if not basicSec(requests):
         return redirect('Login.html')
     user, resp = getCoockieAndResponse(requests, "searchByGeoLocation.html")
     return resp
