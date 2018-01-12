@@ -93,7 +93,7 @@ def SignInfunc(request):
     # validate
     message = []
     if not (validateLoginSignIn(request,message)):
-        return SignInFailed(message[0])
+        return SignInLoginFailed(message[0])
     
     name, password = request.GET['username'],request.GET['password']
     
@@ -114,7 +114,6 @@ def pictureService(request):
             return None
         responseJson = get_songs_related_to_keywords(json)
         return HttpResponse(responseJson)
-        
     return HttpResponse(None)
 
 @csrf_exempt

@@ -18,6 +18,7 @@ class DBconnection():
     _rowsReturned = -1
     _exception = None
     _open = False
+    _columns = None
 
     
     def connect(self):
@@ -26,7 +27,7 @@ class DBconnection():
             self.cursor = self._db.cursor()
             self._open = True
             
-    def selectQuery(self, query):
+    def doSelectQuery(self, query):
         
         self.connect()
         
@@ -41,6 +42,7 @@ class DBconnection():
             self._rowsReturned = self.cursor.execute(query)
             self._succ = True
             self._results = self.cursor.fetchall()
+            self._columns = [i[0] for i in self.cursor.description]
             return True
         
         # fail
@@ -71,10 +73,6 @@ class DBconnection():
         except Exception as e:
             self._exception = (e.message)
             return False
-        
-    def getJsonColumns(self): 
-#        num_fields = len(self.cursor.description)
-        return [i[0] for i in self.cursor.description]
     
     def close(self):
         if (self._open):
@@ -154,7 +152,7 @@ def googleApiSearchSongsByKeyWord(keywords):
 
 ###########Geographical####################
 def geographical_filtering(json):
-    res = '{ "Results": [' 
+
     query = """SELECT 
           artist_name as 'Artist Name', terms as 'Genre', latitude as 'Latitude', longitude as 'Longitude'
            ( 3959 * acos( cos( radians("""+json['latitude']+""") ) * cos( radians( Seed.latitude ) ) 
@@ -166,17 +164,8 @@ def geographical_filtering(json):
 
     con = DBconnection()
     if (con.selectQuery(query) and con._rowsReturned > 0):
-        cols = con.getJsonColumns()
-        for row in con._results:
-            res += '{'
-            for col,val in zip(cols,row):
-               res += '"' + col + '":"' + val + '",'
-            res = res[:len(res)-1] + '},'
         con.close()
-        
-        print("res is", res)            
-        return res[:len(res)-1] + ']}'
-#        return res[:len(res)-1] + '] , "keyword":'+keyword+'}'
-    return None
+        return con._columns,con._results
+    return None,None
     
     
