@@ -65,7 +65,9 @@ function fadeOutButtons(elementId, elementId2, elementId3) {
     document.getElementById(elementId3).style.visibility = "hidden";
 }
 
-function loadDoc() {
+function loadDoc(postUrl, sentData) {
+    sentData = sentData || "photo=" + encodeURIComponent(photo.substring(photo.indexOf(",") + 1));
+    postUrl = postUrl || "pictureQuery";
     var xhttp = new XMLHttpRequest();
     document.getElementById("loadingsign").style.visibility="visible";
     // debugger;
@@ -81,10 +83,10 @@ function loadDoc() {
             fadeOutButtons("browsebutton", "loadbutton", "loadingsign");
         }
     };
-    xhttp.open("POST", "pictureQuery", true);
+    xhttp.open("POST", postUrl, true);
     xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     if (photo) {
-        xhttp.send("photo="+encodeURIComponent(photo.substring(photo.indexOf(",")+1)));
+        xhttp.send(sentData);
     }
     else {
         alert("Please enter a photo!");
