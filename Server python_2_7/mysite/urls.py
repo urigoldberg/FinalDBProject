@@ -27,11 +27,14 @@ urlpatterns = [
     url(r'^imageToMusic.html',views.imageToMusic),
     url(r'^searchByKeywords.html',views.searchByKeywords),
     url(r'^searchByGeoLocation.html',views.searchByGeoLocation),
+    url(r'^match4all.html',views.match4all),
+    
     
     # services
     url(r'^pictureQuery',views.pictureService),
     url(r'^SignIn*',views.SignInfunc),
     url(r'^LoginUser*',views.LoginUserfunc),
+    url(r'^GeoLocation',views.pictureService),
     
     
     

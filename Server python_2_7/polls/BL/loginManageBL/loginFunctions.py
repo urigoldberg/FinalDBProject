@@ -5,6 +5,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.db import connections
 from django.shortcuts import redirect
 from django.shortcuts import render
+import hashlib
 from ..DAL.mainDAL import *
 import os
 
@@ -25,6 +26,11 @@ def setCoockieAndResponse(pageName, username, message = None):
     pages and get details about him/her from usersTable if necessary'''
     resp = redirect(pageName)
     resp.set_cookie("user",username)
+    
+    #calculate hash
+    h = hashlib.new('ripemd160')
+    h.update(username+"basicSec")
+    resp.set_cookie("bs",h.hexdigest())
     return resp
 
 # sign in stuff
