@@ -67,13 +67,10 @@
         <div class="row">
             <div class="col-sm-8">
 
-                <div id="big">
-                    
-                </div>
                 <form>
                     <div class="form-group">
-                        <label for="sel1">Select list (select one):</label>
-                        <select class="form-control" id="sel1">
+                        <label for="sel0">Select list (select one):</label>
+                        <select class="form-control" id="sel0">
                             <option>Artist</option>
                             <option>Song name</option>
                             <option>Genere</option>
@@ -85,10 +82,11 @@
                     <input id="keywordToSearch" type="text" class="form-control" value="write keyword here">
                 </div>
 
-                <button id="addAnotherButton" class ="btn btn-default" onclick="">Add another keyword</button><br>
+                <div id="big"></div>
 
+                <button id="addAnotherButton" class ="btn btn-default" onclick="addfilter()">Add another keyword</button><br>
 
-                <button id="getSongsButton" class ="btn btn-default" onclick="searchKeyword(document.getElementById('keywordToSearch').innerText)">Find songs from keyword!</button>
+                <button id="getSongsButton" class ="btn btn-default" >Match songs for everyone!</button>
 
             </div>
 
