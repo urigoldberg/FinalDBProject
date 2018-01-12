@@ -1,5 +1,7 @@
 var photo;
 
+var match4allfilternum = 1;
+
 function encodeImageFileAsURL() {
     var filesSelected = document.getElementById("inputFileToLoad").files;
     if (filesSelected.length > 0) {
@@ -133,5 +135,33 @@ function searchKeyword(keyword){
     else {
         alert("Please enter a keyword!");
     }
+}
+
+function addFilterNum(addedFilters,i) {
+    addedFilters += "<form>\n" +
+        "                    <div class=\"form-group\">\n" +
+        "                        <label for=\"sel"+ i +"\">Select list (select one):</label>\n" +
+        "                        <select class=\"form-control\" id=\"sel\"+ i +\"\">\n" +
+        "                            <option>Artist</option>\n" +
+        "                            <option>Song name</option>\n" +
+        "                            <option>Genere</option>\n" +
+        "                        </select>\n" +
+        "                    </div>\n" +
+        "                </form>\n" +
+        "\n" +
+        "                <div class=\"form-group\">\n" +
+        "                    <input id=\"keywordToSearch\"+ i +\"\" type=\"text\" class=\"form-control\" value=\"write keyword here\">\n" +
+        "                </div>"
+    return addedFilters;
+}
+
+function addfilter(){
+    match4allfilternum+=1;
+    var addedFilters;
+    for(i=0;i<match4allfilternum-1;i++){
+        addedFilters = addFilterNum(addedFilters,i+1);
+    }
+    document.getElementById("big").innerHTML = addedFilters;
+
 }
 
