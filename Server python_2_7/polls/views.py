@@ -38,25 +38,25 @@ def default(request):
 def UiHomepage(requests):
     if not basicSec(requests):
         return redirect('Login.html')
-    user, resp = getCoockieAndResponse(requests, "UiHomepage.html")
+    user, resp = getCookieAndResponse(requests, "UiHomepage.html")
     return resp
 
 def match4all(requests):
     if not basicSec(requests):
         return redirect('Login.html')
-    user, resp = getCoockieAndResponse(requests, "match4all.html")
+    user, resp = getCookieAndResponse(requests, "match4all.html")
     return resp
 
 def imageToMusic(requests):
     if not basicSec(requests):
         return redirect('Login.html')
-    user, resp = getCoockieAndResponse(requests, "imageToMusic.html")
+    user, resp = getCookieAndResponse(requests, "imageToMusic.html")
     return resp
 
 def searchByKeywords(requests):
     if not basicSec(requests):
         return redirect('Login.html')
-    user, resp = getCoockieAndResponse(requests, "searchByKeywords.html")
+    user, resp = getCookieAndResponse(requests, "searchByKeywords.html")
     return resp
 
 def searchByGeoLocation(requests):
@@ -83,7 +83,7 @@ def LoginUserfunc(request):
 
     # BL
     if (loginUser(name,password)):
-        resp = setCoockieAndResponse("UiHomepage.html",name )
+        resp = setCookieAndResponse("UiHomepage.html",name )
     else:
         resp = SignInLoginFailed("user or password are incorrect, please try again")
     return resp
@@ -99,7 +99,7 @@ def SignInfunc(request):
     
     # BL
     if (signNewUser(name,password)):
-        resp = setCoockieAndResponse("UiHomepage.html",name )
+        resp = setCookieAndResponse("UiHomepage.html",name )
     else:
         resp = SignInLoginFailed("user alreay exists")
     return resp

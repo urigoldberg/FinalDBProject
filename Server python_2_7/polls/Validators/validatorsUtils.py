@@ -11,7 +11,7 @@ def basicSec(requests):
     h = hashlib.new('ripemd160')
     user = requests.COOKIES['user']
     bs = requests.COOKIES['bs']
-    h.update(user+"basicSec")
+    h.update(str(len(user))+user+"basicSec")
     
     return h.hexdigest() == bs
     

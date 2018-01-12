@@ -13,7 +13,7 @@ import os
 
 # cookies stuff
 
-def getCoockieAndResponse(request, pageName, message = "", show = ""):
+def getCookieAndResponse(request, pageName, message = "", show = ""):
     user = request.COOKIES['user']
     objPath = os.path.join(os.getcwd(),'polls', 'static', pageName)
     obj = open(objPath,'r').read()
@@ -21,7 +21,7 @@ def getCoockieAndResponse(request, pageName, message = "", show = ""):
     resp = HttpResponse(Template(obj).render(context))
     return user, resp
 
-def setCoockieAndResponse(pageName, username, message = None):
+def setCookieAndResponse(pageName, username, message = None):
     '''Set cookie contains username, in order to present it in some
     pages and get details about him/her from usersTable if necessary'''
     resp = redirect(pageName)
