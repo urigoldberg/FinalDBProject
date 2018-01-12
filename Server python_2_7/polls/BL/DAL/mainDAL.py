@@ -152,5 +152,31 @@ def googleApiSearchSongsByKeyWord(keywords):
 #        return res[:len(res)-1] + '] , "keyword":'+keyword+'}'
     return None
 
+###########Geographical####################
+def geographical_filtering(json):
+    res = '{ "Results": [' 
+    query = """SELECT 
+          artist_name as 'Artist Name', terms as 'Genre', latitude as 'Latitude', longitude as 'Longitude'
+           ( 3959 * acos( cos( radians("""+json['latitude']+""") ) * cos( radians( Seed.latitude ) ) 
+           * cos( radians(Seed.longitude) - radians("""+json['longitude']+""")) + sin(radians("""+json['latitude']+""")) 
+           * sin( radians(Seed.latitude)))) AS distance 
+        FROM Seed 
+        HAVING distance < """+json['radius']+""" 
+        ORDER BY distance;"""
 
+    con = DBconnection()
+    if (con.selectQuery(query) and con._rowsReturned > 0):
+        cols = con.getJsonColumns()
+        for row in con._results:
+            res += '{'
+            for col,val in zip(cols,row):
+               res += '"' + col + '":"' + val + '",'
+            res = res[:len(res)-1] + '},'
+        con.close()
+        
+        print("res is", res)            
+        return res[:len(res)-1] + ']}'
+#        return res[:len(res)-1] + '] , "keyword":'+keyword+'}'
+    return None
+    
     

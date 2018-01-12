@@ -17,6 +17,7 @@ from polls.Validators.validatorsUtils import *
 
 from polls.BL.GoogleVisionApiBL.googleVisionSendPost import *
 from polls.BL.GoogleVisionApiBL.getSongsByKeywordFromGoogleApi import *
+from polls.BL.GeoBL.GeoServiceBL import get_json_from_request, get_artists_in_requested_radius
 from polls.BL.sqlQueryBuilderBL import queriesBuilder,mockResponse
 from polls.BL.loginManageBL.loginFunctions import *
 
@@ -115,8 +116,9 @@ def pictureService(request):
 def GeoService(request):
     #get query
     if (request.POST and "geo" in request.POST.keys() ):
-        json = (sendGoogleQuery(request.POST.get("photo","")))
-        responseJson = get_songs_related_to_keywords(json)
+#        json = (sendGoogleQuery(request.POST.get("photo","")))
+        json = get_json_from_request(request) #{"longitude": 32,"latitude": 45,"radius": 14}
+        responseJson = get_artists_in_requested_radius(json)
         return HttpResponse(responseJson)
         
     return HttpResponse(None)
