@@ -41,6 +41,12 @@ def UiHomepage(requests):
     user, resp = getCoockieAndResponse(requests, "UiHomepage.html")
     return resp
 
+def match4all(requests):
+    if not requests.COOKIES.has_key('user' ):
+        return redirect('Login.html')
+    user, resp = getCoockieAndResponse(requests, "match4all.html")
+    return resp
+
 def imageToMusic(requests):
     if not requests.COOKIES.has_key('user' ):
         return redirect('Login.html')
