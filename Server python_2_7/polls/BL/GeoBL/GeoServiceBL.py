@@ -16,7 +16,7 @@ def get_artists_in_requested_radius(json):
             for col,val in zip(cols,row):
                res += '"' + col + '":"' + val + '",'
             res = res[:len(res)-1] + '},'
-        final = res[:len(res)-1] + ']}
+        final = res[:len(res)-1] + ']}'
         print (final)
         return final
 
