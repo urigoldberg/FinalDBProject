@@ -29,7 +29,7 @@ def setCoockieAndResponse(pageName, username, message = None):
     
     #calculate hash
     h = hashlib.new('ripemd160')
-    h.update(username+"basicSec")
+    h.update(str(len(username))+username+"basicSec")
     resp.set_cookie("bs",h.hexdigest())
     return resp
 
