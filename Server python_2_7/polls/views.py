@@ -107,8 +107,17 @@ def pictureService(request):
         responseJson = get_songs_related_to_keywords(json)
         return HttpResponse(responseJson)
         
-    #Path = os.path.join(os.getcwd(),'polls', 'Client', 'htmlphoto.html')
-    return HttpResponse("asasas")
+    return HttpResponse(None)
+
+@csrf_exempt
+def GeoService(request):
+    #get query
+    if (request.POST and "geo" in request.POST.keys()):
+        json = (sendGoogleQuery(request.POST.get("photo","")))
+        responseJson = get_songs_related_to_keywords(json)
+        return HttpResponse(responseJson)
+        
+    return HttpResponse(None)
 
 
 
