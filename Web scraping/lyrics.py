@@ -4,7 +4,6 @@ import urllib.request
 
 import MySQLdb
 import json
-import sshtunnel
 import csv
 from tqdm import tqdm
 
@@ -22,24 +21,14 @@ def flush_to_csv(file, lyrics):
             writer.writerow(line[:-1])
 
 
-
-# with sshtunnel.SSHTunnelForwarder("nova.cs.tau.ac.il",
-#         ssh_username="orrbarkat",
-#         ssh_password="Uni1983",
-#         remote_bind_address=("mysqlsrv.cs.tau.ac.il", 3306),
-#         local_bind_address=("127.0.0.1", 3000)) as tunnel:
-#     db = MySQLdb.connect(host="mysqlsrv.cs.tau.ac.il",  # your host
-#                          user="DbMysql12",       # username
-#                          password="DbMysql12",
-#                          db="DbMysql12")
-#     db = MySQLdb.connect(host="127.0.0.1",  # your host
-#                          port=3000,
-#                          user="DbMysql12",       # username
-#                          password="DbMysql12",
-#                          db="DbMysql12")   # name of the database
-db = MySQLdb.connect(host="localhost",  # your host
-                     user="root",       # username
-                     db="uni")   # name of the database
+db = MySQLdb.connect(host="127.0.0.1",  # your host
+                     port=3305,
+                     user="DbMysql12",       # username
+                     password="DbMysql12",
+                     db="DbMysql12")   # name of the database
+# db = MySQLdb.connect(host="localhost",  # your host
+#                      user="root",       # username
+#                      db="uni")   # name of the database
 
 # Create a Cursor object to execute queries.
 cur = db.cursor()
