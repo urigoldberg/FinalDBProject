@@ -17,12 +17,33 @@ CREATE TABLE if NOT EXISTS Album(
   FOREIGN KEY (artist_id) REFERENCES artists(id)
 );
 
-CREATE TABLE if NOT EXISTS Media(
+# CREATE TABLE if NOT EXISTS Media(
+#   artist_db_id INT,
+#   album_db_id INT,
+#   song_db_id INT UNIQUE,
+#   media_url VARCHAR(255) NOT NULL  ,
+#   artist_id INT,
+#   album_id INT,
+#   id INT NOT NULL AUTO_INCREMENT,
+#   PRIMARY KEY(id),
+#   FOREIGN KEY (artist_id) REFERENCES artists(id),
+#   FOREIGN KEY (album_id) REFERENCES Album(id)
+# );
+
+CREATE TABLE if NOT EXISTS Song(
+  db_id INT NOT NULL UNIQUE,
   artist_db_id INT,
   album_db_id INT,
-  song_db_id INT,
-  media_url VARCHAR(255) UNIQUE NOT NULL,
-  song_id INT,
+  lyrics TEXT(5000),
+  title VARCHAR(128) NOT NULL ,
+  duration TEXT(4096),
+  genre VARCHAR(128),
+  media_url VARCHAR(255),
+  media_views INT,
+  media_likes INT,
+  order_in_album INT,
+  score int,
+  score_votes int,
   artist_id INT,
   album_id INT,
   id INT NOT NULL AUTO_INCREMENT,
@@ -31,26 +52,12 @@ CREATE TABLE if NOT EXISTS Media(
   FOREIGN KEY (album_id) REFERENCES Album(id)
 );
 
-CREATE TABLE if NOT EXISTS Song(
-  db_id INT NOT NULL UNIQUE,
-  artist_db_id INT,
-  album_db_id INT,
-  lyrics_id INT,
-  media_id INT,
-  title VARCHAR(128),
-  genre VARCHAR(128),
-  description TEXT(4096),
-  artist_id INT,
-  album_id INT,
+CREATE TABLE if NOT EXISTS CountryArtists(
+  name VARCHAR(255),
+  artist_id INT NOT NULL,
   id INT NOT NULL AUTO_INCREMENT,
-  PRIMARY KEY(id),
+  PRIMARY KEY (id),
   FOREIGN KEY (artist_id) REFERENCES artists(id),
-  FOREIGN KEY (album_id) REFERENCES Album(id),
-  FOREIGN KEY (media_id) REFERENCES Media(id)
+  INDEX CountryArtists(name) USING BTREE,
+  UNIQUE unique_index (name, artist_id)
 );
-
-# create fk for song in media
-UPDATE Song
-set media_id = (SELECT Media.id FROM Media, Song WHERE Song.db_id = Media.song_db_id)
-WHERE Song.id is NULL
-      AND EXISTS(SELECT Media.id FROM Media, Song WHERE Song.db_id = Media.song_db_id);
