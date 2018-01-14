@@ -155,6 +155,7 @@ function addFilterNum(i) {
         "                </form>\n" +
         "\n" +
         "                <div class=\"form-group\">\n" +
+        "                    <label for=\"keywordToSearch"+i+"\">Enter keyword for filter:</label>\n" +
         "                    <input id=\"keywordToSearch"+i+"\" type=\"text\" class=\"form-control\" value=\"write keyword here\">\n" +
         "                </div>";
     return addedFilters;
