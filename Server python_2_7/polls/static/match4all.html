@@ -66,10 +66,10 @@
         <!-- inside this single row will be a side bar and another column for the main page-->
         <div class="row">
             <div class="col-sm-8">
-
+                <!--initial form number 0-->
                 <form>
                     <div class="form-group">
-                        <label for="sel0">Select list (select one):</label>
+                        <label for="sel0">Select filter type:</label>
                         <select class="form-control" id="sel0">
                             <option>Artist</option>
                             <option>Song name</option>
@@ -79,14 +79,15 @@
                 </form>
 
                 <div class="form-group">
-                    <input id="keywordToSearch" type="text" class="form-control" value="write keyword here">
+                    <input id="keywordToSearch0" type="text" class="form-control" value="write keyword here">
                 </div>
 
+                <!--added forms will be here-->
                 <div id="big"></div>
 
-                <button id="addAnotherButton" class ="btn btn-default" onclick="addfilter()">Add another keyword</button><br>
+                <button id="addAnotherButton" class ="btn btn-default" onclick="addfilter()">Add another keyword</button><br><br>
 
-                <button id="getSongsButton" class ="btn btn-default" >Match songs for everyone!</button>
+                <button id="getSongsButton" class ="btn btn-default" onclick="queryDBforFilters()" >Match songs for everyone!</button>
 
             </div>
 
