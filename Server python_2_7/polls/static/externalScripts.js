@@ -1,6 +1,6 @@
 var photo;
 
-var match4AllCurrentFilternum = 0;
+var match4AllCurrentFilterNum = 0;
 var addedFilters = "";
 var typesChosen = new Array();
 var filterWordsChosen = new Array();
@@ -54,10 +54,11 @@ function createTableFromResponse(responseArr) {
     return finaltable;
 }
 
-function fadeInTable(finalTable) {
-    document.getElementById("imgTest").style.display = "none";
-    document.getElementById("imgTest").innerHTML = finalTable;
-    $("#imgTest").fadeIn(1500);
+function fadeInTable(finalTable, elementToReplaceByTable) {
+    elementToReplaceByTable = elementToReplaceByTable || "imgTest";
+    document.getElementById(elementToReplaceByTable).style.display = "none";
+    document.getElementById(elementToReplaceByTable).innerHTML = finalTable;
+    $("#"+elementToReplaceByTable).fadeIn(1500);
 }
 
 function fadeOutButtons(elementId, elementId2, elementId3) {
@@ -160,26 +161,47 @@ function addFilterNum(i) {
 }
 
 function printArraysTillNow() {
-    for (i = 0; i < match4AllCurrentFilternum; i++) {
+    for (i = 0; i < match4AllCurrentFilterNum; i++) {
         console.log("type number " + i + " is: " + typesChosen[i] + ", filter number " + i + " is: " + filterWordsChosen[i]);
     }
 }
 
 function addfilter(){
-    match4AllCurrentFilternum+=1;
+    match4AllCurrentFilterNum+=1;
     savePreviousSelections();
-    addFilterNum(match4AllCurrentFilternum);
+    addFilterNum(match4AllCurrentFilterNum);
     document.getElementById("big").innerHTML = addedFilters;
     printArraysTillNow();
     fillOldFilters();
 }
 
 function queryDBforFilters() {
-    
+    var sentData = match4AllCurrentFilterNum + getStringOfValues(); //TODO: implement this accoarding to contract with backend
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+        if (this.readyState === 4 && this.status === 200) {
+            var responseArr = JSON.parse(this.responseText);
+            console.log("initializing table head and opening body tag");
+            //create table from response
+            var finalTable = createTableFromResponse(responseArr);
+            fadeInTable(finalTable,"big");
+            //remove all forms
+            document.getElementsByClassName("form-group").style.visibility = "hidden";
+            document.getElementById("imageToTextHeader").innerText = "By extracting the keyword "+responseArr.keyword+" the Following songs were found:";
+            fadeOutButtons("addAnotherButton", "getSongsButton");
+        }
+    };
+    xhttp.open("POST", "match4all", true); //TODO: add by uri/shcorry
+    xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xhttp.send(sentData);
+}
+
+function getStringOfValues(){
+
 }
 
 function savePreviousSelections(){
-    for(i=1;i<match4AllCurrentFilternum;i++){
+    for(i=1; i<match4AllCurrentFilterNum; i++){
         var selId = "sel"+(i);
         // console.log("select id is: "+selId);
         var temp = document.getElementById(selId);
@@ -195,12 +217,11 @@ function savePreviousSelections(){
         filterWordsChosen[i]=(filterChosen);
         // console.log("added "+ filterChosen);
     }
-
 }
 
 function fillOldFilters(){
     console.log("at fill old filters");
-    for(i=1;i<match4AllCurrentFilternum;i++){
+    for(i=1; i<match4AllCurrentFilterNum; i++){
         var selId = "sel"+(i);
         document.getElementById(selId).value = typesChosen[i];
         var keywordId = "keywordToSearch"+(i);
