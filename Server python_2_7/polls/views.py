@@ -112,42 +112,51 @@ def SignInfunc(request):
         resp = SignInLoginFailed("user alreay exists")
     return resp
 
+#
+#@csrf_exempt
+#def pictureService(request):
+#    # Validate
+#    if not (request.POST and "photo" in request.POST.keys()):
+#        return HttpResponse(ERROR_JSON)
+#    
+#    # Get / Create JSON query
+#    json = (sendGoogleQuery(request.POST.get("photo","")))
+#    if (json is None):
+#        return HttpResponse(ERROR_JSON)
+#    
+#    #create Json Response
+#    responseJson = handleQueryResponse("pictureService",[json])
+#    get_songs_related_to_keywords(json)
+#        
+#    # return to client
+#    return HttpResponse(responseJson)
+#
+#
+#@csrf_exempt
+#def GeoService(request):
+#    # Validate
+#    if not (validateGeoService(request)) :
+#         return HttpResponse(ERROR_JSON)
+#     
+#    # Get / Create JSON query
+#    json = get_json_from_request(request) #{"longitude": 32,"latitude": 45,"radius": 14}
+#    if (json is None):
+#        return HttpResponse(ERROR_JSON)
+#        
+#    #create Json Response
+#    responseJson = handleQueryResponse("GeoService",[json])
+#        
+#    # return to client
+#    return HttpResponse(responseJson)
 
-@csrf_exempt
-def pictureService(request):
-    # Validate
-    if not (request.POST and "photo" in request.POST.keys()):
-        return HttpResponse(ERROR_JSON)
-    
-    # Get / Create JSON query
-    json = (sendGoogleQuery(request.POST.get("photo","")))
-    if (json is None):
-        return HttpResponse(ERROR_JSON)
-    
-    #create Json Response
-    responseJson = handleQueryResponse("pictureService",[json])
-    get_songs_related_to_keywords(json)
-        
-    # return to client
-    return HttpResponse(responseJson)
 
 
-@csrf_exempt
-def GeoService(request):
-    # Validate
-    if not (validateGeoService(request)) :
-         return HttpResponse(ERROR_JSON)
-     
-    # Get / Create JSON query
-    json = get_json_from_request(request) #{"longitude": 32,"latitude": 45,"radius": 14}
-    if (json is None):
-        return HttpResponse(ERROR_JSON)
-        
-    #create Json Response
-    responseJson = handleQueryResponse("GeoService",[json])
-        
-    # return to client
-    return HttpResponse(responseJson)
+
+
+
+########################################
+##### REGULAR QUERY ####################
+########################################
 
 
 @csrf_exempt
@@ -166,12 +175,6 @@ def generic(request):
         
     # return to client
     return HttpResponse(responseJson)
-
-
-
-########################################
-##### REGULAR QUERY ####################
-########################################
 
 def handleQueryResponse(flowname,param,json):
     

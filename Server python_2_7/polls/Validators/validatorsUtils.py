@@ -79,16 +79,17 @@ def validateGeneric(request):
     # request is ..
     if not (request.POST and "flowname" in request.POST.keys() and "params" in request.POST.keys()):
         return False
-    
     flowname, params = request.POST["flowname"], request.POST["params"]
-    print(params)
+    
     if not validateLength(params, 3, 20):
+        return False
+    
+    # request doesn't contain illegal characters - against sql injections
+    if not (sqlInjectionChars(params)):
         return False
     
     if (flowname not in flownames):
         return False
-    # request doesn't contain illegal characters - against sql injections
-    if not (sqlInjectionChars(params)):
-        return False
+
     
     return True
