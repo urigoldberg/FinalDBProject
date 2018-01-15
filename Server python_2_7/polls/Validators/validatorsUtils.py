@@ -101,11 +101,12 @@ def validateGeneric(request):
     
     if (type(json["params"]) is not list or len(json["params"]) == 0):
         return False
+
+        
+    flowname, params = str(json["flowname"]), json["params"][0]
     
     if (flowname not in flownames):
         return False
-        
-    flowname, params = str(json["flowname"]), json["params"][0]
     
     if not (hasKeys(flowname, params)):
         return False
