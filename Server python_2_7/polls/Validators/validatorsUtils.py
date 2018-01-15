@@ -124,17 +124,21 @@ def validateGeneric(request):
     flowname, params = str(json["flowname"]), json["params"][0]
     
     if (flowname not in flownames):
+        print("flowname not in flownames")
         return False
     
     if not (hasKeys(flowname, params)):
+        print("keys are not updated")
         return False
     
     if not validateLength(params, 3, 20):
+        print("to short")
         return False
     
 
     # request doesn't contain illegal characters - against sql injections
     if not (sqlInjectionChars(params)):
+        print("sqlInjectionChars")
         return False
     
     # speaciel validators:
