@@ -28,7 +28,7 @@ def sqlInjectionChars(dic):
 def sqlInjectionCharsList(lst):
     
     for  value in lst:
-        if (re.search("[\"\\\/\*\-;'<>]", value)):
+        if (re.search("[\"\\\/\*#;'<>]", value)):
             return False
     return True
 
