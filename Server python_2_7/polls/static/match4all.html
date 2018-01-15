@@ -54,6 +54,11 @@
                     </a>
                 </li>
                 <li>
+                    <a href="specialQueries.html.html">
+                        <h4 class="list-group-item-heading">SpecialQueries</h4>
+                    </a>
+                </li>
+                <li>
                     <a href="Login.html">
                         <h4 class="list-group-item-heading">Logout</h4>
                     </a>
@@ -65,7 +70,7 @@
     <div class="container-fluid">
         <!-- inside this single row will be a side bar and another column for the main page-->
         <div class="row">
-            <div class="col-sm-8">
+            <div class="col-sm-6">
 
                 <div id="responseheader"></div>
                 <!--initial form number 0-->
@@ -76,7 +81,6 @@
                             <option>Artist</option>
                             <option>Song name</option>
                             <option>Genre</option>
-                            <option>Has more then x hits</option>
                         </select>
                     </div>
                 </form>
@@ -96,6 +100,27 @@
                 <br><br>
 
                 <button id="getSongsButton" class ="btn btn-default" onclick="queryDBforFilters()" >Match songs for everyone!</button>
+
+            </div>
+
+            <div class="col-sm-2">
+
+                <h4>Additional filters:</h4>
+                <p>You can only select one additional filter</p>
+                <form>
+                    <div class="checkbox">
+                        <label><input class="spec" id="spec0" type="checkbox" onchange="disableSpecialFilters('spec0')">Group by Artist</label>
+                    </div>
+                    <div class="checkbox">
+                        <label><input class="spec" id="spec1" type="checkbox" onchange="disableSpecialFilters('spec1')">Group by song name</label>
+                    </div>
+                    <div class="checkbox disabled">
+                        <label><input class="spec" id="spec2" type="checkbox" onchange="disableSpecialFilters('spec2')">Order by Artist</label>
+                    </div>
+                    <div class="checkbox disabled">
+                        <label><input class="spec" id="spec3" type="checkbox" onchange="disableSpecialFilters('spec3')">Order by song name</label>
+                    </div>
+                </form>
 
             </div>
 
