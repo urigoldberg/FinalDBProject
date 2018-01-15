@@ -58,15 +58,12 @@ function fadeOutButtons(elementId, elementId2, elementId3) {
     console.log("before hiding buttons");
     if(elementId){
         document.getElementById(elementId).style.visibility = "hidden";
-
     }
     if(elementId2){
         document.getElementById(elementId2).style.visibility = "hidden";
-
     }
     if(elementId3){
         document.getElementById(elementId3).style.visibility = "hidden";
-
     }
 }
 
@@ -76,19 +73,20 @@ function loadDocSpecialQuery(postUrl) {
     // debugger;
     xhttp.onreadystatechange = function() {
         if (this.readyState === 4 && this.status === 200) {
-            // debugger;
+            debugger;
             var responseArr = JSON.parse(this.responseText);
             console.log("initializing table head and opening body tag");
             var finalTable = createTableFromResponse(responseArr);
-            fadeInTable(finalTable);
+            fadeInTable(finalTable,"big");
             // debugger;
             document.getElementById("responseheader").innerText = "the Following year was found:";
             fadeOutButtons("clearAll", "getSongsButton");
+            document.getElementsByClassName("tofade");
         }
     };
     xhttp.open("POST", "Generic", true);
     xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-    debugger;
+    // debugger;
     xhttp.send("data="+sentData);
 
 }
@@ -122,51 +120,25 @@ function createJSONString(flowname) {
     var jsonString = "{";
     jsonString = addFlowNameJSON(jsonString,flowname);
     jsonString = addparamsKeyforJSON(jsonString);
-    jsonString = addParamJSON(jsonString,"num",document.getElementById("num").innerText);
+    // debugger;
+    var num = document.getElementById("num").value;
+    jsonString = addParamJSON(jsonString,"num",num);
     jsonString+=",";
-    jsonString = addParamJSON(jsonString,"genre",document.getElementById("genre").innerText);
+    var genre = document.getElementById("genre").value;
+    jsonString = addParamJSON(jsonString,"genre",genre);
     jsonString+=",";
     x = document.getElementById("sel0").value == "Died" ? "1" : "0";
     jsonString = addParamJSON(jsonString,"dead",x);
     jsonString += "]}";
-    debugger;
+    // debugger;
     return jsonString;
 }
 
-function getJSONStringOfValues(){
-    match4AllCurrentFilterNum++;
-    savePreviousSelections();
-    var jsonString = createJSONString("filterKeys");
-    return jsonString;
-}
-
-function savePreviousSelections(){
-    for(i=0; i<match4AllCurrentFilterNum; i++){
-        var selId = "sel"+(i);
-        var temp = document.getElementById(selId);
-        var typeChosen = temp.options[temp.selectedIndex].value;
-        filterTypesChosen[i]=(typeChosen);
-        var keywordId = "keywordToSearch"+(i);
-        temp = document.getElementById(keywordId);
-        var filterChosen = temp.value;
-        filterWordsChosen[i]=(filterChosen);
-    }
-}
-
-function fillOldFilters(){
-    console.log("at fill old filters");
-    for(i=1; i<match4AllCurrentFilterNum; i++){
-        var selId = "sel"+(i);
-        document.getElementById(selId).value = filterTypesChosen[i];
-        var keywordId = "keywordToSearch"+(i);
-        document.getElementById(keywordId).value = filterWordsChosen[i];
-    }
-}
 
 function disableSpecialFilters(notDisable){
     additionalFiltersSelected = notDisable;
     var specArr = document.getElementsByClassName("spec");
-    debugger;
+    // debugger;
     for(i=0;i<specArr.length;i++){
         var spec = specArr[i];
         if(spec.id != notDisable){
