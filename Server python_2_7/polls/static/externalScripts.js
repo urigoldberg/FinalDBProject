@@ -166,7 +166,7 @@ function addFilterNum(i) {
         "                        <select class=\"form-control\" id=\"sel"+i+"\">\n" +
         "                            <option>Artist</option>\n" +
         "                            <option>Song name</option>\n" +
-        "                            <option>Genere</option>\n" +
+        "                            <option>Genre</option>\n" +
         "                        </select>\n" +
         "                    </div>\n" +
         "                </form>\n" +
