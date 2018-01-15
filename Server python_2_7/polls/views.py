@@ -160,7 +160,6 @@ def SignInfunc(request):
 @csrf_exempt
 def generic(request):
     # Validate
-    print(_json.loads(request.POST["data"])["flowname"])
     if not (validateGeneric(request)):
          return HttpResponse(ERROR_JSON)
      
