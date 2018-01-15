@@ -2,7 +2,7 @@ var photo;
 
 var match4AllCurrentFilterNum = 0;
 var addedFilters = "";
-var typesChosen = new Array();
+var filterTypesChosen = new Array();
 var filterWordsChosen = new Array();
 
 function encodeImageFileAsURL() {
@@ -25,6 +25,9 @@ function encodeImageFileAsURL() {
 }
 
 function createTableFromResponse(responseArr) {
+    if(responseArr.isError == "true"){
+        return "<p>"+responseArr.errorMessage+"</p>"
+    }
     var numofRows = responseArr.Results.length;
     var columnNames = [];
      // debugger;
@@ -163,7 +166,7 @@ function addFilterNum(i) {
 
 function printArraysTillNow() {
     for (i = 0; i < match4AllCurrentFilterNum; i++) {
-        console.log("type number " + i + " is: " + typesChosen[i] + ", filter number " + i + " is: " + filterWordsChosen[i]);
+        console.log("type number " + i + " is: " + filterTypesChosen[i] + ", filter number " + i + " is: " + filterWordsChosen[i]);
     }
 }
 
@@ -177,7 +180,7 @@ function addfilter(){
 }
 
 function queryDBforFilters() {
-    var sentData = match4AllCurrentFilterNum + getStringOfValues(); //TODO: implement this accoarding to contract with backend
+    var sentData = getJSONStringOfValues();
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
         if (this.readyState === 4 && this.status === 200) {
@@ -192,31 +195,59 @@ function queryDBforFilters() {
             fadeOutButtons("addAnotherButton", "getSongsButton");
         }
     };
-    xhttp.open("POST", "match4all", true); //TODO: add by uri/shcorry
-    xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+
+    xhttp.open("POST", "Generic", true);
+    xhttp.setRequestHeader("Content-type", "application/json");
+    console.log("String for JSON is: "+ sentData);
     xhttp.send(sentData);
 }
 
-function getStringOfValues(){
+function addFlowNameJSON(jsonString, flowname) {
+    jsonString += "\"flowname\":" + "\"" + flowname + "\",";
+    return jsonString;
+}
 
+function addparamsKeyforJSON(jsonString) {
+    jsonString += "\"params\":[";
+    return jsonString;
+}
+
+function addParamJSON(jsonString, keyString, valueString) {
+    jsonString += "{\"" + keyString + "\"" + ":" + "\"" + valueString + "\"}";
+    return jsonString;
+}
+
+function createJSONString() {
+    var jsonString = "{";
+    jsonString = addFlowNameJSON(jsonString,"filterKeys");
+    jsonString = addparamsKeyforJSON(jsonString);
+    for (i = 0; i < match4AllCurrentFilterNum; i++) {
+        jsonString = addParamJSON(jsonString,filterTypesChosen[i],filterWordsChosen[i]);
+        if (i < match4AllCurrentFilterNum - 1) {
+            jsonString += ",";
+        }
+    }
+    jsonString += "]}";
+    return jsonString;
+}
+
+function getJSONStringOfValues(){
+    match4AllCurrentFilterNum++;
+    savePreviousSelections();
+    var jsonString = createJSONString();
+    return jsonString;
 }
 
 function savePreviousSelections(){
-    for(i=1; i<match4AllCurrentFilterNum; i++){
+    for(i=0; i<match4AllCurrentFilterNum; i++){
         var selId = "sel"+(i);
-        // console.log("select id is: "+selId);
         var temp = document.getElementById(selId);
-        // console.log(temp);
         var typeChosen = temp.options[temp.selectedIndex].value;
-        // console.log("added type: "+typeChosen+" to array");
-        typesChosen[i]=(typeChosen);
+        filterTypesChosen[i]=(typeChosen);
         var keywordId = "keywordToSearch"+(i);
-        // console.log("keyword id is: "+keywordId);
         temp = document.getElementById(keywordId);
         var filterChosen = temp.value;
-        // console.log("filter chosen is: "+filterChosen);
         filterWordsChosen[i]=(filterChosen);
-        // console.log("added "+ filterChosen);
     }
 }
 
@@ -224,7 +255,7 @@ function fillOldFilters(){
     console.log("at fill old filters");
     for(i=1; i<match4AllCurrentFilterNum; i++){
         var selId = "sel"+(i);
-        document.getElementById(selId).value = typesChosen[i];
+        document.getElementById(selId).value = filterTypesChosen[i];
         var keywordId = "keywordToSearch"+(i);
         document.getElementById(keywordId).value = filterWordsChosen[i];
     }
