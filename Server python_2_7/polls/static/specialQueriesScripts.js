@@ -81,7 +81,7 @@ function loadDocSpecialQuery(postUrl) {
             // debugger;
             document.getElementById("responseheader").innerText = "the Following year was found:";
             fadeOutButtons("clearAll", "getSongsButton");
-            document.getElementsByClassName("tofade");
+            document.getElementsByClassName("tofade").style.visibility = "hidden";
         }
     };
     xhttp.open("POST", "Generic", true);
