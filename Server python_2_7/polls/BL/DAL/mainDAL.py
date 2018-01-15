@@ -163,7 +163,7 @@ def yearMostArtistDiedOrBornDB(dead,num,genre):
 FROM
     DbMysql12.artists t
 WHERE
-    t.year_of_birth IS NOT NULL
+    t.{0} IS NOT NULL
     AND t.genre like '{2}'
         AND t.genre IS NOT NULL
         AND t.genre NOT LIKE ''
