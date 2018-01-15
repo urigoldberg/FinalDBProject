@@ -23,6 +23,15 @@ function encodeImageFileAsURL() {
     }
 }
 
+function createJSONStringforImage(flowname, encoding) {
+    var jsonString = "{";
+    jsonString = addFlowNameJSON(jsonString,flowname);
+    jsonString = addparamsKeyforJSON(jsonString);
+    jsonString = addParamJSON(jsonString,"photo",encoding);
+    jsonString += "]}";
+    return jsonString;
+}
+
 function createTableFromResponse(responseArr) {
     if(responseArr.isError == "true"){
         return "<p>"+responseArr.errorMessage+"</p>"
@@ -80,7 +89,6 @@ function fadeOutButtons(elementId, elementId2, elementId3) {
 }
 
 function loadDoc(postUrl, sentData) {
-    sentData = sentData || "photo=" + encodeURIComponent(photo.substring(photo.indexOf(",") + 1));
     var xhttp = new XMLHttpRequest();
     document.getElementById("loadingsign").style.visibility="visible";
     // debugger;
@@ -96,10 +104,11 @@ function loadDoc(postUrl, sentData) {
             fadeOutButtons("browsebutton", "loadbutton", "loadingsign");
         }
     };
-    xhttp.open("POST", postUrl, true);
+    xhttp.open("POST", "Generic", true);
     xhttp.setRequestHeader("Content-type", "application/json");
-    
     if (photo) {
+        var sentData = createJSONStringforImage(postUrl,encodeURIComponent(photo.substring(photo.indexOf(",") + 1)));
+        debugger;
         xhttp.send(sentData);
     }
     else {
@@ -223,9 +232,9 @@ function addParamJSON(jsonString, keyString, valueString) {
     return jsonString;
 }
 
-function createJSONString() {
+function createJSONString(flowname) {
     var jsonString = "{";
-    jsonString = addFlowNameJSON(jsonString,"filterKeys");
+    jsonString = addFlowNameJSON(jsonString,flowname);
     jsonString = addparamsKeyforJSON(jsonString);
     for (i = 0; i < match4AllCurrentFilterNum; i++) {
         jsonString = addParamJSON(jsonString,filterTypesChosen[i],filterWordsChosen[i]);
@@ -240,7 +249,7 @@ function createJSONString() {
 function getJSONStringOfValues(){
     match4AllCurrentFilterNum++;
     savePreviousSelections();
-    var jsonString = createJSONString();
+    var jsonString = createJSONString("filterKeys");
     return jsonString;
 }
 
