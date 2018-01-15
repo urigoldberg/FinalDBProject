@@ -212,9 +212,9 @@ function queryDBforFilters() {
     };
 
     xhttp.open("POST", "Generic", true);
-    xhttp.setRequestHeader("Content-type", "application/json");
+    xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     console.log("String for JSON is: "+ sentData);
-    xhttp.send(sentData);
+    xhttp.send("data="+sentData);
 }
 
 function addFlowNameJSON(jsonString, flowname) {
