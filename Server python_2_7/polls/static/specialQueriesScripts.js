@@ -71,7 +71,7 @@ function fadeOutButtons(elementId, elementId2, elementId3) {
     }
 }
 
-function loadDoc(postUrl, sentData) {
+function loadDocSpecialQuery(postUrl, sentData) {
     var xhttp = new XMLHttpRequest();
     document.getElementById("loadingsign").style.visibility="visible";
     // debugger;
