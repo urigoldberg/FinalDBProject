@@ -25,8 +25,21 @@ def sqlInjectionChars(dic):
             return False
     return True
 
+def sqlInjectionCharsList(lst):
+    
+    for  value in lst:
+        if (re.search("[\"\\\/\*\-;'<>]", value)):
+            return False
+    return True
+
 def validateLength(dic, minLength, maxLength):
     for key, value in dic.iteritems():
+        if (len(value) > maxLength or len(value) < minLength):
+            return False
+    return True
+
+def validateLengthList(lst, minLength, maxLength):
+    for  value in lst:
         if (len(value) > maxLength or len(value) < minLength):
             return False
     return True
@@ -53,12 +66,12 @@ def validateLoginSignIn(request, message):
     
     username, password = request.GET["username"], request.GET["password"]
     
-    if not validateLength([username,username], 5, 20):
+    if not validateLengthList([username,username], 5, 20):
         message += ["username & password must contain at least 5 characters, and not more than 20"]
         return False
     
     # request doesn't contain illegal characters - against sql injections
-    if not (sqlInjectionChars([username,username])):
+    if not (sqlInjectionCharsList([username,username])):
         message += ["invalid request, please try again"]
         return False
     
