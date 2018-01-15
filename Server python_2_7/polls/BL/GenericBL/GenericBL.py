@@ -3,6 +3,7 @@ from ..DAL.mainDAL import geographical_filtering, yearMostArtistDiedOrBornDB
 # return [{"nameOfColumn01":"value01","nameOfColumn02":"value02"....},{},{}]
 #in case of error - return None
 def generateResFromRes(cols,result):
+    print ("generateResFromRes - cols",cols, "result",result )
     res = '[' 
     try:        
         if (cols is None or result is None):
@@ -10,13 +11,14 @@ def generateResFromRes(cols,result):
         for row in result:
             res += '{'
             for col,val in zip(cols,row):
-               res += '"' + col + '":"' + val + '",'
+               res += '"' + str(col) + '":"' + str(val) + '",'
             res = res[:len(res)-1] + '},'
         final = res[:len(res)-1] + ']'
         print(final)
         return final
         
-    except:
+    except Exception as e:
+        print (e.message)
         return None
     
 

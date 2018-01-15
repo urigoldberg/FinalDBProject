@@ -176,7 +176,13 @@ def generic(request):
      
     # Get / Create JSON query
     json = _json.loads(request.POST["data"])
-    flowname, params = str(json["flowname"]), json["params"][0]
+    flowname, diclist = str(json["flowname"]), json["params"]
+    params = {}
+    for pair in diclist:
+        for key, value in pair.iteritems():
+            params[str(key)] = str(value)
+    
+    print("params",params)
     if (flowname is None or params is None):
         return HttpResponse(ERROR_JSON)
     
@@ -190,7 +196,7 @@ def generic(request):
 def handleQueryResponse(flowname,param):
     
     ResultsArray = None
-    print(param)
+    print("param",param)
     
     #check flow name
     if (flowname == "pictureService"):
@@ -200,11 +206,11 @@ def handleQueryResponse(flowname,param):
     if (flowname == "GeoService"):
         ResultsArray = get_artists_in_requested_radius(param)
         
-    if (serviceName == "Filterkeys"):
+    if (flowname == "Filterkeys"):
         ResultsArray = None
         
-    if (serviceName == "year"):
-        dead, num, genre = param["dead"],param["num"],param["genre"]
+    if (flowname == "year"):
+        dead, num, genre = str(param["dead"]),str(param["num"]),str(param["genre"])
         if (dead == "0"):
             dead = "year_of_birth"
         else:
