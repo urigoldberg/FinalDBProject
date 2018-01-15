@@ -3,6 +3,7 @@ var match4AllCurrentFilterNum = 0;
 var addedFilters = "";
 var filterTypesChosen = new Array();
 var filterWordsChosen = new Array();
+var additionalFiltersSelected ="";
 
 function encodeImageFileAsURL() {
     var filesSelected = document.getElementById("inputFileToLoad").files;
@@ -108,7 +109,7 @@ function loadDoc(postUrl, sentData) {
     xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     if (photo) {
         var sentData = createJSONStringforImage(postUrl,encodeURIComponent(photo.substring(photo.indexOf(",") + 1)));
-        debugger;
+        // debugger;
         xhttp.send("data="+sentData);
     }
     else {
@@ -242,7 +243,12 @@ function createJSONString(flowname) {
             jsonString += ",";
         }
     }
+    if(additionalFiltersSelected){//TODO: finish this
+        jsonString+=",";
+        jsonString = addParamJSON(jsonString,"additionalFilters",additionalFiltersSelected) //TODO: convert this to groupby what
+    }
     jsonString += "]}";
+    // debugger;
     return jsonString;
 }
 
@@ -273,6 +279,18 @@ function fillOldFilters(){
         document.getElementById(selId).value = filterTypesChosen[i];
         var keywordId = "keywordToSearch"+(i);
         document.getElementById(keywordId).value = filterWordsChosen[i];
+    }
+}
+
+function disableSpecialFilters(notDisable){
+    additionalFiltersSelected = notDisable;
+    var specArr = document.getElementsByClassName("spec");
+    // debugger;
+    for(i=0;i<specArr.length;i++){
+        var spec = specArr[i];
+        if(spec.id != notDisable){
+            spec.disabled = "true";
+        }
     }
 }
 
