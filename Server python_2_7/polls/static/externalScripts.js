@@ -105,11 +105,11 @@ function loadDoc(postUrl, sentData) {
         }
     };
     xhttp.open("POST", "Generic", true);
-    xhttp.setRequestHeader("Content-type", "application/json");
+    xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     if (photo) {
         var sentData = createJSONStringforImage(postUrl,encodeURIComponent(photo.substring(photo.indexOf(",") + 1)));
         debugger;
-        xhttp.send(sentData);
+        xhttp.send("data="+sentData);
     }
     else {
         alert("Please enter a photo!");
