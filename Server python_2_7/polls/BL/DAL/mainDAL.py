@@ -155,5 +155,23 @@ def geographical_filtering(json):
         con.close()
         return con._columns,con._results
     return None,None
-    
-    
+
+###########maigc years####################
+def yearMostArtistDiedOrBornDB(dead,num,genre):
+    query = """SELECT 
+    t.genre, t.{0}, COUNT(t.genre) AS numOfArts
+FROM
+    DbMysql12.artists t
+WHERE
+    t.year_of_birth IS NOT NULL
+    AND t.genre like '{2}'
+        AND t.genre IS NOT NULL
+        AND t.genre NOT LIKE ''
+GROUP BY t.genre
+HAVING numOfArts > {1}
+ORDER BY numOfArts DESC;""".format(dead,num,genre)
+    con = DBconnection()
+    if (con.doSelectQuery(query) and con._rowsReturned > 0):
+        con.close()
+        return con._columns,con._results
+    return None,None

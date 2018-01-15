@@ -191,6 +191,14 @@ def handleQueryResponse(flowname,param):
         
     if (serviceName == "Filterkeys"):
         ResultsArray = None
+        
+    if (serviceName == "year"):
+        dead, num, genre = param["dead"],param["num"],param["genre"]
+        if (dead == "0"):
+            dead = "year_of_birth"
+        else:
+            dead = "year_of_death"
+        ResultsArray = magicYearQuery(param)
     # more ifs..
     
     # If ResultsArray == None, an error has occuered
