@@ -51,6 +51,13 @@ def UiHomepage(requests):
     user, resp = getCookieAndResponse(requests, "UiHomepage.html")
     return resp
 
+def specialQueries(requests):
+    if not basicSec(requests):
+        return redirect('Login.html')
+    user, resp = getCookieAndResponse(requests, "specialQueries.html")
+    return resp
+
+
 def match4all(requests):
     if not basicSec(requests):
         return redirect('Login.html')
@@ -198,7 +205,7 @@ def handleQueryResponse(flowname,param):
             dead = "year_of_birth"
         else:
             dead = "year_of_death"
-        ResultsArray = magicYearQuery(param)
+        ResultsArray = yearMostArtistDiedOrBorn(dead,num,genre)
     # more ifs..
     
     # If ResultsArray == None, an error has occuered

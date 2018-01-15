@@ -28,7 +28,7 @@ urlpatterns = [
     url(r'^searchByKeywords.html',views.searchByKeywords),
     url(r'^searchByGeoLocation.html',views.searchByGeoLocation),
     url(r'^match4all.html',views.match4all),
-    
+    url(r'^specialQueries.html',views.specialQueries),
     
     # services
 #    url(r'^pictureQuery',views.pictureService),
