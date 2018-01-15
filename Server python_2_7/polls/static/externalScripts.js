@@ -65,13 +65,19 @@ function fadeInTable(finalTable, elementToReplaceByTable) {
 }
 
 function fadeOutButtons(elementId, elementId2, elementId3) {
-    elementId3 = elementId3 || "loadingsign";
-    elementId2 = elementId2 || "loadbutton";
-    elementId = elementId || "browsebutton";
     console.log("before hiding buttons");
-    document.getElementById(elementId).style.visibility = "hidden";
-    document.getElementById(elementId2).style.visibility = "hidden";
-    document.getElementById(elementId3).style.visibility = "hidden";
+    if(elementId){
+        document.getElementById(elementId).style.visibility = "hidden";
+
+    }
+    if(elementId2){
+        document.getElementById(elementId2).style.visibility = "hidden";
+
+    }
+    if(elementId3){
+        document.getElementById(elementId3).style.visibility = "hidden";
+
+    }
 }
 
 function loadDoc(postUrl, sentData) {
@@ -190,8 +196,9 @@ function queryDBforFilters() {
             var finalTable = createTableFromResponse(responseArr);
             fadeInTable(finalTable,"big");
             //remove all forms
-            document.getElementsByClassName("form-group").style.visibility = "hidden";
-            document.getElementById("imageToTextHeader").innerText = "By extracting the keyword "+responseArr.keyword+" the Following songs were found:";
+            document.getElementById("initialinput").style.visibility = "hidden";
+            document.getElementById("initialform").style.visibility = "hidden";
+            document.getElementById("responseheader").innerHTML = "<h4>By extracting the keyword "+responseArr.keyword+" the Following songs were found:</h4>";
             fadeOutButtons("addAnotherButton", "getSongsButton");
         }
     };
