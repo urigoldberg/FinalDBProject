@@ -205,7 +205,7 @@ def handleQueryResponse(flowname,param):
             dead = "year_of_birth"
         else:
             dead = "year_of_death"
-        ResultsArray = yearMostArtistDiedOrBorn(dead,num,genre)
+        ResultsArray = GenericBL.yearMostArtistDiedOrBorn(dead,num,genre)
     # more ifs..
     
     # If ResultsArray == None, an error has occuered
