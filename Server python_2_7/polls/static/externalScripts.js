@@ -1,5 +1,4 @@
 var photo;
-
 var match4AllCurrentFilterNum = 0;
 var addedFilters = "";
 var filterTypesChosen = new Array();
@@ -82,7 +81,6 @@ function fadeOutButtons(elementId, elementId2, elementId3) {
 
 function loadDoc(postUrl, sentData) {
     sentData = sentData || "photo=" + encodeURIComponent(photo.substring(photo.indexOf(",") + 1));
-    postUrl = postUrl || "pictureQuery";
     var xhttp = new XMLHttpRequest();
     document.getElementById("loadingsign").style.visibility="visible";
     // debugger;
@@ -99,7 +97,8 @@ function loadDoc(postUrl, sentData) {
         }
     };
     xhttp.open("POST", postUrl, true);
-    xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xhttp.setRequestHeader("Content-type", "application/json");
+    
     if (photo) {
         xhttp.send(sentData);
     }
