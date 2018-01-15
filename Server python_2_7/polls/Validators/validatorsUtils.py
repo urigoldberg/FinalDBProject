@@ -5,6 +5,8 @@ import hashlib
 ########## general validations #######################
 ######################################################
 
+flownames = []
+
 def basicSec(requests):
     if not (requests.COOKIES.has_key('user') and (requests.COOKIES.has_key('bs'))):
         return False
@@ -57,21 +59,36 @@ def validateLoginSignIn(request, message):
 ##################### Geo ############################
 ######################################################
 
-def validateGeoService(request, message):
+def validateGeoService(request):
     # request has un + password
     if not (request.POST and "geo" in request.POST.keys()):
-        message += ["invalid request, please try again"]
         return False
     
-    username, password = request.GET["username"], request.GET["password"]
-    
     if not validateLength([username,username], 5, 20):
-        message += ["username & password must contain at least 5 characters, and not more than 20"]
         return False
     
     # request doesn't contain illegal characters - against sql injections
     if not (sqlInjectionChars([username,username])):
-        message += ["invalid request, please try again"]
+        return False
+    
+    return True
+
+
+
+def validateGeneric(request):
+    # request is ..
+    if not (request.POST and "flowname" in request.POST.keys() and "params" in request.POST.keys()):
+        return False
+    
+    flowname, params = request.POST["flowname"], request.POST["params"]
+    print(params)
+    if not validateLength(params, 3, 20):
+        return False
+    
+    if (flowname not in flownames):
+        return False
+    # request doesn't contain illegal characters - against sql injections
+    if not (sqlInjectionChars(params)):
         return False
     
     return True

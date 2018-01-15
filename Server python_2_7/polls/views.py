@@ -19,6 +19,7 @@ from polls.BL.GoogleVisionApiBL.googleVisionSendPost import *
 from polls.BL.GoogleVisionApiBL.getSongsByKeywordFromGoogleApi import *
 from polls.BL.GeoBL.GeoServiceBL import get_json_from_request, get_artists_in_requested_radius
 from polls.BL.sqlQueryBuilderBL import queriesBuilder,mockResponse
+from polls.BL.GenericBL import GenericBL
 from polls.BL.loginManageBL.loginFunctions import *
 
 ####################################
@@ -134,7 +135,7 @@ def pictureService(request):
 @csrf_exempt
 def GeoService(request):
     # Validate
-    if not (request.POST and "geo" in request.POST.keys() and validateGeoService(request)) :
+    if not (validateGeoService(request)) :
          return HttpResponse(ERROR_JSON)
      
     # Get / Create JSON query
@@ -147,6 +148,25 @@ def GeoService(request):
         
     # return to client
     return HttpResponse(responseJson)
+
+
+@csrf_exempt
+def generic(request):
+    # Validate
+    if not (validateGeneric(request)) :
+         return HttpResponse(ERROR_JSON)
+     
+    # Get / Create JSON query
+    flowname,json = get_json_from_generic_request(request)
+    if (json is None):
+        return HttpResponse(ERROR_JSON)
+        
+    #create Json Response
+    responseJson = handleQueryResponse("Generic",[flowname, json])
+        
+    # return to client
+    return HttpResponse(responseJson)
+
 
 
 ########################################
