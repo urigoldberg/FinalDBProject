@@ -11,6 +11,7 @@ from django.shortcuts import render
 
 import MySQLdb
 import os
+import json as _json
 
 from polls.models import *
 from polls.Validators.validatorsUtils import *
@@ -26,7 +27,7 @@ from polls.BL.loginManageBL.loginFunctions import *
 ############### consts #############
 ####################################
 
-ERROR_JSON = '{ "isError" : "false", "errorMessage": "An error had occuered", "Results": [] }'
+ERROR_JSON = '{ "isError" : "true", "errorMessage": "An error had occuered", "Results": [] }'
 
 
 ####################################
@@ -151,9 +152,6 @@ def SignInfunc(request):
 
 
 
-
-
-
 ########################################
 ##### REGULAR QUERY ####################
 ########################################
@@ -162,21 +160,27 @@ def SignInfunc(request):
 @csrf_exempt
 def generic(request):
     # Validate
+#    print("GENERIC")
+    #print(request)
+    #print(request.POST)
+    #print(request.POST["data"])
+    print(_json.loads(request.POST["data"])["flowname"])
     if not (validateGeneric(request)):
          return HttpResponse(ERROR_JSON)
      
     # Get / Create JSON query
-    flowname,param,json = flowname, params = request.POST["flowname"], request.POST["params"],request.POST["params"]
-    if (flowname is None or param is None or json is None):
+    
+    flowname,param = flowname, params = request.POST["flowname"], request.POST["params"]
+    if (flowname is None or param is None):
         return HttpResponse(ERROR_JSON)
         
     #create Json Response
-    responseJson = handleQueryResponse(flowname,param,json)
+    responseJson = handleQueryResponse(flowname,param)
         
     # return to client
     return HttpResponse(responseJson)
 
-def handleQueryResponse(flowname,param,json):
+def handleQueryResponse(flowname,param):
     
     ResultsArray = None
     print(param)

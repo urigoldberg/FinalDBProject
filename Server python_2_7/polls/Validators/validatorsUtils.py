@@ -1,5 +1,6 @@
 import re
 import hashlib
+import json as _json
 
 ######################################################
 ########## general validations #######################
@@ -77,9 +78,17 @@ def validateGeoService(request):
 
 def validateGeneric(request):
     # request is ..
-    if not (request.POST and "flowname" in request.POST.keys() and "params" in request.POST.keys()):
+    if not (request.POST and "data" in request.POST.keys()):
         return False
-    flowname, params = request.POST["flowname"], request.POST["params"]
+    
+    json = request.POST["data"]
+    try:
+        json = _json.loads(request.POST["data"])
+    except ValueError:
+        return False
+    
+    flowname, params = json["flowname"], json["params"]
+    print(type(json["params"]))
     
     if not validateLength(params, 3, 20):
         return False
@@ -90,6 +99,9 @@ def validateGeneric(request):
     
     if (flowname not in flownames):
         return False
+    
+    # speaciel validators:
+    
 
     
     return True
