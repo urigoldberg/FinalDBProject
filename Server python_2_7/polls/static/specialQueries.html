@@ -7,7 +7,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <link rel="stylesheet" type="text/css" href="static/recommenderStyles.css">
-    <script src="static/externalScripts.js"></script>
+    <script src="static/specialQueriesScripts.js"></script>
 </head>
 <body>
 
@@ -84,7 +84,7 @@
                     <input type="text" class="form-control" value="write number here">
                 </div>
                 <p> have </p>
-                <form id="initialform">
+                <form id="Died">
                     <div class="form-group">
                         <label for="sel0">Select filter type:</label>
                         <select class="form-control" id="sel0">
@@ -94,18 +94,14 @@
                     </div>
                 </form>
 
-
-
                 <!--added forms will be here-->
                 <div id="big"></div>
 
-                <button id="addAnotherButton" class ="btn btn-default" onclick="addfilter()">Add another keyword</button>
-
-                <button id="clearAll" class ="btn btn-default" onclick="window.location.href='match4all.html'">Clear all</button>
+                <button id="clearAll" class ="btn btn-default" onclick="window.location.href='specialQueries.html.html'">Clear all</button>
 
                 <br><br>
 
-                <button id="getSongsButton" class ="btn btn-default" onclick="queryDBforFilters()" >Match songs for everyone!</button>
+                <button id="getSongsButton" class ="btn btn-default" onclick="loadDocSpecialQuery()" >Match songs for everyone!</button>
 
             </div>
 
