@@ -168,8 +168,11 @@ def SignInfunc(request):
 @csrf_exempt
 def generic(request):
     # Validate
+    print ("generic is been called")
     if not (validateGeneric(request)):
          return HttpResponse(ERROR_JSON)
+    
+    print ("generic passed validation")
      
     # Get / Create JSON query
     json = _json.loads(request.POST["data"])
@@ -181,6 +184,7 @@ def generic(request):
     responseJson = handleQueryResponse(flowname,params)
         
     # return to client
+    print("we return ",responseJson," to flow",flowname)
     return HttpResponse(responseJson)
 
 def handleQueryResponse(flowname,param):

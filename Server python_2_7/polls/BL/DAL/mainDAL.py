@@ -170,6 +170,7 @@ WHERE
 GROUP BY t.genre
 HAVING numOfArts > {1}
 ORDER BY numOfArts DESC;""".format(dead,num,genre)
+    print("query",query)
     con = DBconnection()
     if (con.doSelectQuery(query) and con._rowsReturned > 0):
         con.close()

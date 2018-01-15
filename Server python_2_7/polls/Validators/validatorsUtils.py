@@ -100,20 +100,24 @@ def validateGeoService(request):
 
 
 def validateGeneric(request):
+    print("start validating")
     
     flownames = ["pictureQuery", "geoService", "year"]
     
     # request is ..
     if not (request.POST and "data" in request.POST.keys()):
+        print("donsnt have data =")
         return False
     
     json = None
     try:
         json = _json.loads(request.POST["data"])
     except ValueError:
+        print("invalid json")
         return False
     
     if (type(json["params"]) is not list or len(json["params"]) == 0):
+        print("params is not good")
         return False
 
         
