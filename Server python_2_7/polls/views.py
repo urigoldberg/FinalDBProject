@@ -22,6 +22,13 @@ from polls.BL.sqlQueryBuilderBL import queriesBuilder,mockResponse
 from polls.BL.loginManageBL.loginFunctions import *
 
 ####################################
+############### consts #############
+####################################
+
+ERROR_JSON = '{ "isError" : "false", "errorMessage": "An error had occuered", "Results": [] }'
+
+
+####################################
 ####### views functions GET ########
 ####################################
 
@@ -107,25 +114,66 @@ def SignInfunc(request):
 
 @csrf_exempt
 def pictureService(request):
-    #get query
-    if (request.POST and "photo" in request.POST.keys()):
-        json = (sendGoogleQuery(request.POST.get("photo","")))
-        if (json is None):
-            return None
-        responseJson = get_songs_related_to_keywords(json)
-        return HttpResponse(responseJson)
-    return HttpResponse(None)
+    # Validate
+    if not (request.POST and "photo" in request.POST.keys()):
+        return HttpResponse(ERROR_JSON)
+    
+    # Get / Create JSON query
+    json = (sendGoogleQuery(request.POST.get("photo","")))
+    if (json is None):
+        return HttpResponse(ERROR_JSON)
+    
+    #create Json Response
+    responseJson = handleQueryResponse("pictureService",[json])
+    get_songs_related_to_keywords(json)
+        
+    # return to client
+    return HttpResponse(responseJson)
+
 
 @csrf_exempt
 def GeoService(request):
-    #get query
-    if (request.POST and "geo" in request.POST.keys() ):
-#        json = (sendGoogleQuery(request.POST.get("photo","")))
-        json = get_json_from_request(request) #{"longitude": 32,"latitude": 45,"radius": 14}
-        responseJson = get_artists_in_requested_radius(json)
-        return HttpResponse(responseJson)
+    # Validate
+    if not (request.POST and "geo" in request.POST.keys() and validateGeoService(request)) :
+         return HttpResponse(ERROR_JSON)
+     
+    # Get / Create JSON query
+    json = get_json_from_request(request) #{"longitude": 32,"latitude": 45,"radius": 14}
+    if (json is None):
+        return HttpResponse(ERROR_JSON)
         
-    return HttpResponse(None)
+    #create Json Response
+    responseJson = handleQueryResponse("GeoService",[json])
+        
+    # return to client
+    return HttpResponse(responseJson)
+
+
+########################################
+##### REGULAR QUERY ####################
+########################################
+
+def handleQueryResponse(serviceName,params):
+    
+    ResultsArray = None
+    
+    #check flow name
+    if (serviceName == "pictureService"):
+        ResultsArray = get_songs_related_to_keywords(params[0])
+    
+    if (serviceName == "GeoService"):
+        ResultsArray = get_artists_in_requested_radius(params[0])
+    
+    # more ifs..
+    
+    # If ResultsArray == None, an error has occuered
+    # Otherwise, the function returned array for json
+    if (ResultsArray == None):
+        return ERROR_JSON
+    
+    return '{ "isError" : "false", "errorMessage": "", "Results": ' + ResultsArray + '}' 
+    
+    
 
 
 

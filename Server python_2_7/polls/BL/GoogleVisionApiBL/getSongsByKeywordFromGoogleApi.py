@@ -2,11 +2,11 @@ import json
 import MySQLdb
 from collections import OrderedDict
 from ..DAL.mainDAL import *
-
     
+
+
 def get_songs_related_to_keywords(jsons):
 
-    res = '{ "Results": [' 
     keyword = None
     
     try:
@@ -27,7 +27,7 @@ def get_songs_related_to_keywords(jsons):
             artist_name = str.format('"%s"' % row[1])
             match = str.format('"%s"' % row[3])
             res += '{ "Song Name":' + song_name + ',"Artist":' + artist_name + ',"YouTube Link":' + '"noooo"' + ', "Matching Keyword":'+match+'},'
-        return res[:len(res)-1] + ']}'
+        return res[:len(res)-1] + ']'
         
     except (ValueError, KeyError, TypeError):
         print ("JSON format error")

@@ -5,7 +5,6 @@ def get_json_from_request(request):
 
 def get_artists_in_requested_radius(json):
     
-    res = '{ "Results": [' 
     try:
         decoded = json.loads(json)        
         cols,result = geographical_filtering(json)
@@ -22,5 +21,6 @@ def get_artists_in_requested_radius(json):
 
     except (ValueError, KeyError, TypeError):
         print ("JSON format error")
+        return None
     
     return final

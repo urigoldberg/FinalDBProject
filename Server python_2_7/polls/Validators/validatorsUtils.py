@@ -18,7 +18,7 @@ def basicSec(requests):
 
 def sqlInjectionChars(arrOfStrings):
     for s in arrOfStrings:
-        if (re.search("[\"\\\/\*\-;']", s)):
+        if (re.search("[\"\\\/\*\-;'<>]", s)):
             return False
     return True
 
@@ -57,7 +57,7 @@ def validateLoginSignIn(request, message):
 ##################### Geo ############################
 ######################################################
 
-def validateGeo(request, message):
+def validateGeoService(request, message):
     # request has un + password
     if not (request.POST and "geo" in request.POST.keys()):
         message += ["invalid request, please try again"]
