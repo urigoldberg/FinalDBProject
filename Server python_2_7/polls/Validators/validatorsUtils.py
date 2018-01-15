@@ -131,9 +131,9 @@ def validateGeneric(request):
         print("keys are not updated")
         return False
     
-    if not validateLength(params, 3, 20):
-        print("to short")
-        return False
+#    if not validateLength(params, 1, 20):
+#        print("to short")
+#        return False
     
 
     # request doesn't contain illegal characters - against sql injections
