@@ -4,6 +4,10 @@ from ..DAL.mainDAL import geographical_filtering
 def get_json_from_generic_request(request):
     return None
 
+def get_json_get_artists(request):
+    return None
+
+
 
 def get_artists_in_requested_radius(json):
     

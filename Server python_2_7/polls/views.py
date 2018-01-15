@@ -153,16 +153,16 @@ def GeoService(request):
 @csrf_exempt
 def generic(request):
     # Validate
-    if not (validateGeneric(request)) :
+    if not (validateGeneric(request)):
          return HttpResponse(ERROR_JSON)
      
     # Get / Create JSON query
-    flowname,json = get_json_from_generic_request(request)
-    if (json is None):
+    flowname,param,json = flowname, params = request.POST["flowname"], request.POST["params"],request.POST["params"]
+    if (flowname is None or param is None or json is None):
         return HttpResponse(ERROR_JSON)
         
     #create Json Response
-    responseJson = handleQueryResponse("Generic",[flowname, json])
+    responseJson = handleQueryResponse(flowname,param,json)
         
     # return to client
     return HttpResponse(responseJson)
@@ -173,17 +173,21 @@ def generic(request):
 ##### REGULAR QUERY ####################
 ########################################
 
-def handleQueryResponse(serviceName,params):
+def handleQueryResponse(flowname,param,json):
     
     ResultsArray = None
+    print(param)
     
     #check flow name
-    if (serviceName == "pictureService"):
-        ResultsArray = get_songs_related_to_keywords(params[0])
+    if (flowname == "pictureService"):
+        json = (sendGoogleQuery(params['photo']))
+        ResultsArray = get_songs_related_to_keywords(json)
     
-    if (serviceName == "GeoService"):
-        ResultsArray = get_artists_in_requested_radius(params[0])
-    
+    if (flowname == "GeoService"):
+        ResultsArray = get_artists_in_requested_radius(param)
+        
+    if (serviceName == "Filterkeys"):
+        ResultsArray = None
     # more ifs..
     
     # If ResultsArray == None, an error has occuered
