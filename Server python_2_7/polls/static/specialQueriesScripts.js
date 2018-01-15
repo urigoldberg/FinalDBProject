@@ -2,7 +2,6 @@ var match4AllCurrentFilterNum = 0;
 var addedFilters = "";
 var filterTypesChosen = new Array();
 var filterWordsChosen = new Array();
-var additionalFiltersSelected ="";
 
 
 
@@ -71,9 +70,9 @@ function fadeOutButtons(elementId, elementId2, elementId3) {
     }
 }
 
-function loadDocSpecialQuery(postUrl, sentData) {
+function loadDocSpecialQuery(postUrl) {
+    var sentData = createJSONString(postUrl);
     var xhttp = new XMLHttpRequest();
-    document.getElementById("loadingsign").style.visibility="visible";
     // debugger;
     xhttp.onreadystatechange = function() {
         if (this.readyState === 4 && this.status === 200) {
@@ -83,20 +82,15 @@ function loadDocSpecialQuery(postUrl, sentData) {
             var finalTable = createTableFromResponse(responseArr);
             fadeInTable(finalTable);
             // debugger;
-            document.getElementById("imageToTextHeader").innerText = "By extracting the keyword "+responseArr.keyword+" the Following songs were found:";
-            fadeOutButtons("browsebutton", "loadbutton", "loadingsign");
+            document.getElementById("responseheader").innerText = "the Following year was found:";
+            fadeOutButtons("clearAll", "getSongsButton");
         }
     };
     xhttp.open("POST", "Generic", true);
     xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-    if (photo) {
-        var sentData = createJSONStringforImage(postUrl,encodeURIComponent(photo.substring(photo.indexOf(",") + 1)));
-        debugger;
-        xhttp.send("data="+sentData);
-    }
-    else {
-        alert("Please enter a photo!");
-    }
+    debugger;
+    xhttp.send("data="+sentData);
+
 }
 
 
@@ -124,19 +118,16 @@ function addParamJSON(jsonString, keyString, valueString) {
 }
 
 function createJSONString(flowname) {
+    var x;
     var jsonString = "{";
     jsonString = addFlowNameJSON(jsonString,flowname);
     jsonString = addparamsKeyforJSON(jsonString);
-    for (i = 0; i < match4AllCurrentFilterNum; i++) {
-        jsonString = addParamJSON(jsonString,filterTypesChosen[i],filterWordsChosen[i]);
-        if (i < match4AllCurrentFilterNum - 1) {
-            jsonString += ",";
-        }
-    }
-    if(additionalFiltersSelected){//TODO: finish this
-        jsonString+=",";
-        jsonString = addParamJSON(jsonString,"additionalFilters",additionalFiltersSelected) //TODO: convert this to groupby what
-    }
+    jsonString = addParamJSON(jsonString,"num",document.getElementById("num").innerText);
+    jsonString+=",";
+    jsonString = addParamJSON(jsonString,"genre",document.getElementById("genre").innerText);
+    jsonString+=",";
+    x = document.getElementById("sel0").value == "Died" ? "1" : "0";
+    jsonString = addParamJSON(jsonString,"dead",x);
     jsonString += "]}";
     debugger;
     return jsonString;
