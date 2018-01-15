@@ -21,7 +21,7 @@ def basicSec(requests):
 def sqlInjectionChars(dic):
     
     for key, value in dic.iteritems():
-        if (re.search("[\"\\\/\*\-;'<>]", value)):
+        if (re.search("[\"\\\/\*#;'<>]", value)):
             return False
     return True
 
