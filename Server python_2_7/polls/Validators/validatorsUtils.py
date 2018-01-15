@@ -33,9 +33,11 @@ def validateLength(dic, minLength, maxLength):
 
 def hasKeys(flow,dic):
     dicOfKeys = {}
-    dicOfKeys["pictureService"] = ["photo"]
+    dicOfKeys["pictureQuery"] = ["photo"]
     dicOfKeys["geoService"] = ["shit"]
-    keys = [key for key, value in dic.iteritems()]
+    keys = [str(key) for key, value in dic.iteritems()]
+    print(keys)
+    print(dicOfKeys[flow])
     # is subset
     return set(keys) < set(dicOfKeys[flow])
 
@@ -85,7 +87,7 @@ def validateGeoService(request):
 
 def validateGeneric(request):
     
-    flownames = ["pictureService", "geoService"]
+    flownames = ["pictureQuery", "geoService"]
     
     # request is ..
     if not (request.POST and "data" in request.POST.keys()):
@@ -99,8 +101,11 @@ def validateGeneric(request):
     
     if (type(json["params"]) is not list or len(json["params"]) == 0):
         return False
+    
+    if (flowname not in flownames):
+        return False
         
-    flowname, params = json["flowname"], json["params"][0]
+    flowname, params = str(json["flowname"]), json["params"][0]
     
     if not (hasKeys(flowname, params)):
         return False
@@ -108,8 +113,7 @@ def validateGeneric(request):
     if not validateLength(params, 3, 20):
         return False
     
-    if (flowname not in flownames):
-        return False
+
     # request doesn't contain illegal characters - against sql injections
     if not (sqlInjectionChars(params)):
         return False

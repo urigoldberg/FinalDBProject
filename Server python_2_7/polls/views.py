@@ -165,7 +165,7 @@ def generic(request):
      
     # Get / Create JSON query
     json = _json.loads(request.POST["data"])
-    flowname, params = json["flowname"], json["params"][0]
+    flowname, params = str(json["flowname"]), json["params"][0]
     if (flowname is None or param is None):
         return HttpResponse(ERROR_JSON)
     
