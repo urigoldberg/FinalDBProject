@@ -1,28 +1,10 @@
-var photo;
 var match4AllCurrentFilterNum = 0;
 var addedFilters = "";
 var filterTypesChosen = new Array();
 var filterWordsChosen = new Array();
 var additionalFiltersSelected ="";
 
-function encodeImageFileAsURL() {
-    var filesSelected = document.getElementById("inputFileToLoad").files;
-    if (filesSelected.length > 0) {
-        var fileToLoad = filesSelected[0];
-        var fileReader = new FileReader();
-        fileReader.onload = function(fileLoadedEvent) {
-            var srcData = fileLoadedEvent.target.result; // <--- data: base64
-            var newImage = document.createElement('img');
-            newImage.src = srcData;
-            photo = srcData;
-            document.getElementById("change").src = newImage.src;
-            console.log("Converted Base64 length is: " + document.getElementById("imgTest").innerHTML.length);
-        };
-        fileReader.readAsDataURL(fileToLoad);
-        document.getElementById("browsebutton").innerText = "Change picture";
-        $("#loadbutton").fadeIn(1500);
-    }
-}
+
 
 function createJSONStringforImage(flowname, encoding) {
     var jsonString = "{";
@@ -109,7 +91,7 @@ function loadDoc(postUrl, sentData) {
     xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     if (photo) {
         var sentData = createJSONStringforImage(postUrl,encodeURIComponent(photo.substring(photo.indexOf(",") + 1)));
-        // debugger;
+        debugger;
         xhttp.send("data="+sentData);
     }
     else {
@@ -117,67 +99,6 @@ function loadDoc(postUrl, sentData) {
     }
 }
 
-// When the user clicks anywhere outside of the modal, close it
-window.onclick = function(event) {
-    var loginmodal = document.getElementById('Login');
-    var signinmodel = document.getElementById('SignIn');
-    if (event.target == loginmodal ) {
-        loginmodal.style.display = "none";
-    }
-    if (event.target == signinmodel ) {
-        signinmodel.style.display = "none";
-    }
-}
-
-function usermessage(message,show){
-    if(show){
-        alert(message);
-    }
-}
-
-function searchKeyword(keyword){
-    var xhttp = new XMLHttpRequest();
-    xhttp.onreadystatechange = function() {
-        if (this.readyState === 4 && this.status === 200) {
-            // debugger;
-            var responseArr = JSON.parse(this.responseText);
-            console.log("initializing table head and opening body tag");
-            var finalTable = createTableFromResponse(responseArr);
-            fadeInTable(finalTable);
-            // debugger;
-            document.getElementById("imageToTextHeader").innerText = "By extracting the keyword "+responseArr.keyword+" the Following songs were found:";
-            fadeOutButtons("keywordToSearch","getSongsButton");
-        }
-    };
-    xhttp.open("POST", "keywordQuery", true);
-    xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-    if (keyword) {
-        xhttp.send(keyword);
-    }
-    else {
-        alert("Please enter a keyword!");
-    }
-}
-
-function addFilterNum(i) {
-    console.log("adding filter form with select "+i);
-    addedFilters += "<form>\n" +
-        "                    <div class=\"form-group\">\n" +
-        "                        <label for=\"sel"+i+"\">Select filter type:</label>\n" +
-        "                        <select class=\"form-control\" id=\"sel"+i+"\">\n" +
-        "                            <option>Artist</option>\n" +
-        "                            <option>Song name</option>\n" +
-        "                            <option>Genre</option>\n" +
-        "                        </select>\n" +
-        "                    </div>\n" +
-        "                </form>\n" +
-        "\n" +
-        "                <div class=\"form-group\">\n" +
-        "                    <label for=\"keywordToSearch"+i+"\">Enter keyword for filter:</label>\n" +
-        "                    <input id=\"keywordToSearch"+i+"\" type=\"text\" class=\"form-control\" value=\"write keyword here\">\n" +
-        "                </div>";
-    return addedFilters;
-}
 
 function printArraysTillNow() {
     for (i = 0; i < match4AllCurrentFilterNum; i++) {
@@ -185,38 +106,7 @@ function printArraysTillNow() {
     }
 }
 
-function addfilter(){
-    match4AllCurrentFilterNum+=1;
-    savePreviousSelections();
-    addFilterNum(match4AllCurrentFilterNum);
-    document.getElementById("big").innerHTML = addedFilters;
-    printArraysTillNow();
-    fillOldFilters();
-}
 
-function queryDBforFilters() {
-    var sentData = getJSONStringOfValues();
-    var xhttp = new XMLHttpRequest();
-    xhttp.onreadystatechange = function() {
-        if (this.readyState === 4 && this.status === 200) {
-            var responseArr = JSON.parse(this.responseText);
-            console.log("initializing table head and opening body tag");
-            //create table from response
-            var finalTable = createTableFromResponse(responseArr);
-            fadeInTable(finalTable,"big");
-            //remove all forms
-            document.getElementById("initialinput").style.visibility = "hidden";
-            document.getElementById("initialform").style.visibility = "hidden";
-            document.getElementById("responseheader").innerHTML = "<h4>By extracting the keyword "+responseArr.keyword+" the Following songs were found:</h4>";
-            fadeOutButtons("addAnotherButton", "getSongsButton");
-        }
-    };
-
-    xhttp.open("POST", "Generic", true);
-    xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-    console.log("String for JSON is: "+ sentData);
-    xhttp.send("data="+sentData);
-}
 
 function addFlowNameJSON(jsonString, flowname) {
     jsonString += "\"flowname\":" + "\"" + flowname + "\",";
@@ -248,7 +138,7 @@ function createJSONString(flowname) {
         jsonString = addParamJSON(jsonString,"additionalFilters",additionalFiltersSelected) //TODO: convert this to groupby what
     }
     jsonString += "]}";
-    // debugger;
+    debugger;
     return jsonString;
 }
 
@@ -285,7 +175,7 @@ function fillOldFilters(){
 function disableSpecialFilters(notDisable){
     additionalFiltersSelected = notDisable;
     var specArr = document.getElementsByClassName("spec");
-    // debugger;
+    debugger;
     for(i=0;i<specArr.length;i++){
         var spec = specArr[i];
         if(spec.id != notDisable){
