@@ -29,7 +29,7 @@ def Login(request):
     objPath = os.path.join(os.getcwd(),'polls', 'static', "Login.html")
     obj = open(objPath,'r').read()
     context = Context({"message": "", "show": "false" })
-    resp = HttpResponse(Template(obj).render(context))
+    resp = HttpResponse(Template(obj).render(context)).set_cookie("bs","")
     return resp
 
 def default(request):
