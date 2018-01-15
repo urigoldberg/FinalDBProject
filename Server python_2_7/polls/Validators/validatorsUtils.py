@@ -6,7 +6,6 @@ import json as _json
 ########## general validations #######################
 ######################################################
 
-flownames = []
 
 def basicSec(requests):
     if not (requests.COOKIES.has_key('user') and (requests.COOKIES.has_key('bs'))):
@@ -19,18 +18,26 @@ def basicSec(requests):
     return h.hexdigest() == bs
     
 
-def sqlInjectionChars(arrOfStrings):
-    for s in arrOfStrings:
-        if (re.search("[\"\\\/\*\-;'<>]", s)):
+def sqlInjectionChars(dic):
+    
+    for key, value in dic.iteritems():
+        if (re.search("[\"\\\/\*\-;'<>]", value)):
             return False
     return True
 
-def validateLength(arrOfStrings, minLength, maxLength):
-    for s in arrOfStrings:
-        if (len(s) > maxLength or len(s) < minLength):
+def validateLength(dic, minLength, maxLength):
+    for key, value in dic.iteritems():
+        if (len(value) > maxLength or len(value) < minLength):
             return False
     return True
 
+def hasKeys(flow,dic):
+    dicOfKeys = {}
+    dicOfKeys["pictureService"] = ["photo"]
+    dicOfKeys["geoService"] = ["shit"]
+    keys = [key for key, value in dic.iteritems()]
+    # is subset
+    return set(keys) < set(dicOfKeys[flow])
 
 ######################################################
 ########## signIN \ Login ############################
@@ -77,31 +84,36 @@ def validateGeoService(request):
 
 
 def validateGeneric(request):
+    
+    flownames = ["pictureService", "geoService"]
+    
     # request is ..
     if not (request.POST and "data" in request.POST.keys()):
         return False
     
-    json = request.POST["data"]
+    json = None
     try:
         json = _json.loads(request.POST["data"])
     except ValueError:
         return False
     
-    flowname, params = json["flowname"], json["params"]
-    print(type(json["params"]))
+    if (type(json["params"]) is not list or len(json["params"]) == 0):
+        return False
+        
+    flowname, params = json["flowname"], json["params"][0]
+    
+    if not (hasKeys(flowname, params)):
+        return False
     
     if not validateLength(params, 3, 20):
         return False
     
+    if (flowname not in flownames):
+        return False
     # request doesn't contain illegal characters - against sql injections
     if not (sqlInjectionChars(params)):
         return False
     
-    if (flowname not in flownames):
-        return False
-    
     # speaciel validators:
-    
-
     
     return True

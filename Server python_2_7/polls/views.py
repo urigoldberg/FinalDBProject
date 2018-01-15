@@ -160,22 +160,18 @@ def SignInfunc(request):
 @csrf_exempt
 def generic(request):
     # Validate
-#    print("GENERIC")
-    #print(request)
-    #print(request.POST)
-    #print(request.POST["data"])
     print(_json.loads(request.POST["data"])["flowname"])
     if not (validateGeneric(request)):
          return HttpResponse(ERROR_JSON)
      
     # Get / Create JSON query
-    
-    flowname,param = flowname, params = request.POST["flowname"], request.POST["params"]
+    json = _json.loads(request.POST["data"])
+    flowname, params = json["flowname"], json["params"][0]
     if (flowname is None or param is None):
         return HttpResponse(ERROR_JSON)
-        
+    
     #create Json Response
-    responseJson = handleQueryResponse(flowname,param)
+    responseJson = handleQueryResponse(flowname,params)
         
     # return to client
     return HttpResponse(responseJson)
@@ -187,7 +183,7 @@ def handleQueryResponse(flowname,param):
     
     #check flow name
     if (flowname == "pictureService"):
-        json = (sendGoogleQuery(params['photo']))
+        json = (sendGoogleQuery(param['photo']))
         ResultsArray = get_songs_related_to_keywords(json)
     
     if (flowname == "GeoService"):
