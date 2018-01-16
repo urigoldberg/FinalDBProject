@@ -128,11 +128,7 @@ def validateGeoService(request):
 
 def validateGeneric(request):
     print("start validating")
-    
-    
-    if not(basicSec(request)):
-        print("validateGeneric", "cookie")
-    
+       
     
     flownames = ["pictureQuery", "geoService", "year","columnname","youTubeLink","SucAlbums"\
                  ,"mostviewedartist", "updateyoutubelink","add_liked_song"]

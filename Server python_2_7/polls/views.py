@@ -183,7 +183,7 @@ def generic(request):
     
     print ("generic passed validation")
     
-    userName = requests.COOKIES['user']
+    
      
     # Get / Create JSON query
     json = _json.loads(request.POST["data"])
@@ -206,7 +206,7 @@ def generic(request):
     print("we return ",responseJson," to flow",flowname)
     return HttpResponse(responseJson)
 
-def handleQueryResponse(flowname,param,userName):
+def handleQueryResponse(flowname,param):
     
     ResultsArray = None
 #    print("param in handle query response",param)
@@ -250,7 +250,7 @@ def handleQueryResponse(flowname,param,userName):
         ResultsArray = GenericBL.addLikedSong(param)
         
     if (flowname == "personalization"):
-        ResultsArray = GenericBL.personalization(userName)
+        ResultsArray = GenericBL.personalization(param["userName"])
     
     # If ResultsArray == None, an error has occuered
     # Otherwise, the function returned array for json
