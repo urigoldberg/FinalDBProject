@@ -37,7 +37,4 @@ urlpatterns = [
     
     
     
-    url(r'^polls/mockHTML',views.mockHTML),
-    url(r'^polls/test', views.test),
-
 ]

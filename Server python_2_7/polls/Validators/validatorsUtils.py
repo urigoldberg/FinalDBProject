@@ -173,10 +173,6 @@ def validateGeneric(request):
             if not (sqlInjectionCharsList (value)):
                 return False
     
-#    if not validateLength(params, 1, 20):
-#        print("to short")
-#        return False
-    
 
     # request doesn't contain illegal characters - against sql injections
     if not (sqlInjectionChars(params)):
