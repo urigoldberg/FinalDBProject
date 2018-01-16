@@ -119,8 +119,9 @@ class DBconnection():
         
 #############LOGIN######################
     
-def addNewUserDAL(username, password):
-    query = """insert into DbMysql12.users_table values ('"""+username+"""','"""+password+"""');"""
+def addNewUserDAL(name, password,datebith,yesNo,genre,Country):
+    
+    query = """insert into DbMysql12.users_table values ('{0}','{1}','{2}','{3}','{4}','{5}');""".format(name, password,datebith,yesNo,genre,Country)
     con = DBconnection()
     if (con.insertQuery(query)):
         con.close()
