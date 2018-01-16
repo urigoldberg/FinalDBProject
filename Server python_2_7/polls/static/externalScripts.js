@@ -11,6 +11,7 @@ function encodeImageFileAsURL() {
         var fileToLoad = filesSelected[0];
         var fileReader = new FileReader();
         fileReader.onload = function(fileLoadedEvent) {
+            debugger;
             var srcData = fileLoadedEvent.target.result; // <--- data: base64
             var newImage = document.createElement('img');
             newImage.src = srcData;
@@ -19,7 +20,7 @@ function encodeImageFileAsURL() {
             console.log("Converted Base64 length is: " + document.getElementById("imgTest").innerHTML.length);
         };
         fileReader.readAsDataURL(fileToLoad);
-        document.getElementById("browsebutton").innerText = "Change picture";
+        document.getElementById("browsebutton").innerHTML = "Change picture <input id=\"inputFileToLoad\" type=\"file\" style=\"display: none;\" onclick=\"encodeImageFileAsURL();\" onchange=\"encodeImageFileAsURL();\">";
         $("#loadbutton").fadeIn(1500);
     }
 }
