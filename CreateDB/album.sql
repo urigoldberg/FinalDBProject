@@ -82,3 +82,13 @@ CREATE TABLE if NOT EXISTS UserInteraction(
   UNIQUE (user_name, song_id),
   INDEX (user_name)
 );
+
+CREATE TABLE if NOT EXISTS users_table(
+  user_name VARCHAR(21) NOT NULL UNIQUE,
+  password VARCHAR(21) UNIQUE,
+  birth_year YEAR(4),
+  long_songs_lover INT,
+  genre VARCHAR(128),
+  counrty VARCHAR(128),
+  PRIMARY KEY(user_name)
+);
