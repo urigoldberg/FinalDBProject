@@ -93,6 +93,10 @@ def searchByGeoLocation(requests):
     return resp
 
 
+def personalization(requests):
+    if not basicSec(requests):
+        return redirect('Login.html')
+    return "aaaaaaaaaaa"
 
 ####################################
 ####### views functions POST #######
