@@ -1,5 +1,7 @@
 var DEADButton = 1;
 var q2Button = 1;
+var q3Button = 1;
+
 
 function createTableFromResponse(responseArr) {
     if(responseArr.isError == "true"){
@@ -7,7 +9,6 @@ function createTableFromResponse(responseArr) {
     }
     var numofRows = responseArr.Results.length;
     var columnNames = [];
-     // debugger;
     for (var colName in responseArr.Results[0]) {
         if (colName) {
             columnNames.push(colName);
@@ -24,7 +25,6 @@ function createTableFromResponse(responseArr) {
     for (var i = 0; i < numofRows; i++){
         finaltable+="<tr>";
         for(var j=0;j<numofCols;j++){
-            // debugger;
             var val = responseArr.Results[i][columnNames[j]];
             finaltable+="<th>"+val+"</th>";
         }
@@ -62,25 +62,21 @@ function hideDisplayofClass(classNames) {
 }
 
 function loadDocSpecialQuery(postUrl) {
-    var sentData = createJSONStringDistinctGenre(postUrl);
+    var sentData = createJSONStringforDistinctColumnName(postUrl, "genre", "Song");
     var xhttp = new XMLHttpRequest();
-    // debugger;
     xhttp.onreadystatechange = function() {
         if (this.readyState === 4 && this.status === 200) {
-            // debugger;
             var responseArr = JSON.parse(this.responseText);
             console.log("initializing table head and opening body tag");
             var finalTable = createTableFromResponse(responseArr);
             fadeInTable(finalTable,"big");
             document.getElementById("responseheader").innerText = "the Following year was found:";
-            // debugger;
             hideDisplayofClass("tofade");
             hideDisplayofClass("querybutton");
         }
     };
     xhttp.open("POST", "Generic", true);
     xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-    // debugger;
     xhttp.send("data="+sentData);
 }
 
@@ -104,7 +100,6 @@ function createJSONString(flowname) {
     var jsonString = "{";
     jsonString = addFlowNameJSON(jsonString,flowname);
     jsonString = addparamsKeyforJSON(jsonString);
-    // debugger;
     var num = document.getElementById("num").value;
     jsonString = addParamJSON(jsonString,"num",num);
     jsonString+=",";
@@ -114,7 +109,6 @@ function createJSONString(flowname) {
     x = document.getElementById("sel0").value === "Died" ? "1" : "0";
     jsonString = addParamJSON(jsonString,"dead",x);
     jsonString += "]}";
-    // debugger;
     return jsonString;
 }
 
@@ -163,7 +157,7 @@ function switchq2() {
             "                    </form>\n" +
             "<button id=\"changeq2\" class =\"btn btn-default\" onclick=\"switchq2()\">Close most viewed query</button>";
         console.log("Setting q2Button to 0");
-        updateGenre();
+        loadDistinctDropdown("columnname", "selq2", "genre", "Song");
         q2Button = 0;
     }
     else{
@@ -173,45 +167,54 @@ function switchq2() {
     }
 }
 
-function updateGenre(){
-    loadDistinctGenere("columnname");
+function switchq3() {
+    if(q3Button === 1){
+        document.getElementById("q3").innerHTML = "<p>Most viewed artists on YouTube from Genre:</p>\n" +
+            "                    <form id=\"q3form\">\n" +
+            "                        <div class=\"form-group\">\n" +
+            "                            <select class=\"form-control\" id=\"selq3\"></select>\n" +
+            "                        </div>\n" +
+            "                    </form>\n" +
+            "<button id=\"changeq3\" class =\"btn btn-default\" onclick=\"switchq3()\">Close most viewed query</button>";
+        console.log("Setting q3Button to 0");
+        loadDistinctDropdown("columnname", "selq3", "name", "artists");
+        q3Button = 0;
+    }
+    else{
+        document.getElementById("q3").innerHTML = "<button id=\"changeq3\" class =\"btn btn-default\" onclick=\"switchq3()\">Open most viewed query</button>";
+        console.log("Setting q3Button to 1");
+        q3Button=1;
+    }
 }
 
-function loadDistinctGenere(flowName) {
-    var sentData = createJSONStringDistinctGenre(flowName);
+function loadDistinctDropdown(flowName, elementIdtoChange, columnName, tablename) {
+    var sentData = createJSONStringforDistinctColumnName(flowName, columnName, tablename);
     var xhttp = new XMLHttpRequest();
-    // debugger;
     xhttp.onreadystatechange = function() {
         if (this.readyState === 4 && this.status === 200) {
-            // debugger;
             var responseArr = JSON.parse(this.responseText);
             console.log("initializing table head and opening body tag");
             var finalTable = fillDropdownFromResponse(responseArr);
-            // fadeInTable(finalTable,"selq2");
-            document.getElementById("selq2").style.visibility = "hidden";
-            document.getElementById("selq2").innerHTML = finalTable;
-            document.getElementById("selq2").style.visibility = "visible";
+            document.getElementById(elementIdtoChange).style.visibility = "hidden";
+            document.getElementById(elementIdtoChange).innerHTML = finalTable;
+            document.getElementById(elementIdtoChange).style.visibility = "visible";
         }
     };
     xhttp.open("POST", "Generic", true);
     xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-    // debugger;
     xhttp.send("data="+sentData);
 }
 
-function createJSONStringDistinctGenre(flowname) {
+function createJSONStringforDistinctColumnName(flowname, columnName, tablename) {
     var x;
     var jsonString = "{";
     jsonString = addFlowNameJSON(jsonString,flowname);
     jsonString = addparamsKeyforJSON(jsonString);
-    // debugger;
-    jsonString = addParamJSON(jsonString,"column","genre");
+    jsonString = addParamJSON(jsonString,"column",columnName);
     jsonString+=",";
-    jsonString = addParamJSON(jsonString,"tablename","Song");
+    jsonString = addParamJSON(jsonString,"tablename",tablename);
     jsonString += "]}";
-    // debugger;
     console.log(jsonString);
-    // debugger;
     return jsonString;
 }
 
@@ -221,7 +224,6 @@ function fillDropdownFromResponse(responseArr) {
     }
     var numofRows = responseArr.Results.length;
     var finalDropDownOptions ="";
-    // debugger;
     for(var i=0;i<numofRows;i++){
         finalDropDownOptions+="<option>"+responseArr.Results[i].genre+"</option>";
     }
