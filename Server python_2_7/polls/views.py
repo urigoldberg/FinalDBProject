@@ -95,13 +95,13 @@ def LoginUserfunc(request):
     
     # validate
     message = []
-    if not (validateLoginSignIn(request,message)):
+    if not (validateLogin(request,message)):
         return SignInLoginFailed(message[0])
     
-    name, password = request.GET['username'],request.GET['password']
+    name, password,datebith,yesNo,genre,Country = request.GET['username'],request.GET['password'],request.GET['datebith'],request.GET['yesNo'],request.GET['genre'],request.GET['Country']
 
     # BL
-    if (loginUser(name,password)):
+    if (loginUser(name,password,)):
         resp = setCookieAndResponse("UiHomepage.html",name )
     else:
         resp = SignInLoginFailed("user or password are incorrect, please try again")
@@ -111,7 +111,7 @@ def LoginUserfunc(request):
 def SignInfunc(request):
     # validate
     message = []
-    if not (validateLoginSignIn(request,message)):
+    if not (validateSignIn(request,message)):
         return SignInLoginFailed(message[0])
     
     name, password = request.GET['username'],request.GET['password']

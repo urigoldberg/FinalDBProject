@@ -67,13 +67,33 @@ def hasKeys(flow,dic):
 ########## signIN \ Login ############################
 ######################################################
 
-def validateLoginSignIn(request, message):
+def validateSignIn(request, message):
     # request has un + password
-    if not (request.GET and "username" in request.GET and "password" in request.GET):
+    if not (request.GET and "username" in request.GET and "password" in request.GET and 'datebith' in request.GET and 'yesNo' in request.GET and 'genre' in request.GET and 'Country' in request.GET):
         message += ["invalid request, please try again"]
         return False
     
-    username, password = request.GET["username"], request.GET["password"]
+    username, password,datebith,yesNo,genre,Country = request.GET['username'],request.GET['password'],request.GET['datebith'],request.GET['yesNo'],request.GET['genre'],request.GET['Country']
+    
+    if not validateLengthList([username,password,datebith,yesNo,genre,Country], 5, 20):
+        message += ["username & password must contain at least 5 characters, and not more than 20"]
+        return False
+    
+    # request doesn't contain illegal characters - against sql injections
+    if not (sqlInjectionCharsList([username,password,datebith,yesNo,genre,Country])):
+        message += ["invalid request, please try again"]
+        return False
+    
+    return True
+
+
+def validateLogin(request, message):
+    # request has un + password
+    if not (request.GET and "username" in request.GET and "password"):
+        message += ["invalid request, please try again"]
+        return False
+    
+    username, password= request.GET['username'],request.GET['password']
     
     if not validateLengthList([username,password], 5, 20):
         message += ["username & password must contain at least 5 characters, and not more than 20"]
@@ -85,7 +105,6 @@ def validateLoginSignIn(request, message):
         return False
     
     return True
-
 
 ######################################################
 ##################### Geo ############################
