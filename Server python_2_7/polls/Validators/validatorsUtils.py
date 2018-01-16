@@ -2,7 +2,7 @@ import re
 import hashlib
 import json as _json
 
-from ..BL import GenericBL
+from ..BL.GenericBL.GenericBL import getDicOfParams
 
 ######################################################
 ########## general validations #######################
@@ -54,7 +54,7 @@ def hasKeys(flow,dic):
     dicOfKeys["columnname"] = ["column","tablename"]
     dicOfKeys["youTubeLink"] = ["operation","artistname"]
     dicOfKeys["mostviewedartist"] = ["location","genre"]
-    
+	dicOfKeys["SucAlbums"] = ["numOfSales", "genre"]
     keys = [str(key) for key, value in dic.iteritems()]
     print(keys)
     print(dicOfKeys[flow])
@@ -108,7 +108,7 @@ def validateGeoService(request):
 def validateGeneric(request):
     print("start validating")
     
-    flownames = ["pictureQuery", "geoService", "year","columnname","youTubeLink","mostviewedartist"]
+    flownames = ["pictureQuery", "geoService", "year","columnname","youTubeLink","mostviewedartist","SucAlbums"]
     
     # request is ..
     if not (request.POST and "data" in request.POST.keys()):
@@ -129,9 +129,9 @@ def validateGeneric(request):
     flowname, diclist = str(json["flowname"]), json["params"]
      # Get params dis
     if (flowname == "filterKeys"):
-        params = GenericBL.getDicOfParams(diclist,True)
+        params = getDicOfParams(diclist,True)
     else:
-        params = GenericBL.getDicOfParams(diclist,False)
+        params = getDicOfParams(diclist,False)
     
     if (flowname not in flownames):
         print("flowname not in flownames")

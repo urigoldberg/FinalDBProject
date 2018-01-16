@@ -61,8 +61,13 @@ function hideDisplayofClass(classNames) {
     }
 }
 
-function loadDocSpecialQuery(postUrl) {
-    var sentData = createJSONString(postUrl);
+function loadDocSpecialQuery(flowname) {
+    var sentData;
+    if(flowname === "columnname"){
+        sentData = createJSONStringforDistinctColumnName(flowname, "genre", "Song");
+    }else{
+        sentData = createJSONString(flowname)
+    }
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
         if (this.readyState === 4 && this.status === 200) {
@@ -169,19 +174,19 @@ function switchq2() {
 
 function switchq3() {
     if(q3Button === 1){
-        document.getElementById("q3").innerHTML = "<p>Most viewed artists on YouTube from Genre:</p>\n" +
+        document.getElementById("q3").innerHTML = "<p>Longest/shortest song on youtube of one of the following artists:</p>\n" +
             "                    <form id=\"q3form\">\n" +
             "                        <div class=\"form-group\">\n" +
             "                            <select class=\"form-control\" id=\"selq3\"></select>\n" +
             "                        </div>\n" +
             "                    </form>\n" +
-            "<button id=\"changeq3\" class =\"btn btn-default\" onclick=\"switchq3()\">Close most viewed query</button>";
+            "<button id=\"changeq3\" class =\"btn btn-default\" onclick=\"switchq3()\">Close YouTube link query</button>";
         console.log("Setting q3Button to 0");
         loadDistinctDropdown("columnname", "selq3", "name", "artists");
         q3Button = 0;
     }
     else{
-        document.getElementById("q3").innerHTML = "<button id=\"changeq3\" class =\"btn btn-default\" onclick=\"switchq3()\">Open most viewed query</button>";
+        document.getElementById("q3").innerHTML = "<button id=\"changeq3\" class =\"btn btn-default\" onclick=\"switchq3()\">open YouTube link query</button>";
         console.log("Setting q3Button to 1");
         q3Button=1;
     }
@@ -194,7 +199,7 @@ function loadDistinctDropdown(flowName, elementIdtoChange, columnName, tablename
         if (this.readyState === 4 && this.status === 200) {
             var responseArr = JSON.parse(this.responseText);
             console.log("initializing table head and opening body tag");
-            var finalTable = fillDropdownFromResponse(responseArr);
+            var finalTable = fillDropdownFromResponse(responseArr,columnName);
             document.getElementById(elementIdtoChange).style.visibility = "hidden";
             document.getElementById(elementIdtoChange).innerHTML = finalTable;
             document.getElementById(elementIdtoChange).style.visibility = "visible";
@@ -218,14 +223,21 @@ function createJSONStringforDistinctColumnName(flowname, columnName, tablename) 
     return jsonString;
 }
 
-function fillDropdownFromResponse(responseArr) {
+function fillDropdownFromResponse(responseArr,columnName) {
     if(responseArr.isError == "true"){
         return "<p>"+responseArr.errorMessage+"</p>"
     }
     var numofRows = responseArr.Results.length;
     var finalDropDownOptions ="";
+    debugger;
     for(var i=0;i<numofRows;i++){
-        finalDropDownOptions+="<option>"+responseArr.Results[i].genre+"</option>";
+        if(columnName === "genre"){
+            finalDropDownOptions+="<option>"+responseArr.Results[i].genre+"</option>";
+        }
+        else{
+            finalDropDownOptions+="<option>"+responseArr.Results[i].name+"</option>";
+
+        }
     }
     return finalDropDownOptions;
 }

@@ -2,6 +2,10 @@ import MySQLdb
 import os
 import string
 
+import sys
+reload(sys)  
+sys.setdefaultencoding('utf8')
+
 ######CLASS###########
 
 class DBconnection():
@@ -21,11 +25,14 @@ class DBconnection():
     _open = False
     _columns = None
     printable = set(string.printable)
+    
+    
+    
 
     
     def connect(self):
         if not (self._open):
-            self._db = MySQLdb.connect(user=self._user, db=self._db,  passwd=self._passwd, host=self._host, port = self._port)
+            self._db = MySQLdb.connect(user=self._user, db=self._db,  passwd=self._passwd, host=self._host, port = self._port, charset='utf8',use_unicode=True)
             self.cursor = self._db.cursor()
             self._open = True
             
@@ -46,7 +53,7 @@ class DBconnection():
             self._succ = True
             self._results = self.cursor.fetchall()
             print("done fetching results, description is", self.cursor.description)
-            self._columns = [filter(lambda x: x in self.printable, str(i[0])) for i in self.cursor.description]
+            self._columns = [str(i[0]) for i in self.cursor.description]
             print("columns are",self._columns)
             return True
         
@@ -222,7 +229,7 @@ FROM
     DbMysql12.artists t
 WHERE
     t.{0} IS NOT NULL
-    AND t.genre like '{2}'
+    AND t.genre = '{2}'
         AND t.genre IS NOT NULL
         AND t.genre NOT LIKE ''
 GROUP BY t.genre
@@ -259,7 +266,7 @@ FROM
     DbMysql12.Song a,
     DbMysql12.artists b
 WHERE
-    a.artist_db_id = b.db_id
+    a.artist_id = b.id
         AND b.name = '{0}'
         AND a.media_url IS NOT NULL
         AND a.duration {1}= ALL (SELECT 
@@ -278,7 +285,7 @@ WHERE
         return con._columns,con._results
     return None,None
 
-
+########MOST VIEWED GENRE##################
 def mostViewedArtistDB(location,genre):
     query = "select * from ("
     base_query = """SELECT artists.name,artists.location,artists.genre, sum(album_views) as artist_views
@@ -289,7 +296,7 @@ GROUP BY album_id) as album_by_song
 on Album.id = album_by_song.album_id
    WHERE Album.artist_id = artists.id
 GROUP BY artists.id, artists.name
-ORDER BY artist_views DESC)"""
+ORDER BY artist_views DESC) t1"""
 
     if(location != None):
         query = query + base_query + "where t1.location like '%"""+location+"""%'"""
@@ -298,6 +305,29 @@ ORDER BY artist_views DESC)"""
     elif (genre != None):
         query + base_query + "where t1.genre like '%"""+genre+"""%'"""
     
+    print("query",query)
+    con = DBconnection()
+    if (con.doSelectQuery(query) and con._rowsReturned > 0):
+        con.close()
+        return con._columns,con._results
+    return None,None
+	
+#########ALBUMS OF GENRE ###############################
+def albumsOfGenreWithSalesDB(numOfSales,genre):
+    query = """SELECT 
+    c.name AS Artist_Name,
+    a.genre AS Genre,
+    COUNT(b.id) AS Num_Of_Albums
+FROM
+    DbMysql12.Song a,
+    DbMysql12.Album b,
+    DbMysql12.artists c
+WHERE
+    b.id = a.album_id AND a.album_id = c.id
+        AND b.sales > {0}
+        AND a.genre = '{1}'
+GROUP BY (b.id)
+ORDER BY Num_Of_Albums""".format(numOfSales,genre)
     print("query",query)
     con = DBconnection()
     if (con.doSelectQuery(query) and con._rowsReturned > 0):
