@@ -19,6 +19,8 @@ from polls.Validators.validatorsUtils import *
 from polls.BL.GoogleVisionApiBL.googleVisionSendPost import *
 from polls.BL.GoogleVisionApiBL.getSongsByKeywordFromGoogleApi import *
 from polls.BL.GeoBL.GeoServiceBL import get_json_from_request, get_artists_in_requested_radius
+from polls.BL.GoogleVisionApiBL.googleVisionSendPost import sendGoogleQuery
+from polls.BL.GoogleVisionApiBL.getSongsByKeywordFromGoogleApi import get_songs_related_to_keywords
 from polls.BL.sqlQueryBuilderBL import queriesBuilder,mockResponse
 from polls.BL.GenericBL import GenericBL
 from polls.BL.loginManageBL.loginFunctions import *
@@ -196,11 +198,13 @@ def generic(request):
 def handleQueryResponse(flowname,param):
     
     ResultsArray = None
-    print("param",param)
-    
+#    print("param in handle query response",param)
+    print("flowname is",flowname)
     #check flow name
-    if (flowname == "pictureService"):
+    if (flowname == "pictureQuery"):
+        print("sending picture to google")
         json = (sendGoogleQuery(param['photo']))
+        print("sent picture to google")
         ResultsArray = get_songs_related_to_keywords(json)
     
     if (flowname == "GeoService"):

@@ -53,8 +53,8 @@ def hasKeys(flow,dic):
     print(keys)
     print(dicOfKeys[flow])
     # is subset
-    return set(keys) < set(dicOfKeys[flow])
-
+    #return set(keys) < set(dicOfKeys[flow])
+	return set(keys) == set(dicOfKeys[flow])
 ######################################################
 ########## signIN \ Login ############################
 ######################################################

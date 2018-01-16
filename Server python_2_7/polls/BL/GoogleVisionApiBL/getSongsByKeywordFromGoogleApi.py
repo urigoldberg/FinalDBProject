@@ -2,13 +2,12 @@ import json
 import MySQLdb
 from collections import OrderedDict
 from ..DAL.mainDAL import *
-    
+from ..GenericBL.GenericBL import generateResFromRes
 
 
 def get_songs_related_to_keywords(jsons):
 
     keyword = None
-    res = '['
     try:
         decoded = json.loads(jsons)
 #        #get all keywords
@@ -21,13 +20,16 @@ def get_songs_related_to_keywords(jsons):
         #keyword = str(decoded['responses'][0]['labelAnnotations'][0]['description'])
         array = [str(word['description']) for word in decoded['responses'][0]['labelAnnotations']]
         keywords = list(OrderedDict.fromkeys(array))[:5]
-        rows = googleApiSearchSongsByKeyWord(keywords)
-        for row in rows:
-            song_name = str.format('"%s"' % row[0])
-            artist_name = str.format('"%s"' % row[1])
-            match = str.format('"%s"' % row[3])
-            res += '{ "Song Name":' + song_name + ',"Artist":' + artist_name + ',"YouTube Link":' + '"noooo"' + ', "Matching Keyword":'+match+'},'
-        return res[:len(res)-1] + ']'
+        cols,rows = googleApiSearchSongsByKeyWord(keywords)
+        print("returned from google api query. rows",rows)
+        return generateResFromRes(cols,rows)
+#        for row in rows:
+#            song_name = str.format('"%s"' % row[0])
+#            artist_name = str.format('"%s"' % row[1])
+#            match = str.format('"%s"' % row[3])
+#            res += '{ "Song Name":' + song_name + ',"Artist":' + artist_name + ', "Matching Keyword":'+match+'},'
+#        print("res[:len(res)-1] + ']'", res[:len(res)-1] + ']')
+#        return res[:len(res)-1] + ']'
         
     except (ValueError, KeyError, TypeError):
         print ("JSON format error")

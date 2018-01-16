@@ -40,14 +40,41 @@ class DBconnection():
         # succed
         try:
             self._rowsReturned = self.cursor.execute(query)
+            print("executed successfully. num of rows returned",self._rowsReturned)
             self._succ = True
             self._results = self.cursor.fetchall()
-            self._columns = [i[0] for i in self.cursor.description]
+            print("done fetching results, description is", self.cursor.description)
+            self._columns = [str(i[0]) for i in self.cursor.description]
+            print("columns are",self._columns)
             return True
         
         # fail
         except Exception as e:
             self._exception = (e.message)
+            print("exception has occurred in doSelectQuery")
+            return False
+        
+    def doQuery(self, query):  
+        #this is used for DB
+        self.connect()
+        
+        # prepare
+        self._succ = False
+        self._rowsReturned = -1
+        self._results = None
+        self._exception = None
+        
+        # succed
+        try:
+            self._rowsReturned = self.cursor.execute(query)
+            self._db.commit()
+            self._succ = True
+            return True
+        
+        # fail
+        except Exception as e:
+            self._exception = (e.message)
+            print("exception has occurred in doQuery")
             return False
         
         
@@ -108,53 +135,62 @@ def getUserPasswordUsernameDAL(username):
 ###########GOOGLE API####################
     
 def googleApiSearchSongsByKeyWord(keywords):
-    #this is the real query we should be using once we change Lyrics.seed_id to Lyrics.song_id    
+    if len(keywords) == 0:
+        return None
     keywords_for_full_text = ""
     for keyword in keywords:
-        keywords_for_full_text += ' +'+ keyword
-    query = """
-    create table DbMysql12.temp_keywords
-(
+        keywords_for_full_text += ' +'+ str(keyword)
+    create_search_table_query = """
+    drop table if exists DbMysql12.temp_keywords;
+    create table DbMysql12.temp_keywords(
 	song_id int,
     lyrics text
 );
 
 Insert Into DbMysql12.temp_keywords
 SELECT lyr.song_id ,lyr.lyrics FROM DbMysql12.Lyrics lyr
-where match(lyr.lyrics) against ('"""+keywords_for_full_text+"""' in boolean mode);
+where match(lyr.lyrics) against ('"""+keywords_for_full_text+"""' in natural language mode);
     """
-    query += "select t.* from ("
-    if len(keywords) == 0:
-        return None
     
+    con = DBconnection()
+    con.doQuery(create_search_table_query)
+    con.close()
+    print("finished creating table")
+    
+    query = "select t.title as 'Song Name',t.name as 'Artist Name', t.keyword as 'Keyword' from ("
     for index,keyword in enumerate(keywords):
         if not index == 0:
             query += "union all "
         numOfAppear = 5 - index + 1
         # TO DO - DUPLICATED ROWS
-        query += """select * from (SELECT 
-    inner_songs.title, art.name, inner_songs.num_occurrences, '"""+keyword+"""' as keyword
-FROM
-    (SELECT 
-        *
-    FROM
+        query += """select * from
         (SELECT 
-        song_id,
-            ((LENGTH(lyrics) - LENGTH(REPLACE(lyrics, '"""+keyword+"""', ''))) / LENGTH('"""+keyword+"""')) AS num_occurrences
-    FROM
-        DbMysql12.temp_keywords) lyr
-    INNER JOIN DbMysql12.Song son ON lyr.song_id = son.id)  inner_songs
-        INNER JOIN
-    DbMysql12.artists art ON art.db_id = inner_songs.artist_db_id
+ inner_songs.title, art.name,
+ inner_songs.num_occurrences, '"""+str(keyword)+"""' as keyword
+FROM (SELECT * FROM
+(SELECT song_id,
+((LENGTH(lyrics) - LENGTH(REPLACE(lyrics, '"""+str(keyword)+"""', '')))
+/ LENGTH('"""+str(keyword)+"""'))
+AS num_occurrences FROM
+DbMysql12.temp_keywords) lyr
+INNER JOIN DbMysql12.Song son ON lyr.song_id = son.id)  inner_songs
+INNER JOIN
+DbMysql12.artists art ON art.db_id = inner_songs.artist_db_id
 ORDER BY num_occurrences DESC
 LIMIT """+str(numOfAppear) +""") as tbl"""+str(index) +""" 
-    """
+"""
     con = DBconnection()
     query += """) t where t.num_occurrences > 0 order by t.num_occurrences desc;
-    drop table DbMysql12.temp_keywords;"""
+"""
+    
+
+    f = open('workfile', 'w')
+    f.write(query)
+    f.close
     if (con.doSelectQuery(query) and con._rowsReturned > 0):
-        con.close()
-        return con._results 
+        print("finished googleAPI successfuly")
+        con.close()   
+        return con._columns, con._results 
     return None
 
 ###########Geographical####################
