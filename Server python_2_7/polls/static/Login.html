@@ -8,9 +8,32 @@
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
         <link rel="stylesheet" type="text/css" href="static/recommenderStyles.css">
         <script src="static/externalScripts.js"></script>
+		<style type="text/css">
+td
+{
+    padding:0 15px 0 15px;
+}
+</style>
     </head>
     <script>
         window.onload = usermessage('{{message}}',{{show}});
+		
+		function validateForm() {
+    var x = document.forms["modal-content animate sign"]["datebith"].value;
+    if (x.length != 4) {
+        alert("year must contains 4 digits..");
+        return false;
+    }
+}
+
+		function validateFormYes() {
+    var x = document.forms["modal-content animate sign"]["yesNo"].value;
+    if (x === 'yes' || x === 'no' ) {
+        alert("please enter yes \ no");
+        return false;
+    }
+}
+
     </script>
     <body>
         <!-- HEADER -->
@@ -46,18 +69,14 @@
                         <input type="password" placeholder="Enter Password" name="password" required>
 
                         <button type="submit" class="loginbutton">Login</button>
-                        <input type="checkbox" checked="checked"> Remember me
                     </div>
 
-                    <div class="container" style="background-color:#f1f1f1">
-                        <button type="button" onclick="document.getElementById('Login').style.display='none'" class="cancelbtn">Cancel</button>
-                        <span class="psw">Forgot <a href="#">password?</a></span>
-                    </div>
+                   
                 </form>
             </div>
 
             <div id="SignIn" class="modal">
-                <form class="modal-content animate" action="SignIn">
+                <form class="modal-content animate sign" action="SignIn">
                     <div class="imgcontainer">
                         <span onclick="document.getElementById('SignIn').style.display='none'" class="close" title="Close Modal">&times;</span>
                         <img src="static/avatar.png" alt="Avatar" class="avatar img-circle">
@@ -69,15 +88,46 @@
 
                         <label><b>Password</b></label>
                         <input type="password" placeholder="Enter Password" name="password" required>
+						
+						<br><br>
+						
+						<table>
+						<tr>
+						<td>
+						<label><b>Year Of Birth</b></label>
+                        <input type="text" placeholder="1900" onkeypress='return event.charCode >= 48 && event.charCode <= 57' name="datebith"  onsubmit="return validateForm()" required>
+						</td>
+						<td>
+						<label><b>Do you like you're songs longs?</b></label>
+                        <input type="text" placeholder="yes / no" name="yesNo"  onsubmit="return validateFormYes()" required>
+						</td>
+						<td></td>
+						<td>
+					
+						<label style="align:left"><b>favorite genre</b></label>
+                        <select type="text" class="form-control" name="genre" required>
+						
+						  <option value="volvo">Volvo</option>
+						  <option value="saab">Saab</option>
+						
+						</select>
+						</td>
+						<td>
+						<label style="align:left"><b>Country</b></label>
+						<select type="text" class="form-control" name="Country" required>
+						
+						  <option value="volvo">Volvo</option>
+						  <option value="saab">Saab</option>
+						
+						</select>
+						</td>
+						</tr>
+						</table>
+						
 
                         <button type="submit" class="loginbutton">Sign In</button>
-                        <input type="checkbox" checked="checked"> Remember me
                     </div>
 
-                    <div class="container" style="background-color:#f1f1f1">
-                        <button type="button" onclick="document.getElementById('SignIn').style.display='none'" class="cancelbtn">Cancel</button>
-                        <span class="psw">Forgot <a href="#">password?</a></span>
-                    </div>
                 </form>
             </div>
 
