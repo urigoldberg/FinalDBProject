@@ -221,6 +221,10 @@ def handleQueryResponse(flowname,param):
             dead = "year_of_death"
         if (num.isdigit()):
             ResultsArray = GenericBL.yearMostArtistDiedOrBorn(dead,num,genre)
+            
+    if (flowname == "columnname"):
+        column, tablename = str(param["column"]),str(param["tablename"])
+        ResultsArray = GenericBL.getColumnValues(column, tablename)
     # more ifs..
     
     # If ResultsArray == None, an error has occuered

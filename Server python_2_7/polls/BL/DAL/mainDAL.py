@@ -106,6 +106,7 @@ class DBconnection():
             self._db.close()
             self._open = False
         
+    
         
 #############LOGIN######################
     
@@ -225,6 +226,22 @@ WHERE
 GROUP BY t.genre
 HAVING numOfArts > {1}
 ORDER BY numOfArts DESC;""".format(dead,num,genre)
+    print("query",query)
+    con = DBconnection()
+    if (con.doSelectQuery(query) and con._rowsReturned > 0):
+        con.close()
+        return con._columns,con._results
+    return None,None
+
+##########Get column values#####################
+def getColumnValuesDB(column, tablename):
+    query = """SELECT DISTINCT
+    t.{0}
+FROM
+    DbMysql12.{1} t
+WHERE
+    t.{0} IS NOT NULL
+        AND t.{0} NOT LIKE '';""".format(column, tablename)
     print("query",query)
     con = DBconnection()
     if (con.doSelectQuery(query) and con._rowsReturned > 0):

@@ -49,6 +49,8 @@ def hasKeys(flow,dic):
     dicOfKeys["pictureQuery"] = ["photo"]
     dicOfKeys["geoService"] = ["shit"]
     dicOfKeys["year"] = ["dead","num","genre"]
+    dicOfKeys["columnname"] = ["column","tablename"]
+    
     keys = [str(key) for key, value in dic.iteritems()]
     print(keys)
     print(dicOfKeys[flow])
@@ -102,7 +104,7 @@ def validateGeoService(request):
 def validateGeneric(request):
     print("start validating")
     
-    flownames = ["pictureQuery", "geoService", "year"]
+    flownames = ["pictureQuery", "geoService", "year","columnname"]
     
     # request is ..
     if not (request.POST and "data" in request.POST.keys()):

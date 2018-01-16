@@ -1,4 +1,4 @@
-from ..DAL.mainDAL import geographical_filtering, yearMostArtistDiedOrBornDB
+from ..DAL.mainDAL import geographical_filtering, yearMostArtistDiedOrBornDB, getColumnValuesDB
 
 # return [{"nameOfColumn01":"value01","nameOfColumn02":"value02"....},{},{}]
 #in case of error - return None
@@ -26,6 +26,9 @@ def yearMostArtistDiedOrBorn(dead,num,genre):
     cols,result = yearMostArtistDiedOrBornDB(dead,num,genre)
     return generateResFromRes(cols,result)
 
+def getColumnValues(column, tablename):
+    cols,result = getColumnValuesDB(column, tablename)
+    return generateResFromRes(cols,result)
     
 
 
