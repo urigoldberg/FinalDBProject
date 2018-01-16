@@ -1,8 +1,5 @@
 from ..DAL.mainDAL import geographical_filtering,personalizationDB, yearMostArtistDiedOrBornDB, getColumnValuesDB, youTubeLongestShortestLinkDB, albumsOfGenreWithSalesDB, mostViewedArtistDB, updateYoutubeLinkDB, addLikedSongDB, getUserDetailsDAL
 
-# return [{"nameOfColumn01":"value01","nameOfColumn02":"value02"....},{},{}]
-#in case of error - return None
-
 def addValuesForFromDic(dic,colum,table,key):
     cols,result = getColumnValuesDB(colum,table)
     op = """<option value="{0}">{0}</option>"""
@@ -117,7 +114,6 @@ def addLikedSong(param):
         return True
     else:
         return None
-
 
 def get_artists_in_requested_radius(json):
     
