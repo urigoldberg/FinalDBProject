@@ -2,6 +2,7 @@ var DEADButton = 1;
 var mostViewedButton = 1;
 var youTubeLinkButton = 1;
 var albumWithSalesButton = 1;
+var personalizeButton = 1;
 
 
 function createTableFromResponse(responseArr) {
@@ -255,6 +256,37 @@ function switchAlbumWithSales(){
     }
 }
 
+function switchPerzonalize(){
+    if(personalizeButton === 1){
+        document.getElementById("q5").innerHTML = "<button id=\"person\" class =\"btn btn-default\" onclick=\"sendPerson()\">query</button>"+
+            "<button id=\"changeq4\" class =\"btn btn-default\" onclick=\"switchPerzonalize()\">Close Personalize query</button>";
+        console.log("Setting personalizeButton to 0");
+        personalizeButton = 0;
+    }
+    else{
+        document.getElementById("q5").innerHTML = "<button id=\"changeq4\" class =\"btn btn-default\" onclick=\"switchPerzonalize()\">open Personalize query</button>";
+        console.log("Setting personalizeButton to 1");
+        personalizeButton=1;
+    }
+}
+
+function sendPerson(){
+    debugger;
+    var xhttp = new XMLHttpRequest();
+    var x = document.cookie.user;
+    var y = document.cookie.bs;
+    var jsonSent = createJSONStringforPersonalization("personalization",x,y);
+    xhttp.onreadystatechange = function() {
+        if (this.readyState === 4 && this.status === 200) {
+            alert(this.responseText);
+            alert("ok!");
+        }
+    };
+    xhttp.open("POST", "Generic", true);
+    xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xhttp.send("data="+jsonSent);
+}
+
 function loadDistinctDropdown(flowName, elementIdtoChange, columnName, tablename) {
     var sentData = createJSONStringforDistinctColumnName(flowName, columnName, tablename);
     var xhttp = new XMLHttpRequest();
@@ -282,6 +314,20 @@ function createJSONStringforDistinctColumnName(flowname, columnName, tablename) 
     jsonString = addParamJSON(jsonString,"tablename",tablename);
     jsonString += "]}";
     console.log(jsonString);
+    debugger;
+    return jsonString;
+}
+
+function createJSONStringforPersonalization(flowname, columnName, tablename) {
+    var jsonString = "{";
+    jsonString = addFlowNameJSON(jsonString,flowname);
+    jsonString = addparamsKeyforJSON(jsonString);
+    jsonString = addParamJSON(jsonString,"user",columnName);
+    jsonString+=",";
+    jsonString = addParamJSON(jsonString,"bs",tablename);
+    jsonString += "]}";
+    console.log(jsonString);
+    debugger;
     return jsonString;
 }
 
