@@ -267,7 +267,7 @@ FROM
     DbMysql12.artists b
 WHERE
     a.artist_db_id = b.db_id
-        AND b.name = '{0}'
+        AND b.name IN ('{0}')
         AND a.media_url IS NOT NULL
         AND a.duration {1}= ALL (SELECT 
             a.duration
