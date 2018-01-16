@@ -34,7 +34,7 @@ function createJSONStringforImage(flowname, encoding) {
 }
 
 function createTableFromResponse(responseArr) {
-    if(responseArr.isError == "true"){
+    if(responseArr.isError === "true"){
         return "<p>"+responseArr.errorMessage+"</p>"
     }
     var numOfRows = responseArr.Results.length;
@@ -121,10 +121,10 @@ function loadDoc(postUrl) {
 window.onclick = function(event) {
     var loginModel = document.getElementById('Login');
     var signInModel = document.getElementById('SignIn');
-    if (event.target == loginModel ) {
+    if (event.target === loginModel ) {
         loginModel.style.display = "none";
     }
-    if (event.target == signInModel ) {
+    if (event.target === signInModel ) {
         signInModel.style.display = "none";
     }
 };
