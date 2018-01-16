@@ -53,17 +53,17 @@ def UiHomepage(requests):
     user, resp = getCookieAndResponse(requests, "UiHomepage.html")
     return resp
 
-def specialQueries(requests):
+def musicExpert(requests):
     if not basicSec(requests):
         return redirect('Login.html')
-    user, resp = getCookieAndResponse(requests, "specialQueries.html")
+    user, resp = getCookieAndResponse(requests, "musicExpert.html")
     return resp
 
 
-def match4all(requests):
+def filterSongs(requests):
     if not basicSec(requests):
         return redirect('Login.html')
-    user, resp = getCookieAndResponse(requests, "match4all.html")
+    user, resp = getCookieAndResponse(requests, "filterSongs.html")
     return resp
 
 def imageToMusic(requests):
