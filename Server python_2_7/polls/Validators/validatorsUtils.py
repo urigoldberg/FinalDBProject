@@ -23,7 +23,7 @@ def basicSec(requests):
 def sqlInjectionChars(dic):
     
     for key, value in dic.iteritems():
-        if (re.search("[\"\\\/\*#;'<>]", value)):
+        if (re.search("[\"\*#;'<>]", value)):
             return False
     return True
 
@@ -73,7 +73,7 @@ def validateLoginSignIn(request, message):
     
     username, password = request.GET["username"], request.GET["password"]
     
-    if not validateLengthList([username,username], 5, 20):
+    if not validateLengthList([username,password], 5, 20):
         message += ["username & password must contain at least 5 characters, and not more than 20"]
         return False
     
