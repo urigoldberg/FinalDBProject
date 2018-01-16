@@ -181,7 +181,7 @@ def generic(request):
     flowname, diclist = str(json["flowname"]), json["params"]
     
     # Get params dis
-    if (flowname == "filter"):
+    if (flowname == "filterKeys"):
         params = GenericBL.getDicOfParams(diclist,True)
     else:
         params = GenericBL.getDicOfParams(diclist,False)
@@ -227,6 +227,12 @@ def handleQueryResponse(flowname,param):
     if (flowname == "columnname"):
         column, tablename = str(param["column"]),str(param["tablename"])
         ResultsArray = GenericBL.getColumnValues(column, tablename)
+        
+    if (flowname == "youTubeLink"):
+        op, artistname = str(param["operation"]),str(param["artistname"])
+        ResultsArray = GenericBL.youTubeLongestShortestLink(op, artistname)
+        
+    
     # more ifs..
     
     # If ResultsArray == None, an error has occuered

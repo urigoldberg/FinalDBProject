@@ -248,3 +248,30 @@ WHERE
         con.close()
         return con._columns,con._results
     return None,None
+
+##########Get youtuble link of artist################
+def youTubeLongestShortestLinkDB(name,op):
+    query = """SELECT 
+    a.title as song_name, b.name as artist_name, a.media_url as URL 
+FROM
+    DbMysql12.Song a,
+    DbMysql12.artists b
+WHERE
+    a.artist_db_id = b.db_id
+        AND b.name = '{0}'
+        AND a.media_url IS NOT NULL
+        AND a.duration {1}= ALL (SELECT 
+            a.duration
+        FROM
+            DbMysql12.Song a,
+            DbMysql12.artists b
+        WHERE
+            a.artist_db_id = b.db_id
+                AND b.name = '{0}'
+                AND a.media_url IS NOT NULL);""".format(name,op)
+    print("query",query)
+    con = DBconnection()
+    if (con.doSelectQuery(query) and con._rowsReturned > 0):
+        con.close()
+        return con._columns,con._results
+    return None,None

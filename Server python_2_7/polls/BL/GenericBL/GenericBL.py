@@ -1,4 +1,4 @@
-from ..DAL.mainDAL import geographical_filtering, yearMostArtistDiedOrBornDB, getColumnValuesDB
+from ..DAL.mainDAL import geographical_filtering, yearMostArtistDiedOrBornDB, getColumnValuesDB, youTubeLongestShortestLinkDB
 
 # return [{"nameOfColumn01":"value01","nameOfColumn02":"value02"....},{},{}]
 #in case of error - return None
@@ -28,6 +28,14 @@ def yearMostArtistDiedOrBorn(dead,num,genre):
 
 def getColumnValues(column, tablename):
     cols,result = getColumnValuesDB(column, tablename)
+    return generateResFromRes(cols,result)
+
+def youTubeLongestShortestLink(name,op):
+    if (op == "min"):
+        op = "<"
+    else:
+        op = ">"
+    cols,result = youTubeLongestShortestLinkDB(name,op)
     return generateResFromRes(cols,result)
     
 ########### GENERAL UTILS ##############

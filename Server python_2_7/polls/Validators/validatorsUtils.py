@@ -2,6 +2,8 @@ import re
 import hashlib
 import json as _json
 
+import ..BL.GenericBL 
+
 ######################################################
 ########## general validations #######################
 ######################################################
@@ -50,6 +52,7 @@ def hasKeys(flow,dic):
     dicOfKeys["geoService"] = ["shit"]
     dicOfKeys["year"] = ["dead","num","genre"]
     dicOfKeys["columnname"] = ["column","tablename"]
+    dicOfKeys["youTubeLink"] = ["operation","artistname"]
     
     keys = [str(key) for key, value in dic.iteritems()]
     print(keys)
@@ -104,7 +107,7 @@ def validateGeoService(request):
 def validateGeneric(request):
     print("start validating")
     
-    flownames = ["pictureQuery", "geoService", "year","columnname"]
+    flownames = ["pictureQuery", "geoService", "year","columnname","youTubeLink"]
     
     # request is ..
     if not (request.POST and "data" in request.POST.keys()):
@@ -123,18 +126,26 @@ def validateGeneric(request):
         return False
 
     flowname, diclist = str(json["flowname"]), json["params"]
-    params = {}
-    for pair in diclist:
-        for key, value in pair.iteritems():
-            params[str(key)] = str(value)
+     # Get params dis
+    if (flowname == "filterKeys"):
+        params = GenericBL.getDicOfParams(diclist,True)
+    else:
+        params = GenericBL.getDicOfParams(diclist,False)
     
     if (flowname not in flownames):
         print("flowname not in flownames")
         return False
     
-    if not (hasKeys(flowname, params)):
-        print("keys are not updated")
-        return False
+    # param is a dic contains lists
+    if not (flowname == "filterKeys"):
+        if not (hasKeys(flowname, params)):
+            print("keys are not updated")
+            return False
+    # param values are lists, check each one seperatelly
+    else:
+        for key, value in params.iteritems():
+            if not (sqlInjectionCharsList (value)):
+                return False
     
 #    if not validateLength(params, 1, 20):
 #        print("to short")
