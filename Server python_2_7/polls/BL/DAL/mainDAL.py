@@ -216,7 +216,7 @@ def geographical_filtering(json):
         ORDER BY distance;"""
 
     con = DBconnection()
-    if (con.doSelectQuery(query) and con._rowsReturned > 0):
+    if (con.doSelectQuery(query)):
         con.close()
         return con._columns,con._results
     return None,None
@@ -237,7 +237,7 @@ HAVING numOfArts > {1}
 ORDER BY numOfArts DESC;""".format(dead,num,genre)
     print("query",query)
     con = DBconnection()
-    if (con.doSelectQuery(query) and con._rowsReturned > 0):
+    if (con.doSelectQuery(query)):
         con.close()
         return con._columns,con._results
     return None,None
@@ -280,7 +280,7 @@ WHERE
                 AND a.media_url IS NOT NULL);""".format(name,op)
     print("query",query)
     con = DBconnection()
-    if (con.doSelectQuery(query) and con._rowsReturned > 0):
+    if (con.doSelectQuery(query)):
         con.close()
         return con._columns,con._results
     return None,None
@@ -303,7 +303,7 @@ GROUP BY (b.id)
 ORDER BY Num_Of_Albums""".format(numOfSales,genre)
     print("query",query)
     con = DBconnection()
-    if (con.doSelectQuery(query) and con._rowsReturned > 0):
+    if (con.doSelectQuery(query)):
         con.close()
         return con._columns,con._results
     return None,None
@@ -337,7 +337,7 @@ ORDER BY artist_views DESC
 #    f.close()
     print("wrote file")
     con = DBconnection()
-    if (con.doSelectQuery(query) and con._rowsReturned > 0):
+    if (con.doSelectQuery(query)):
         con.close()
         return con._columns,con._results
     return None,None    
