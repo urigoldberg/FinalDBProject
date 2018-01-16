@@ -61,7 +61,7 @@ function hideDisplayofClass(classNames) {
     }
 }
 
-function loadDocSpecialQuery(flowname) {
+function loadDocSpecialQuery(flowname, elementToReplaceByTable) {
     var sentData;
     if(flowname === "columnname"){
         sentData = createJSONStringforDistinctColumnName(flowname, "genre", "Song");
@@ -77,8 +77,8 @@ function loadDocSpecialQuery(flowname) {
             var responseArr = JSON.parse(this.responseText);
             console.log("initializing table head and opening body tag");
             var finalTable = createTableFromResponse(responseArr);
-            debugger;
-            fadeInTable(finalTable,"big");
+            // debugger;
+            fadeInTable(finalTable,elementToReplaceByTable);
             document.getElementById("responseheader").innerText = "the Following year was found:";
             hideDisplayofClass("tofade");
             hideDisplayofClass("querybutton");
@@ -125,7 +125,7 @@ function createJSONString(flowname, elementId, elementId2, keyString) {
         jsonString = addParamJSON(jsonString,keyString,x);
     }
     jsonString += "]}";
-    debugger;
+    // debugger;
     return jsonString;
 }
 
@@ -154,7 +154,7 @@ function switchDEAD(){
             "                    <!--added forms will be here-->\n" +
             "                    <div id=\"big\"></div>\n" +
             "\n" +
-            "                    <button id=\"getSongsButton\" class =\"btn btn-default querybutton \" onclick=\"loadDocSpecialQuery('year')\">Query</button>\n"+
+            "                    <button id=\"getSongsButton\" class =\"btn btn-default querybutton \" onclick=\"loadDocSpecialQuery('year','big')\">Query</button>\n"+
         "<button id=\"changeDEAD\" class =\"btn btn-default tofade\" onclick=\"switchDEAD()\">close Death / Birth query</button>";
         DEADButton = 0;
     }
@@ -176,7 +176,7 @@ function switchMostViewed() {
             "                    <span class=\"form-group tofade\" >\n" +
             "                    <input type=\"text\" class=\"form-control\" value=\"usa\" id=\"location\">\n" +
             "                    </span>\n"+
-            "<button id=\"getmostviewed\" class =\"btn btn-default querybutton \" onclick=\"loadDocSpecialQuery('mostviewedartist')\">Query</button>\n"+
+            "<button id=\"getmostviewed\" class =\"btn btn-default querybutton \" onclick=\"loadDocSpecialQuery('mostviewedartist','q2')\">Query</button>\n"+
             "<button id=\"changeq2\" class =\"btn btn-default\" onclick=\"switchMostViewed()\">Close most viewed query</button>";
         console.log("Setting q2Button to 0");
         loadDistinctDropdown("columnname", "genre", "genre", "Song");
