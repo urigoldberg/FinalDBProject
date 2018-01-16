@@ -2,6 +2,10 @@ import MySQLdb
 import os
 import string
 
+import sys
+reload(sys)  
+sys.setdefaultencoding('utf8')
+
 ######CLASS###########
 
 class DBconnection():
@@ -21,11 +25,14 @@ class DBconnection():
     _open = False
     _columns = None
     printable = set(string.printable)
+    
+    
+    
 
     
     def connect(self):
         if not (self._open):
-            self._db = MySQLdb.connect(user=self._user, db=self._db,  passwd=self._passwd, host=self._host, port = self._port)
+            self._db = MySQLdb.connect(user=self._user, db=self._db,  passwd=self._passwd, host=self._host, port = self._port, charset='utf8',use_unicode=True)
             self.cursor = self._db.cursor()
             self._open = True
             
@@ -46,7 +53,7 @@ class DBconnection():
             self._succ = True
             self._results = self.cursor.fetchall()
             print("done fetching results, description is", self.cursor.description)
-            self._columns = [filter(lambda x: x in self.printable, str(i[0])) for i in self.cursor.description]
+            self._columns = [str(i[0]) for i in self.cursor.description]
             print("columns are",self._columns)
             return True
         

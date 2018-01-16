@@ -2,7 +2,7 @@ import re
 import hashlib
 import json as _json
 
-from ..BL.GenericBL import *
+from ..BL.GenericBL.GenericBL import getDicOfParams
 
 ######################################################
 ########## general validations #######################

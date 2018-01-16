@@ -1,0 +1,76 @@
+select t.title as 'Song Name',t.name as 'Artist Name', t.keyword as 'Keyword' from (select * from
+        (SELECT 
+ inner_songs.title, art.name,
+ inner_songs.num_occurrences, 'text' as keyword
+FROM (SELECT * FROM
+(SELECT song_id,
+((LENGTH(lyrics) - LENGTH(REPLACE(lyrics, 'text', '')))
+/ LENGTH('text'))
+AS num_occurrences FROM
+DbMysql12.temp_keywords) lyr
+INNER JOIN DbMysql12.Song son ON lyr.song_id = son.id)  inner_songs
+INNER JOIN
+DbMysql12.artists art ON art.db_id = inner_songs.artist_db_id
+ORDER BY num_occurrences DESC
+LIMIT 6) as tbl0 
+union all select * from
+        (SELECT 
+ inner_songs.title, art.name,
+ inner_songs.num_occurrences, 'product' as keyword
+FROM (SELECT * FROM
+(SELECT song_id,
+((LENGTH(lyrics) - LENGTH(REPLACE(lyrics, 'product', '')))
+/ LENGTH('product'))
+AS num_occurrences FROM
+DbMysql12.temp_keywords) lyr
+INNER JOIN DbMysql12.Song son ON lyr.song_id = son.id)  inner_songs
+INNER JOIN
+DbMysql12.artists art ON art.db_id = inner_songs.artist_db_id
+ORDER BY num_occurrences DESC
+LIMIT 5) as tbl1 
+union all select * from
+        (SELECT 
+ inner_songs.title, art.name,
+ inner_songs.num_occurrences, 'font' as keyword
+FROM (SELECT * FROM
+(SELECT song_id,
+((LENGTH(lyrics) - LENGTH(REPLACE(lyrics, 'font', '')))
+/ LENGTH('font'))
+AS num_occurrences FROM
+DbMysql12.temp_keywords) lyr
+INNER JOIN DbMysql12.Song son ON lyr.song_id = son.id)  inner_songs
+INNER JOIN
+DbMysql12.artists art ON art.db_id = inner_songs.artist_db_id
+ORDER BY num_occurrences DESC
+LIMIT 4) as tbl2 
+union all select * from
+        (SELECT 
+ inner_songs.title, art.name,
+ inner_songs.num_occurrences, 'product design' as keyword
+FROM (SELECT * FROM
+(SELECT song_id,
+((LENGTH(lyrics) - LENGTH(REPLACE(lyrics, 'product design', '')))
+/ LENGTH('product design'))
+AS num_occurrences FROM
+DbMysql12.temp_keywords) lyr
+INNER JOIN DbMysql12.Song son ON lyr.song_id = son.id)  inner_songs
+INNER JOIN
+DbMysql12.artists art ON art.db_id = inner_songs.artist_db_id
+ORDER BY num_occurrences DESC
+LIMIT 3) as tbl3 
+union all select * from
+        (SELECT 
+ inner_songs.title, art.name,
+ inner_songs.num_occurrences, 'area' as keyword
+FROM (SELECT * FROM
+(SELECT song_id,
+((LENGTH(lyrics) - LENGTH(REPLACE(lyrics, 'area', '')))
+/ LENGTH('area'))
+AS num_occurrences FROM
+DbMysql12.temp_keywords) lyr
+INNER JOIN DbMysql12.Song son ON lyr.song_id = son.id)  inner_songs
+INNER JOIN
+DbMysql12.artists art ON art.db_id = inner_songs.artist_db_id
+ORDER BY num_occurrences DESC
+LIMIT 2) as tbl4 
+) t where t.num_occurrences > 0 order by t.num_occurrences desc;
