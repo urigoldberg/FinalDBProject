@@ -46,7 +46,7 @@ class DBconnection():
             self._succ = True
             self._results = self.cursor.fetchall()
             print("done fetching results, description is", self.cursor.description)
-            self._columns = [str(i[0]) for i in self.cursor.description]
+            self._columns = [filter(lambda x: x in self.printable, str(i[0])) for i in self.cursor.description]
             print("columns are",self._columns)
             return True
         

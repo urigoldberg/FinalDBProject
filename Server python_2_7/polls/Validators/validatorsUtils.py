@@ -2,7 +2,7 @@ import re
 import hashlib
 import json as _json
 
-import ..BL.GenericBL 
+from ..BL import GenericBL
 
 ######################################################
 ########## general validations #######################
