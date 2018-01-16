@@ -80,7 +80,7 @@ def validateLoginSignIn(request, message):
         return False
     
     # request doesn't contain illegal characters - against sql injections
-    if not (sqlInjectionCharsList([username,username])):
+    if not (sqlInjectionCharsList([username,password])):
         message += ["invalid request, please try again"]
         return False
     
