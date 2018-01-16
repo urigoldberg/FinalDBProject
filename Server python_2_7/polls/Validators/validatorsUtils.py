@@ -120,8 +120,11 @@ def validateGeneric(request):
         print("params is not good")
         return False
 
-        
-    flowname, params = str(json["flowname"]), json["params"][0]
+    flowname, diclist = str(json["flowname"]), json["params"]
+    params = {}
+    for pair in diclist:
+        for key, value in pair.iteritems():
+            params[str(key)] = str(value)
     
     if (flowname not in flownames):
         print("flowname not in flownames")
