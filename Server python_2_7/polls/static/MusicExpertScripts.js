@@ -141,6 +141,7 @@ function switchDEAD(){
             "                    <input type=\"text\" class=\"form-control\" value=\"2\" id=\"num\">\n" +
             "                    </span>\n" +
             "                    <span class=\"tofade\">artists of genre </span>\n" +
+            "                    <form id=\"q2form\" class='tofade'>\n" +
             "                        <div class=\"form-group\">\n" +
             "                            <select class=\"form-control tofade\" id=\"genre\"></select>\n" +
             "                        </div>\n" +
