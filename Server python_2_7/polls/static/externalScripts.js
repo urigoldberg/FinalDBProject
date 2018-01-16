@@ -243,13 +243,26 @@ function createJSONString(flowname) {
             jsonString += ",";
         }
     }
-    if(additionalFiltersSelected){//TODO: finish this
+    if(additionalFiltersSelected != ""){
         jsonString+=",";
-        jsonString = addParamJSON(jsonString,"additionalFilters",additionalFiltersSelected) //TODO: convert this to groupby what
+        jsonString = addParamJSON(jsonString,"additionalFilters",converNumToGroupBy(additionalFiltersSelected));
     }
     jsonString += "]}";
-    // debugger;
+    debugger;
     return jsonString;
+}
+
+function converNumToGroupBy(num){
+    switch(num){
+        case "spec0":
+            return "GroupbyArtist";
+        case "spec1":
+            return "Groupbysongname";
+        case "spec2":
+            return "Orderbysongname";
+        case "spec3":
+            return "Orderbysongname";
+    }
 }
 
 function getJSONStringOfValues(){
@@ -282,13 +295,13 @@ function fillOldFilters(){
     }
 }
 
-function disableSpecialFilters(notDisable){
-    additionalFiltersSelected = notDisable;
+function disableSpecialFilters(filterNotToDisable){
+    additionalFiltersSelected = filterNotToDisable;
     var specArr = document.getElementsByClassName("spec");
     // debugger;
     for(i=0;i<specArr.length;i++){
         var spec = specArr[i];
-        if(spec.id != notDisable){
+        if(spec.id != filterNotToDisable){
             spec.disabled = "true";
         }
     }
