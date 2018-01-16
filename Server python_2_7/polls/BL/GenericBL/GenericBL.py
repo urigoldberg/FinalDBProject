@@ -106,8 +106,8 @@ def updateYoutubeLink(param):
     
 
 def addLikedSong(param):
-    song_name,song_artist = str(param["song_name"]),str(param["song_artist"])
-    if(addLikedSongDB(song_name,artist_name)):
+    song_name,song_artist,user_name = str(param["song_name"]),str(param["song_artist"]), str(param["user_name"])
+    if(addLikedSongDB(song_name,song_artist,user_name)):
         print("finished adding song to liked songs")
         return True
     else:
