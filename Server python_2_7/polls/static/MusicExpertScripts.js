@@ -141,9 +141,10 @@ function switchDEAD(){
             "                    <input type=\"text\" class=\"form-control\" value=\"2\" id=\"num\">\n" +
             "                    </span>\n" +
             "                    <span class=\"tofade\">artists of genre </span>\n" +
-            "                    <span class=\"form-group tofade\" >\n" +
-            "                    <input type=\"text\" class=\"form-control\" value=\"hip-hop\" id=\"genre\">\n" +
-            "                    </span>\n" +
+            "                        <div class=\"form-group\">\n" +
+            "                            <select class=\"form-control tofade\" id=\"genre\"></select>\n" +
+            "                        </div>\n" +
+            "                    </form>\n" +
             "                    <span class=\"tofade\"> have </span>\n" +
             "                    <form id=\"Died\" class=\"tofade\">\n" +
             "                        <div class=\"form-group\">\n" +
@@ -159,6 +160,7 @@ function switchDEAD(){
             "\n" +
             "                    <button id=\"getSongsButton\" class =\"btn btn-default querybutton \" onclick=\"loadDocSpecialQuery('year','big')\">Query</button>\n"+
         "<button id=\"changeDEAD\" class =\"btn btn-default tofade\" onclick=\"switchDEAD()\">close Death / Birth query</button>";
+        loadDistinctDropdown("columnname", "genre", "genre", "Song");
         DEADButton = 0;
     }
     else{
