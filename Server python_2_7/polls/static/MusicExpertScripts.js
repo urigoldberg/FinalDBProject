@@ -273,8 +273,8 @@ function switchPerzonalize(){
 function sendPerson(){
     debugger;
     var xhttp = new XMLHttpRequest();
-    var x = document.cookie.user;
-    var y = document.cookie.bs;
+    var x = getCookie("user");
+    var y = getCookie("bs");
     var jsonSent = createJSONStringforPersonalization("personalization",x,y);
     xhttp.onreadystatechange = function() {
         if (this.readyState === 4 && this.status === 200) {
@@ -285,6 +285,12 @@ function sendPerson(){
     xhttp.open("POST", "Generic", true);
     xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     xhttp.send("data="+jsonSent);
+}
+
+function getCookie(name) {
+    var value = "; " + document.cookie;
+    var parts = value.split("; " + name + "=");
+    if (parts.length == 2) return parts.pop().split(";").shift();
 }
 
 function loadDistinctDropdown(flowName, elementIdtoChange, columnName, tablename) {
