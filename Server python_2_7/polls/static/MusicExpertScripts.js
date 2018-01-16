@@ -271,15 +271,20 @@ function switchPerzonalize(){
 }
 
 function sendPerson(){
+    debugger;
     var xhttp = new XMLHttpRequest();
+    var x = document.cookie.user;
+    var y = document.cookie.bs;
+    var jsonSent = createJSONStringforPersonalization("personalization",x,y);
     xhttp.onreadystatechange = function() {
         if (this.readyState === 4 && this.status === 200) {
+            alert(this.responseText);
             alert("ok!");
         }
     };
-    xhttp.open("GET", "personal", true);
+    xhttp.open("POST", "Generic", true);
     xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-    xhttp.send();
+    xhttp.send("data="+jsonSent);
 }
 
 function loadDistinctDropdown(flowName, elementIdtoChange, columnName, tablename) {
@@ -309,6 +314,20 @@ function createJSONStringforDistinctColumnName(flowname, columnName, tablename) 
     jsonString = addParamJSON(jsonString,"tablename",tablename);
     jsonString += "]}";
     console.log(jsonString);
+    debugger;
+    return jsonString;
+}
+
+function createJSONStringforPersonalization(flowname, columnName, tablename) {
+    var jsonString = "{";
+    jsonString = addFlowNameJSON(jsonString,flowname);
+    jsonString = addparamsKeyforJSON(jsonString);
+    jsonString = addParamJSON(jsonString,"user",columnName);
+    jsonString+=",";
+    jsonString = addParamJSON(jsonString,"bs",tablename);
+    jsonString += "]}";
+    console.log(jsonString);
+    debugger;
     return jsonString;
 }
 
