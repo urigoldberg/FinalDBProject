@@ -92,7 +92,7 @@ def updateYoutubeLink(param):
     if(validate_link(link)):
         return updateYoutubeLinkDB(link,song_name,song_artist)
     else:
-        return False
+        return None
     
 
 def addLikedSong(param):
