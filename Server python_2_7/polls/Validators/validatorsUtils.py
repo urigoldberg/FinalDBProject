@@ -53,8 +53,8 @@ def hasKeys(flow,dic):
     print(keys)
     print(dicOfKeys[flow])
     # is subset
-    #return set(keys) < set(dicOfKeys[flow])
-	return set(keys) == set(dicOfKeys[flow])
+    return set(keys) == set(dicOfKeys[flow])
+
 ######################################################
 ########## signIN \ Login ############################
 ######################################################
@@ -140,9 +140,9 @@ def validateGeneric(request):
     
 
     # request doesn't contain illegal characters - against sql injections
-    if not (sqlInjectionChars(params)):
-        print("sqlInjectionChars")
-        return False
+#    if not (sqlInjectionChars(params)):
+#        print("sqlInjectionChars")
+#        return False
     
     # speaciel validators:
     
