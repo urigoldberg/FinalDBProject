@@ -1,7 +1,17 @@
-from ..DAL.mainDAL import geographical_filtering, yearMostArtistDiedOrBornDB, getColumnValuesDB, youTubeLongestShortestLinkDB, albumsOfGenreWithSalesDB, mostViewedArtistDB, updateYoutubeLinkDB, addLikedSongDB
+from ..DAL.mainDAL import geographical_filtering,personalizationDB, yearMostArtistDiedOrBornDB, getColumnValuesDB, youTubeLongestShortestLinkDB, albumsOfGenreWithSalesDB, mostViewedArtistDB, updateYoutubeLinkDB, addLikedSongDB, getUserDetailsDAL
 
 # return [{"nameOfColumn01":"value01","nameOfColumn02":"value02"....},{},{}]
 #in case of error - return None
+
+def addValuesForFromDic(dic,colum,table,key):
+    cols,result = getColumnValuesDB(colum,table)
+    op = """<option value="{0}">{0}</option>"""
+    value = ""
+    for row in result:
+        value = value + op.format(str(row)[3:-3])
+    dic[key] = value
+    print("addGenreToDic", value)
+
 def generateResFromRes(cols,result):
     print ("generateResFromRes - cols",cols, "result",result )
     res = '[' 
@@ -78,6 +88,10 @@ def mostViewedArtist(param):
     cols,result = mostViewedArtistDB(location, genre)
     return generateResFromRes(cols,result)
 
+def personalization(userName):
+    username,password,birth,genre,country,longness = getUserDetailsDAL(userName)
+    cols,result = personalizationDB(genre,country,longness)
+    return generateResFromRes(cols,result)
 
 def validate_link(link):
     import httplib

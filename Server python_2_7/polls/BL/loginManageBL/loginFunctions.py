@@ -41,9 +41,9 @@ def signNewUser (name, password,datebith,yesNo,genre,Country):
     If the username available - add it to usersTable and return True, otherwise return False 
     """
     if (yesNo == "yes"):
-        yesNo = 1
-    else:
         yesNo = 0
+    else:
+        yesNo = 1
     if (addNewUserDAL(name, password,datebith,yesNo,genre,Country)):
         return True
     return False
