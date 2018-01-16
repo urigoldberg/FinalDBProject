@@ -217,12 +217,7 @@ def handleQueryResponse(flowname,param):
         
     if (flowname == "year"):
         dead, num, genre = str(param["dead"]),str(param["num"]),str(param["genre"])
-        if (dead == "0"):
-            dead = "year_of_birth"
-        else:
-            dead = "year_of_death"
-        if (num.isdigit()):
-            ResultsArray = GenericBL.yearMostArtistDiedOrBorn(dead,num,genre)
+        ResultsArray = GenericBL.yearMostArtistDiedOrBorn(dead,num,genre)
             
     if (flowname == "columnname"):
         column, tablename = str(param["column"]),str(param["tablename"])
@@ -232,7 +227,10 @@ def handleQueryResponse(flowname,param):
         op, artistname = str(param["operation"]),str(param["artistname"])
         ResultsArray = GenericBL.youTubeLongestShortestLink(op, artistname)
         
-    
+    if (flowname == "SucAlbums"):
+        numOfSales, genre = str(param["numOfSales"]),str(param["genre"])
+        ResultsArray = GenericBL.albumsOfGenreWithSales(numOfSales, genre)
+        
     # more ifs..
     
     # If ResultsArray == None, an error has occuered

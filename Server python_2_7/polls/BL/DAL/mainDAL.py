@@ -284,3 +284,26 @@ WHERE
         con.close()
         return con._columns,con._results
     return None,None
+
+#########ALBUMS OF GENRE ###############################
+def albumsOfGenreWithSalesDB(numOfSales,genre):
+    query = """SELECT 
+    c.name AS Artist_Name,
+    a.genre AS Genre,
+    COUNT(b.id) AS Num_Of_Albums
+FROM
+    DbMysql12.Song a,
+    DbMysql12.Album b,
+    DbMysql12.artists c
+WHERE
+    b.id = a.album_id AND a.album_id = c.id
+        AND b.sales > {0}
+        AND a.genre = '{1}'
+GROUP BY (b.id)
+ORDER BY Num_Of_Albums""".format(numOfSales,genre)
+    print("query",query)
+    con = DBconnection()
+    if (con.doSelectQuery(query) and con._rowsReturned > 0):
+        con.close()
+        return con._columns,con._results
+    return None,None
