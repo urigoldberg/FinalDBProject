@@ -61,8 +61,13 @@ function hideDisplayofClass(classNames) {
     }
 }
 
-function loadDocSpecialQuery(postUrl) {
-    var sentData = createJSONStringforDistinctColumnName(postUrl, "genre", "Song");
+function loadDocSpecialQuery(flowname) {
+    var sentData;
+    if(flowname === "columnname"){
+        sentData = createJSONStringforDistinctColumnName(flowname, "genre", "Song");
+    }else{
+        sentData = createJSONString(flowname)
+    }
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
         if (this.readyState === 4 && this.status === 200) {
