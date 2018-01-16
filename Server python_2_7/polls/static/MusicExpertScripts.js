@@ -199,7 +199,7 @@ function loadDistinctDropdown(flowName, elementIdtoChange, columnName, tablename
         if (this.readyState === 4 && this.status === 200) {
             var responseArr = JSON.parse(this.responseText);
             console.log("initializing table head and opening body tag");
-            var finalTable = fillDropdownFromResponse(responseArr);
+            var finalTable = fillDropdownFromResponse(responseArr,columnName);
             document.getElementById(elementIdtoChange).style.visibility = "hidden";
             document.getElementById(elementIdtoChange).innerHTML = finalTable;
             document.getElementById(elementIdtoChange).style.visibility = "visible";
@@ -223,14 +223,21 @@ function createJSONStringforDistinctColumnName(flowname, columnName, tablename) 
     return jsonString;
 }
 
-function fillDropdownFromResponse(responseArr) {
+function fillDropdownFromResponse(responseArr,columnName) {
     if(responseArr.isError == "true"){
         return "<p>"+responseArr.errorMessage+"</p>"
     }
     var numofRows = responseArr.Results.length;
     var finalDropDownOptions ="";
+    debugger;
     for(var i=0;i<numofRows;i++){
-        finalDropDownOptions+="<option>"+responseArr.Results[i].genre+"</option>";
+        if(columnName === "genre"){
+            finalDropDownOptions+="<option>"+responseArr.Results[i].genre+"</option>";
+        }
+        else{
+            finalDropDownOptions+="<option>"+responseArr.Results[i].name+"</option>";
+
+        }
     }
     return finalDropDownOptions;
 }
