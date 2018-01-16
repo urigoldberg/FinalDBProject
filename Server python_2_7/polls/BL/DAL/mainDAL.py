@@ -343,20 +343,41 @@ ORDER BY artist_views DESC
     return None,None    
 
 
-
+def addLikedSongDB(song_name,artist_name):
+#    query = """
+#    UPDATE  Song 
+#SET     media_url = '"""+link+"""'
+#where title = 'ASDFDA'
+#and artist_id = 
+#(
+#select id from artists
+#where name = '"""+song_artist+"""'
+#)"""
+#    con = DBconnection()
+#    if(con.doQuery(query)):
+#        print("performed update successfully")
+#        con.close()
+#        return True;
+#    print("error in updateYoutubeLinkDB")
+#    con.close()
+#    return None;
 
 
 def updateYoutubeLinkDB(link,song_name,song_artist):
     query = """
     UPDATE  Song 
 SET     media_url = '"""+link+"""'
-where title = 'ASDFDA'
-and artist_id = 
+where title = '""" + song_name+
+"""and artist_id = 
 (
 select id from artists
 where name = '"""+song_artist+"""'
 )"""
     con = DBconnection()
-    con.doQuery(query)
-    print("performed update successfully")
+    if(con.doQuery(query)):
+        print("performed update successfully")
+        con.close()
+        return True;
+    print("error in updateYoutubeLinkDB")
     con.close()
+    return None;
