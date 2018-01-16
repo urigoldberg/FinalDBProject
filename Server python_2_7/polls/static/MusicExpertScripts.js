@@ -1,6 +1,6 @@
 var DEADButton = 1;
-var q2Button = 1;
-var q3Button = 1;
+var mostViewedButton = 1;
+var youTubeLinkButton = 1;
 
 
 function createTableFromResponse(responseArr) {
@@ -168,8 +168,9 @@ function switchDEAD(){
 }
 
 function switchMostViewed() {
-    if(q2Button === 1){
-        document.getElementById("q2").innerHTML = "<p>Most viewed artists on YouTube with Genre:</p>\n" +
+    if(mostViewedButton === 1){
+        document.getElementById("q2").innerHTML = "<h4 class=\"tofade\">Most viewed query:</h4>\n" +
+            "                    <p>Most viewed artists on YouTube with Genre:</p>\n" +
             "                    <form id=\"q2form\">\n" +
             "                        <div class=\"form-group\">\n" +
             "                            <select class=\"form-control\" id=\"genre\"></select>\n" +
@@ -181,20 +182,21 @@ function switchMostViewed() {
             "                    </span>\n"+
             "<button id=\"getmostviewed\" class =\"btn btn-default querybutton \" onclick=\"loadDocSpecialQuery('mostviewedartist','q2')\">Query</button>\n"+
             "<button id=\"changeq2\" class =\"btn btn-default\" onclick=\"switchMostViewed()\">Close most viewed query</button>";
-        console.log("Setting q2Button to 0");
+        console.log("Setting mostViewedButton to 0");
         loadDistinctDropdown("columnname", "genre", "genre", "Song");
-        q2Button = 0;
+        mostViewedButton = 0;
     }
     else{
         document.getElementById("q2").innerHTML = "<button id=\"changeq2\" class =\"btn btn-default\" onclick=\"switchMostViewed()\">Open most viewed query</button>";
-        console.log("Setting q2Button to 1");
-        q2Button=1;
+        console.log("Setting mostViewedButton to 1");
+        mostViewedButton=1;
     }
 }
 
 function switchYouTubeLink() {
-    if(q3Button === 1){
-        document.getElementById("q3").innerHTML = "<p>Longest/shortest song on youtube of one of the following artists:</p>\n" +
+    if(youTubeLinkButton === 1){
+        document.getElementById("q3").innerHTML = "<h4 class=\"tofade\">Youtube Link query:</h4>\n"+
+            "<p>Longest/shortest song on youtube of one of the following artists:</p>\n" +
             "                    <form id=\"q3form\">\n" +
             "                        <div class=\"form-group\">\n" +
             "                            <select class=\"form-control\" id=\"artistname\"></select>\n" +
@@ -210,14 +212,14 @@ function switchYouTubeLink() {
             "                    </form>\n" +
             "<button id=\"getmostviewed\" class =\"btn btn-default querybutton \" onclick=\"loadDocSpecialQuery('youTubeLink','q3')\">Query</button>\n"+
             "<button id=\"changeq3\" class =\"btn btn-default\" onclick=\"switchYouTubeLink()\">Close YouTube link query</button>";
-        console.log("Setting q3Button to 0");
+        console.log("Setting youTubeLinkButton to 0");
         loadDistinctDropdown("columnname", "artistname", "name", "artists");
-        q3Button = 0;
+        youTubeLinkButton = 0;
     }
     else{
         document.getElementById("q3").innerHTML = "<button id=\"changeq3\" class =\"btn btn-default\" onclick=\"switchYouTubeLink()\">open YouTube link query</button>";
-        console.log("Setting q3Button to 1");
-        q3Button=1;
+        console.log("Setting youTubeLinkButton to 1");
+        youTubeLinkButton=1;
     }
 }
 
