@@ -1,6 +1,7 @@
 var DEADButton = 1;
 var mostViewedButton = 1;
 var youTubeLinkButton = 1;
+var albumWithSalesButton = 1;
 
 
 function createTableFromResponse(responseArr) {
@@ -226,6 +227,36 @@ function switchYouTubeLink() {
     }
 }
 
+function switchAlbumWithSales(){
+    if(albumWithSalesButton === 1){
+        document.getElementById("q4").innerHTML = "<h4 class=\"tofade\">Album with sales query:</h4>\n"+
+            "<p>Albums of the genre:</p>\n" +
+            "                    <form id=\"q4form\">\n" +
+            "                        <div class=\"form-group\">\n" +
+            "                            <select class=\"form-control\" id=\"genre\"></select>\n" +
+            "                        </div>\n" +
+            "                    </form>\n" +
+            "                    <form class=\"tofade\">\n" +
+            "                        <div class=\"form-group\">\n" +
+            "                            <select class=\"form-control\" id=\"operation\">\n" +
+            "                                <option>max</option>\n" +
+            "                                <option>min</option>\n" +
+            "                            </select>\n" +
+            "                        </div>\n" +
+            "                    </form>\n" +
+            "<button id=\"getmostviewed\" class =\"btn btn-default querybutton \" onclick=\"loadDocSpecialQuery('youTubeLink','q4')\">Query</button>\n"+
+            "<button id=\"changeq4\" class =\"btn btn-default\" onclick=\"switchAlbumWithSales()\">Close Album with sales query</button>";
+        console.log("Setting albumWithSalesButton to 0");
+        loadDistinctDropdown("columnname", "genre", "genre", "Song");
+        albumWithSalesButton = 0;
+    }
+    else{
+        document.getElementById("q4").innerHTML = "<button id=\"changeq4\" class =\"btn btn-default\" onclick=\"switchAlbumWithSales()\">open Album with sales query</button>";
+        console.log("Setting albumWithSalesButton to 1");
+        albumWithSalesButton=1;
+    }
+}
+
 function loadDistinctDropdown(flowName, elementIdtoChange, columnName, tablename) {
     var sentData = createJSONStringforDistinctColumnName(flowName, columnName, tablename);
     var xhttp = new XMLHttpRequest();
@@ -245,7 +276,6 @@ function loadDistinctDropdown(flowName, elementIdtoChange, columnName, tablename
 }
 
 function createJSONStringforDistinctColumnName(flowname, columnName, tablename) {
-    var x;
     var jsonString = "{";
     jsonString = addFlowNameJSON(jsonString,flowname);
     jsonString = addparamsKeyforJSON(jsonString);
@@ -258,19 +288,17 @@ function createJSONStringforDistinctColumnName(flowname, columnName, tablename) 
 }
 
 function fillDropdownFromResponse(responseArr,columnName) {
-    if(responseArr.isError == "true"){
+    if(responseArr.isError === "true"){
         return "<p>"+responseArr.errorMessage+"</p>"
     }
     var numofRows = responseArr.Results.length;
     var finalDropDownOptions ="";
-    // debugger;
     for(var i=0;i<numofRows;i++){
         if(columnName === "genre"){
             finalDropDownOptions+="<option>"+responseArr.Results[i].genre+"</option>";
         }
         else{
             finalDropDownOptions+="<option>"+responseArr.Results[i].name+"</option>";
-
         }
     }
     return finalDropDownOptions;
