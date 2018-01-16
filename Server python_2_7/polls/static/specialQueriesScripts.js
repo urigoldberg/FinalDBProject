@@ -20,9 +20,9 @@ function createTableFromResponse(responseArr) {
     }
     //filling table rows
     finaltable+="</tr></thead></tbody>";
-    for (i = 0; i < numofRows; i++){
+    for (var i = 0; i < numofRows; i++){
         finaltable+="<tr>";
-        for(j=0;j<numofCols;j++){
+        for(var j=0;j<numofCols;j++){
             // debugger;
             var val = responseArr.Results[i][columnNames[j]];
             finaltable+="<th>"+val+"</th>";
@@ -55,7 +55,7 @@ function fadeOutButtons(elementId, elementId2, elementId3) {
 
 function hideDisplayofClass(classNames) {
     var fadeArr = document.getElementsByClassName(classNames);
-    for (i = 0; i < fadeArr.length; i++) {
+    for (var i = 0; i < fadeArr.length; i++) {
         fadeArr[i].style.display = "none";
     }
 }
@@ -111,7 +111,7 @@ function createJSONString(flowname) {
     var genre = document.getElementById("genre").value;
     jsonString = addParamJSON(jsonString,"genre",genre);
     jsonString+=",";
-    x = document.getElementById("sel0").value == "Died" ? "1" : "0";
+    x = document.getElementById("sel0").value === "Died" ? "1" : "0";
     jsonString = addParamJSON(jsonString,"dead",x);
     jsonString += "]}";
     // debugger;
@@ -119,7 +119,7 @@ function createJSONString(flowname) {
 }
 
 function switchDEAD(){
-    if(DEADButton == 1){
+    if(DEADButton === 1){
         document.getElementById("DEAD").innerHTML = "<div id=\"responseheader\"></div>\n" +
             "                    <h4 class=\"tofade\">Death / Birth query:</h4>\n" +
             "                    <span class=\"tofade\">the year that at least </span>\n" +

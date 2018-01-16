@@ -1,8 +1,8 @@
 var photo;
 var match4AllCurrentFilterNum = 0;
 var addedFilters = "";
-var filterTypesChosen = new Array();
-var filterWordsChosen = new Array();
+var filterTypesChosen = [];
+var filterWordsChosen = [];
 var additionalFiltersSelected ="";
 
 function encodeImageFileAsURL() {
@@ -37,7 +37,7 @@ function createTableFromResponse(responseArr) {
     if(responseArr.isError == "true"){
         return "<p>"+responseArr.errorMessage+"</p>"
     }
-    var numofRows = responseArr.Results.length;
+    var numOfRows = responseArr.Results.length;
     var columnNames = [];
      // debugger;
     for (var colName in responseArr.Results[0]) {
@@ -53,9 +53,9 @@ function createTableFromResponse(responseArr) {
     }
     //filling table rows
     finaltable+="</tr></thead></tbody>";
-    for (i = 0; i < numofRows; i++){
+    for (var i = 0; i < numOfRows; i++){
         finaltable+="<tr>";
-        for(j=0;j<numofCols;j++){
+        for(var j=0;j<numofCols;j++){
             // debugger;
             var val = responseArr.Results[i][columnNames[j]];
             finaltable+="<th>"+val+"</th>";
@@ -89,7 +89,7 @@ function fadeOutButtons(elementId, elementId2, elementId3) {
     }
 }
 
-function loadDoc(postUrl, sentData) {
+function loadDoc(postUrl) {
     var xhttp = new XMLHttpRequest();
     document.getElementById("loadingsign").style.visibility="visible";
     // debugger;
@@ -119,15 +119,15 @@ function loadDoc(postUrl, sentData) {
 
 // When the user clicks anywhere outside of the modal, close it
 window.onclick = function(event) {
-    var loginmodal = document.getElementById('Login');
-    var signinmodel = document.getElementById('SignIn');
-    if (event.target == loginmodal ) {
-        loginmodal.style.display = "none";
+    var loginModel = document.getElementById('Login');
+    var signInModel = document.getElementById('SignIn');
+    if (event.target == loginModel ) {
+        loginModel.style.display = "none";
     }
-    if (event.target == signinmodel ) {
-        signinmodel.style.display = "none";
+    if (event.target == signInModel ) {
+        signInModel.style.display = "none";
     }
-}
+};
 
 function usermessage(message,show){
     if(show){
@@ -180,7 +180,7 @@ function addFilterNum(i) {
 }
 
 function printArraysTillNow() {
-    for (i = 0; i < match4AllCurrentFilterNum; i++) {
+    for (var i = 0; i < match4AllCurrentFilterNum; i++) {
         console.log("type number " + i + " is: " + filterTypesChosen[i] + ", filter number " + i + " is: " + filterWordsChosen[i]);
     }
 }
@@ -237,13 +237,13 @@ function createJSONString(flowname) {
     var jsonString = "{";
     jsonString = addFlowNameJSON(jsonString,flowname);
     jsonString = addparamsKeyforJSON(jsonString);
-    for (i = 0; i < match4AllCurrentFilterNum; i++) {
+    for (var i = 0; i < match4AllCurrentFilterNum; i++) {
         jsonString = addParamJSON(jsonString,filterTypesChosen[i],filterWordsChosen[i]);
         if (i < match4AllCurrentFilterNum - 1) {
             jsonString += ",";
         }
     }
-    if(additionalFiltersSelected != ""){
+    if(additionalFiltersSelected !== ""){
         jsonString+=",";
         jsonString = addParamJSON(jsonString,"additionalFilters",converNumToGroupBy(additionalFiltersSelected));
     }
@@ -268,12 +268,11 @@ function converNumToGroupBy(num){
 function getJSONStringOfValues(){
     match4AllCurrentFilterNum++;
     savePreviousSelections();
-    var jsonString = createJSONString("filterKeys");
-    return jsonString;
+    return createJSONString("filterKeys");
 }
 
 function savePreviousSelections(){
-    for(i=0; i<match4AllCurrentFilterNum; i++){
+    for(var i=0; i<match4AllCurrentFilterNum; i++){
         var selId = "sel"+(i);
         var temp = document.getElementById(selId);
         var typeChosen = temp.options[temp.selectedIndex].value;
@@ -287,7 +286,7 @@ function savePreviousSelections(){
 
 function fillOldFilters(){
     console.log("at fill old filters");
-    for(i=1; i<match4AllCurrentFilterNum; i++){
+    for(var i=1; i<match4AllCurrentFilterNum; i++){
         var selId = "sel"+(i);
         document.getElementById(selId).value = filterTypesChosen[i];
         var keywordId = "keywordToSearch"+(i);
@@ -299,9 +298,9 @@ function disableSpecialFilters(filterNotToDisable){
     additionalFiltersSelected = filterNotToDisable;
     var specArr = document.getElementsByClassName("spec");
     // debugger;
-    for(i=0;i<specArr.length;i++){
+    for(var i=0;i<specArr.length;i++){
         var spec = specArr[i];
-        if(spec.id != filterNotToDisable){
+        if(spec.id !== filterNotToDisable){
             spec.disabled = "true";
         }
     }
