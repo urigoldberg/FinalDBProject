@@ -240,6 +240,8 @@ def handleQueryResponse(flowname,param):
     if (ResultsArray == None):
         return ERROR_JSON
     
+    
+    
     return '{ "isError" : "false", "errorMessage": "", "Results": ' + ResultsArray + '}' 
     
 

@@ -229,7 +229,7 @@ FROM
     DbMysql12.artists t
 WHERE
     t.{0} IS NOT NULL
-    AND t.genre like '{2}'
+    AND t.genre IN ('{2}')
         AND t.genre IS NOT NULL
         AND t.genre NOT LIKE ''
 GROUP BY t.genre
@@ -266,7 +266,7 @@ FROM
     DbMysql12.Song a,
     DbMysql12.artists b
 WHERE
-    a.artist_db_id = b.db_id
+    a.artist_id = b.id
         AND b.name IN ('{0}')
         AND a.media_url IS NOT NULL
         AND a.duration {1}= ALL (SELECT 
