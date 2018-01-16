@@ -31,20 +31,13 @@ urlpatterns = [
     url(r'^musicExpert.html',views.musicExpert),
     
     # services
-#    url(r'^pictureQuery',views.pictureService),
     url(r'^SignIn*',views.SignInfunc),
     url(r'^LoginUser*',views.LoginUserfunc),
-#    url(r'^GeoLocation',views.pictureService),
     url(r'^Generic',views.generic),
     
     
     
-    # tests and mocks to be deleted
     url(r'^polls/mockHTML',views.mockHTML),
     url(r'^polls/test', views.test),
-#    url(r'^admin/', admin.site.urls),
-#    url(r'^polls/', views.index),
-#    url(r'^main*/', views.main),
-   # url(r'^main*', views.main)
 
 ]
