@@ -179,11 +179,13 @@ def generic(request):
     # Get / Create JSON query
     json = _json.loads(request.POST["data"])
     flowname, diclist = str(json["flowname"]), json["params"]
-    params = {}
-    for pair in diclist:
-        for key, value in pair.iteritems():
-            params[str(key)] = str(value)
     
+    # Get params dis
+    if (flowname == "filter"):
+        params = GenericBL.getDicOfParams(diclist,True)
+    else:
+        params = GenericBL.getDicOfParams(diclist,False)
+
     print("params",params)
     if (flowname is None or params is None):
         return HttpResponse(ERROR_JSON)

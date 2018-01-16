@@ -30,7 +30,28 @@ def getColumnValues(column, tablename):
     cols,result = getColumnValuesDB(column, tablename)
     return generateResFromRes(cols,result)
     
-
+########### GENERAL UTILS ##############
+def getDicOfParams(diclist, isUnique):
+    try:
+        params = {}
+        # unique keys in dic
+        if (isUnique):
+            for pair in diclist:
+                for key, value in pair.iteritems():
+                    if (str(key) in params):
+                        params[str(key)] += [str(value)]
+                    else:
+                        params[str(key)] = [str(value)]
+        # not unique keys in dic
+        else:
+            for pair in diclist:
+                for key, value in pair.iteritems():
+                    params[str(key)] = str(value)
+        return params
+    except Exception as e:
+        print ("getDicOfParams errore ",e.message)
+        return None
+    
 
 def get_artists_in_requested_radius(json):
     
