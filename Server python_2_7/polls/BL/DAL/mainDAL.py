@@ -109,7 +109,21 @@ def getUserPasswordUsernameDAL(username):
     
 def googleApiSearchSongsByKeyWord(keywords):
     #this is the real query we should be using once we change Lyrics.seed_id to Lyrics.song_id    
-    query = "select t.* from ("
+    keywords_for_full_text = ""
+    for keyword in keywords:
+        keywords_for_full_text += ' +'+ keyword
+    query = """
+    create table DbMysql12.temp_keywords
+(
+	song_id int,
+    lyrics text
+);
+
+Insert Into DbMysql12.temp_keywords
+SELECT lyr.song_id ,lyr.lyrics FROM DbMysql12.Lyrics lyr
+where match(lyr.lyrics) against ('"""+keywords_for_full_text+"""' in boolean mode);
+    """
+    query += "select t.* from ("
     if len(keywords) == 0:
         return None
     
@@ -119,20 +133,25 @@ def googleApiSearchSongsByKeyWord(keywords):
         numOfAppear = 5 - index + 1
         # TO DO - DUPLICATED ROWS
         query += """select * from (SELECT 
-        se.title, se.artist_name, lyr.num_occurrences, '"""+keyword+"""' as keyword
+    inner_songs.title, art.name, inner_songs.num_occurrences, '"""+keyword+"""' as keyword
+FROM
+    (SELECT 
+        *
     FROM
         (SELECT 
-            seed_id,
-                ((LENGTH(lyrics) - LENGTH(REPLACE(lyrics, '"""+keyword+"""', ''))) / LENGTH('"""+keyword+"""')) AS num_occurrences
-        FROM
-            DbMysql12.Lyrics) lyr
-            INNER JOIN
-        DbMysql12.Seed se ON lyr.seed_id = se.id
-    ORDER BY num_occurrences DESC
-    LIMIT """+str(numOfAppear) +""") as tbl"""+str(index) +""" 
+        song_id,
+            ((LENGTH(lyrics) - LENGTH(REPLACE(lyrics, '"""+keyword+"""', ''))) / LENGTH('"""+keyword+"""')) AS num_occurrences
+    FROM
+        DbMysql12.temp_keywords) lyr
+    INNER JOIN DbMysql12.Song son ON lyr.song_id = son.id)  inner_songs
+        INNER JOIN
+    DbMysql12.artists art ON art.db_id = inner_songs.artist_db_id
+ORDER BY num_occurrences DESC
+LIMIT """+str(numOfAppear) +""") as tbl"""+str(index) +""" 
     """
     con = DBconnection()
-    query += ") t where t.num_occurrences > 0 order by t.num_occurrences desc;"
+    query += """) t where t.num_occurrences > 0 order by t.num_occurrences desc;
+    drop table DbMysql12.temp_keywords;"""
     if (con.doSelectQuery(query) and con._rowsReturned > 0):
         con.close()
         return con._results 
