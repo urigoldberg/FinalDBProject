@@ -39,7 +39,15 @@ ERROR_JSON = '{ "isError" : "true", "errorMessage": "An error had occuered", "Re
 def Login(request):
     objPath = os.path.join(os.getcwd(),'polls', 'static', "Login.html")
     obj = open(objPath,'r').read()
-    context = Context({"message": "", "show": "false" })
+    dic = {"message": "", "show": "false" }
+    context = Context(dic)
+    
+    # replace for form values, which came from db
+    GenericBL.addValuesForFromDic(dic,"genre", "artists","allGenre")
+    GenericBL.addValuesForFromDic(dic,"name", "CountryArtists","allCountries")
+    obj = obj.replace("{{allGenre}}",dic["allGenre"]).replace("{{allCountries}}",dic["allCountries"])
+
+    
     resp = HttpResponse(Template(obj).render(context))
     resp.set_cookie("bs","")
     return resp

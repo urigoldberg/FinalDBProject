@@ -2,6 +2,16 @@ from ..DAL.mainDAL import geographical_filtering, yearMostArtistDiedOrBornDB, ge
 
 # return [{"nameOfColumn01":"value01","nameOfColumn02":"value02"....},{},{}]
 #in case of error - return None
+
+def addValuesForFromDic(dic,colum,table,key):
+    cols,result = getColumnValuesDB(colum,table)
+    op = """<option value="{0}">{0}</option>"""
+    value = ""
+    for row in result:
+        value = value + op.format(str(row)[3:-3])
+    dic[key] = value
+    print("addGenreToDic", value)
+
 def generateResFromRes(cols,result):
     print ("generateResFromRes - cols",cols, "result",result )
     res = '[' 
