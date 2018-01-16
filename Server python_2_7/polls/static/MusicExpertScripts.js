@@ -125,6 +125,7 @@ function createJSONString(flowname, elementId, elementId2, keyString) {
         jsonString = addParamJSON(jsonString,keyString,x);
     }
     jsonString += "]}";
+    debugger;
     return jsonString;
 }
 
@@ -163,7 +164,7 @@ function switchDEAD(){
     }
 }
 
-function switchq2() {
+function switchMostViewed() {
     if(q2Button === 1){
         document.getElementById("q2").innerHTML = "<p>Most viewed artists on YouTube with Genre:</p>\n" +
             "                    <form id=\"q2form\">\n" +
@@ -176,13 +177,13 @@ function switchq2() {
             "                    <input type=\"text\" class=\"form-control\" value=\"usa\" id=\"location\">\n" +
             "                    </span>\n"+
             "<button id=\"getmostviewed\" class =\"btn btn-default querybutton \" onclick=\"loadDocSpecialQuery('mostviewedartist')\">Query</button>\n"+
-            "<button id=\"changeq2\" class =\"btn btn-default\" onclick=\"switchq2()\">Close most viewed query</button>";
+            "<button id=\"changeq2\" class =\"btn btn-default\" onclick=\"switchMostViewed()\">Close most viewed query</button>";
         console.log("Setting q2Button to 0");
         loadDistinctDropdown("columnname", "genre", "genre", "Song");
         q2Button = 0;
     }
     else{
-        document.getElementById("q2").innerHTML = "<button id=\"changeq2\" class =\"btn btn-default\" onclick=\"switchq2()\">Open most viewed query</button>";
+        document.getElementById("q2").innerHTML = "<button id=\"changeq2\" class =\"btn btn-default\" onclick=\"switchMostViewed()\">Open most viewed query</button>";
         console.log("Setting q2Button to 1");
         q2Button=1;
     }
