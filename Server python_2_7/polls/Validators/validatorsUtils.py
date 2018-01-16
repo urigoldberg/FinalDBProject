@@ -2,7 +2,7 @@ import re
 import hashlib
 import json as _json
 
-from ..BL import GenericBL
+from ..BL.GenericBL import *
 
 ######################################################
 ########## general validations #######################
@@ -128,9 +128,9 @@ def validateGeneric(request):
     flowname, diclist = str(json["flowname"]), json["params"]
      # Get params dis
     if (flowname == "filterKeys"):
-        params = GenericBL.getDicOfParams(diclist,True)
+        params = getDicOfParams(diclist,True)
     else:
-        params = GenericBL.getDicOfParams(diclist,False)
+        params = getDicOfParams(diclist,False)
     
     if (flowname not in flownames):
         print("flowname not in flownames")
