@@ -2,6 +2,7 @@ var DEADButton = 1;
 var mostViewedButton = 1;
 var youTubeLinkButton = 1;
 var albumWithSalesButton = 1;
+var personalizeButton = 1;
 
 
 function createTableFromResponse(responseArr) {
@@ -253,6 +254,32 @@ function switchAlbumWithSales(){
         console.log("Setting albumWithSalesButton to 1");
         albumWithSalesButton=1;
     }
+}
+
+function switchPerzonalize(){
+    if(personalizeButton === 1){
+        document.getElementById("q5").innerHTML = "<button id=\"person\" class =\"btn btn-default\" onclick=\"sendPerson()\">query</button>"+
+            "<button id=\"changeq4\" class =\"btn btn-default\" onclick=\"switchPerzonalize()\">Close Personalize query</button>";
+        console.log("Setting personalizeButton to 0");
+        personalizeButton = 0;
+    }
+    else{
+        document.getElementById("q5").innerHTML = "<button id=\"changeq4\" class =\"btn btn-default\" onclick=\"switchPerzonalize()\">open Personalize query</button>";
+        console.log("Setting personalizeButton to 1");
+        personalizeButton=1;
+    }
+}
+
+function sendPerson(){
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+        if (this.readyState === 4 && this.status === 200) {
+            alert("ok!");
+        }
+    };
+    xhttp.open("GET", "personal", true);
+    xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xhttp.send();
 }
 
 function loadDistinctDropdown(flowName, elementIdtoChange, columnName, tablename) {
