@@ -77,9 +77,18 @@
                         Browse <input id="inputFileToLoad" type="file" style="display: none;" onchange="encodeImageFileAsURL();">
                     </label><br><br>
                     <!--the button to request data-->
-                    <button id="loadbutton" class ="btn btn-default" onclick="loadDoc('pictureQuery')" style="display: none">Find songs from picture!</button>
+                    <button id="loadbutton" class ="btn btn-default" onclick="loadDataForImageToMusic('pictureQuery')" style="display: none">Find songs from picture!</button>
                     <img id="loadingsign" src="static/loading.gif" style ="visibility: hidden">
                     <br>
+
+                    <div id="updaterow" style="visibility: hidden">
+                        <div class="form-inline" style="display: inline-block;">
+                            <input type="text" class="form-control" id="songname" disabled>
+                            <input type="text" class="form-control" id="artist" disabled>
+                            <input type="text" class="form-control" id="keyword" disabled>
+                            <input type="text" class="form-control" id="youtubelink">
+                        </div>
+                    </div>
                 </div>
                 <!--side bar-->
                 <div class="col-sm-4">

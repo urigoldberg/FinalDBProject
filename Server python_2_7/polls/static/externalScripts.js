@@ -11,7 +11,6 @@ function encodeImageFileAsURL() {
         var fileToLoad = filesSelected[0];
         var fileReader = new FileReader();
         fileReader.onload = function(fileLoadedEvent) {
-            debugger;
             var srcData = fileLoadedEvent.target.result; // <--- data: base64
             var newImage = document.createElement('img');
             newImage.src = srcData;
@@ -40,7 +39,6 @@ function createTableFromResponse(responseArr) {
     }
     var numOfRows = responseArr.Results.length;
     var columnNames = [];
-     // debugger;
     for (var colName in responseArr.Results[0]) {
         if (colName) {
             columnNames.push(colName);
@@ -54,17 +52,29 @@ function createTableFromResponse(responseArr) {
     }
     //filling table rows
     finaltable+="</tr></thead></tbody>";
+
     for (var i = 0; i < numOfRows; i++){
         finaltable+="<tr>";
         for(var j=0;j<numofCols;j++){
-            // debugger;
             var val = responseArr.Results[i][columnNames[j]];
-            finaltable+="<th>"+val+"</th>";
+            if(val === "None"){
+                finaltable+="<th>"+insertButtonInTable(i)+"</th>";
+            }else{
+                finaltable+="<th>"+val+"</th>";
+            }
         }
         finaltable+="</tr>";
     }
     finaltable += "</tbody></table>";
     return finaltable;
+}
+
+function insertButtonInTable(rowNumber){
+    return "<button class='btn btn-default' onclick='fillUpdateRow("+rowNumber+")'>insert a youtube link</button>";
+}
+
+function fillUpdateRow(rowNumber){
+
 }
 
 function fadeInTable(finalTable, elementToReplaceByTable) {
@@ -90,18 +100,15 @@ function fadeOutButtons(elementId, elementId2, elementId3) {
     }
 }
 
-function loadDoc(postUrl) {
+function loadDataForImageToMusic(postUrl) {
     var xhttp = new XMLHttpRequest();
     document.getElementById("loadingsign").style.visibility="visible";
-    // debugger;
     xhttp.onreadystatechange = function() {
         if (this.readyState === 4 && this.status === 200) {
-            // debugger;
             var responseArr = JSON.parse(this.responseText);
             console.log("initializing table head and opening body tag");
             var finalTable = createTableFromResponse(responseArr);
             fadeInTable(finalTable);
-            // debugger;
             document.getElementById("imageToTextHeader").innerText = "By extracting the keyword "+responseArr.keyword+" the Following songs were found:";
             fadeOutButtons("browsebutton", "loadbutton", "loadingsign");
         }
@@ -110,7 +117,6 @@ function loadDoc(postUrl) {
     xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     if (photo) {
         var sentData = createJSONStringforImage(postUrl,encodeURIComponent(photo.substring(photo.indexOf(",") + 1)));
-        // debugger;
         xhttp.send("data="+sentData);
     }
     else {
@@ -140,12 +146,10 @@ function searchKeyword(keyword){
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
         if (this.readyState === 4 && this.status === 200) {
-            // debugger;
             var responseArr = JSON.parse(this.responseText);
             console.log("initializing table head and opening body tag");
             var finalTable = createTableFromResponse(responseArr);
             fadeInTable(finalTable);
-            // debugger;
             document.getElementById("imageToTextHeader").innerText = "By extracting the keyword "+responseArr.keyword+" the Following songs were found:";
             fadeOutButtons("keywordToSearch","getSongsButton");
         }
@@ -249,7 +253,6 @@ function createJSONString(flowname) {
         jsonString = addParamJSON(jsonString,"additionalFilters",converNumToGroupBy(additionalFiltersSelected));
     }
     jsonString += "]}";
-    debugger;
     return jsonString;
 }
 
@@ -298,7 +301,6 @@ function fillOldFilters(){
 function disableSpecialFilters(filterNotToDisable){
     additionalFiltersSelected = filterNotToDisable;
     var specArr = document.getElementsByClassName("spec");
-    // debugger;
     for(var i=0;i<specArr.length;i++){
         var spec = specArr[i];
         if(spec.id !== filterNotToDisable){

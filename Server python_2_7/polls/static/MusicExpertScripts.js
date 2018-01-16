@@ -81,7 +81,6 @@ function loadDocSpecialQuery(flowname, elementToReplaceByTable) {
             var responseArr = JSON.parse(this.responseText);
             console.log("initializing table head and opening body tag");
             var finalTable = createTableFromResponse(responseArr);
-            // debugger;
             fadeInTable(finalTable,elementToReplaceByTable);
             document.getElementById("responseheader").innerText = "the Following year was found:";
             hideDisplayofClass("tofade");
@@ -129,7 +128,6 @@ function createJSONString(flowname, elementId, elementId2, keyString) {
         jsonString = addParamJSON(jsonString,keyString,x);
     }
     jsonString += "]}";
-    debugger;
     return jsonString;
 }
 
