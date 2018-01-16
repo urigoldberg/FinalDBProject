@@ -68,6 +68,9 @@ function loadDocSpecialQuery(flowname, elementToReplaceByTable) {
     }else if(flowname === "year"){
         sentData = createJSONString(flowname, "num", "genre","dead");
     }
+    else if(flowname === "youTubeLink"){
+        sentData = createJSONString(flowname, "artistname", "operation");
+    }
     else{
         sentData = createJSONString(flowname, "location", "genre");
     }
@@ -125,7 +128,7 @@ function createJSONString(flowname, elementId, elementId2, keyString) {
         jsonString = addParamJSON(jsonString,keyString,x);
     }
     jsonString += "]}";
-    // debugger;
+    debugger;
     return jsonString;
 }
 
@@ -189,21 +192,30 @@ function switchMostViewed() {
     }
 }
 
-function switchq3() {
+function switchYouTubeLink() {
     if(q3Button === 1){
         document.getElementById("q3").innerHTML = "<p>Longest/shortest song on youtube of one of the following artists:</p>\n" +
             "                    <form id=\"q3form\">\n" +
             "                        <div class=\"form-group\">\n" +
-            "                            <select class=\"form-control\" id=\"selq3\"></select>\n" +
+            "                            <select class=\"form-control\" id=\"artistname\"></select>\n" +
             "                        </div>\n" +
             "                    </form>\n" +
-            "<button id=\"changeq3\" class =\"btn btn-default\" onclick=\"switchq3()\">Close YouTube link query</button>";
+            "                    <form class=\"tofade\">\n" +
+            "                        <div class=\"form-group\">\n" +
+            "                            <select class=\"form-control\" id=\"operation\">\n" +
+            "                                <option>max</option>\n" +
+            "                                <option>min</option>\n" +
+            "                            </select>\n" +
+            "                        </div>\n" +
+            "                    </form>\n" +
+            "<button id=\"getmostviewed\" class =\"btn btn-default querybutton \" onclick=\"loadDocSpecialQuery('youTubeLink','q3')\">Query</button>\n"+
+            "<button id=\"changeq3\" class =\"btn btn-default\" onclick=\"switchYouTubeLink()\">Close YouTube link query</button>";
         console.log("Setting q3Button to 0");
-        loadDistinctDropdown("columnname", "selq3", "name", "artists");
+        loadDistinctDropdown("columnname", "artistname", "name", "artists");
         q3Button = 0;
     }
     else{
-        document.getElementById("q3").innerHTML = "<button id=\"changeq3\" class =\"btn btn-default\" onclick=\"switchq3()\">open YouTube link query</button>";
+        document.getElementById("q3").innerHTML = "<button id=\"changeq3\" class =\"btn btn-default\" onclick=\"switchYouTubeLink()\">open YouTube link query</button>";
         console.log("Setting q3Button to 1");
         q3Button=1;
     }
