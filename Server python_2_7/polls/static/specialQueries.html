@@ -72,35 +72,13 @@
         <div class="row">
             <div class="col-sm-8">
 
-                <div id="responseheader"></div>
+                <div id ="DEAD">
+                    <button id="changeDEAD" class ="btn btn-default" onclick="switchDEAD()">open Death / Birth query</button>
+                </div>
 
-                <h4 class="tofade">Death / Birth query:</h4>
-                <span class="tofade">the year that at least </span>
-                <span class="form-group tofade" >
-                    <input type="text" class="form-control" value="2" id="num">
-                </span>
-                <span class="tofade">artists of genre </span>
-                <span class="form-group tofade" >
-                    <input type="text" class="form-control" value="hip-hop" id="genre">
-                </span>
-                <span class="tofade"> have </span>
-                <form id="Died" class="tofade">
-                    <div class="form-group">
-                        <select class="form-control" id="sel0">
-                            <option>Died</option>
-                            <option>Born</option>
-                        </select>
-                    </div>
-                </form>
-
-                <!--added forms will be here-->
-                <div id="big"></div>
+                <br>
 
                 <button id="clearAll" class ="btn btn-default" onclick="window.location.href='specialQueries.html.html'">Clear all</button>
-
-                <br><br>
-
-                <button id="getSongsButton" class ="btn btn-default" onclick="loadDocSpecialQuery('year')" >Find year</button>
 
             </div>
 
@@ -108,7 +86,8 @@
             <div class="col-sm-4">
                 <h4> Instructions:</h4>
                 <ol>
-                    <li>Choose a keyword type from drop down</li>
+                    <li>Fill in data in wanted query</li>
+                    <li>Select query button in wanted query</li>
                 </ol>
             </div>
         </div>
