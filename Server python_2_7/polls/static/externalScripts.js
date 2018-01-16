@@ -58,7 +58,7 @@ function createTableFromResponse(responseArr) {
         for(var j=0;j<numofCols;j++){
             var val = responseArr.Results[i][columnNames[j]];
             if(val === "None"){
-                finaltable+="<th>"+insertButtonInTable(i)+"</th>";
+                finaltable+="<th>"+insertButtonInTable(i+1)+"</th>";
             }else{
                 finaltable+="<th>"+val+"</th>";
             }
@@ -74,6 +74,18 @@ function insertButtonInTable(rowNumber){
 }
 
 function fillUpdateRow(rowNumber){
+    debugger;
+    var t = document.getElementsByClassName("imagetable");
+    var htmlTable = t[0];
+    var rows = htmlTable.rows;
+    var specificRow=rows[rowNumber];
+    var rowCells = specificRow.cells;
+    var specificcell = rowCells[3];
+    document.getElementById("keyword").value = rowCells[0].innerText;
+    document.getElementById("songname").value = rowCells[1].innerText;
+    document.getElementById("artist").value = rowCells[2].innerText;
+    document.getElementById("youtubelink").value = "Please insert a link to update";
+    document.getElementById("updaterow").style.visibility ="visible";
 
 }
 
