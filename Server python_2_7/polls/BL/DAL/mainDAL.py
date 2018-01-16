@@ -277,3 +277,30 @@ WHERE
         con.close()
         return con._columns,con._results
     return None,None
+
+
+def mostViewedArtistDB(location,genre):
+    query = "select * from ("
+    base_query = """SELECT artists.name,artists.location,artists.genre, sum(album_views) as artist_views
+FROM artists, Album JOIN (SELECT album_id, sum(media_views) as album_views
+FROM Song
+WHERE media_url is NOT NULL
+GROUP BY album_id) as album_by_song
+on Album.id = album_by_song.album_id
+   WHERE Album.artist_id = artists.id
+GROUP BY artists.id, artists.name
+ORDER BY artist_views DESC)"""
+
+    if(location != None):
+        query = query + base_query + "where t1.location like '%"""+location+"""%'"""
+        if(genre != None):
+            query += """and match(t1.genre) like '%"""+genre+"""%'"""
+    elif (genre != None):
+        query + base_query + "where t1.genre like '%"""+genre+"""%'"""
+    
+    print("query",query)
+    con = DBconnection()
+    if (con.doSelectQuery(query) and con._rowsReturned > 0):
+        con.close()
+        return con._columns,con._results
+    return None,None

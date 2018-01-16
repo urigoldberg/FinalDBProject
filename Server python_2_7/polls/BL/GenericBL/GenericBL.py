@@ -1,4 +1,4 @@
-from ..DAL.mainDAL import geographical_filtering, yearMostArtistDiedOrBornDB, getColumnValuesDB, youTubeLongestShortestLinkDB
+from ..DAL.mainDAL import geographical_filtering, yearMostArtistDiedOrBornDB, getColumnValuesDB, youTubeLongestShortestLinkDB, mostViewedArtistDB
 
 # return [{"nameOfColumn01":"value01","nameOfColumn02":"value02"....},{},{}]
 #in case of error - return None
@@ -60,6 +60,9 @@ def getDicOfParams(diclist, isUnique):
         print ("getDicOfParams errore ",e.message)
         return None
     
+def mostViewedArtist(flowname,param):
+    cols,result = mostViewedArtistDB(param['location'],param['genre'])
+    return generateResFromRes(cols,result)
 
 def get_artists_in_requested_radius(json):
     
