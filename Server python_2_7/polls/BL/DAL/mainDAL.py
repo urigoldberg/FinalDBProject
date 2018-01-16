@@ -167,7 +167,7 @@ where match(lyr.lyrics) against ('"""+keywords_for_full_text+"""' in natural lan
     con.close()
     print("finished creating table")
     
-    query = "select t.title as 'Song Name',t.name as 'Artist Name', t.keyword as 'Keyword' from ("
+    query = "select t.keyword as 'Keyword',t.title as 'Song Name',t.name as 'Artist Name',t.media_url as 'Youtube Link' from ("
     for index,keyword in enumerate(keywords):
         if not index == 0:
             query += "union all "
@@ -176,7 +176,7 @@ where match(lyr.lyrics) against ('"""+keywords_for_full_text+"""' in natural lan
         query += """select * from
         (SELECT 
  inner_songs.title, art.name,
- inner_songs.num_occurrences, '"""+str(keyword)+"""' as keyword
+ inner_songs.num_occurrences, inner_songs.media_url, '"""+str(keyword)+"""' as keyword
 FROM (SELECT * FROM
 (SELECT song_id,
 ((LENGTH(lyrics) - LENGTH(REPLACE(lyrics, '"""+str(keyword)+"""', '')))
@@ -341,3 +341,22 @@ ORDER BY artist_views DESC
         con.close()
         return con._columns,con._results
     return None,None    
+
+
+
+
+
+def updateYoutubeLinkDB(link,song_name,song_artist):
+    query = """
+    UPDATE  Song 
+SET     media_url = '"""+link+"""'
+where title = 'ASDFDA'
+and artist_id = 
+(
+select id from artists
+where name = '"""+song_artist+"""'
+)"""
+    con = DBconnection()
+    con.doQuery(query)
+    print("performed update successfully")
+    con.close()

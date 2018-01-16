@@ -1,4 +1,4 @@
-from ..DAL.mainDAL import geographical_filtering, yearMostArtistDiedOrBornDB, getColumnValuesDB, youTubeLongestShortestLinkDB, albumsOfGenreWithSalesDB, mostViewedArtistDB
+from ..DAL.mainDAL import geographical_filtering, yearMostArtistDiedOrBornDB, getColumnValuesDB, youTubeLongestShortestLinkDB, albumsOfGenreWithSalesDB, mostViewedArtistDB, updateYoutubeLinkDB
 
 # return [{"nameOfColumn01":"value01","nameOfColumn02":"value02"....},{},{}]
 #in case of error - return None
@@ -77,6 +77,23 @@ def mostViewedArtist(param):
     location, genre = str(param["location"]),str(param["genre"])
     cols,result = mostViewedArtistDB(location, genre)
     return generateResFromRes(cols,result)
+
+
+def validate_link(link):
+    import httplib
+    if "youtube.com" not in link: 
+        return False
+    c = httplib.HTTPConnection(link)
+    c.request("HEAD", '')
+    return c.getresponse().status == 200
+
+def updateYoutubeLink(param):
+    link,song_name,song_artist = str(param["link"]), str(param["song_name"]),str(param["song_artist"])
+    if(validate_link(link)):
+        updateYoutubeLinkDB(link,song_name,song_artist)
+    else:
+        return '{}'
+    
 
 def get_artists_in_requested_radius(json):
     
