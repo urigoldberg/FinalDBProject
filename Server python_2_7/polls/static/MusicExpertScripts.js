@@ -62,7 +62,7 @@ function hideDisplayofClass(classNames) {
 }
 
 function loadDocSpecialQuery(postUrl) {
-    var sentData = createJSONString(postUrl);
+    var sentData = createJSONStringDistinctGenre(postUrl);
     var xhttp = new XMLHttpRequest();
     // debugger;
     xhttp.onreadystatechange = function() {
@@ -82,7 +82,6 @@ function loadDocSpecialQuery(postUrl) {
     xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     // debugger;
     xhttp.send("data="+sentData);
-
 }
 
 function addFlowNameJSON(jsonString, flowname) {
@@ -165,5 +164,59 @@ function switchq2() {
         console.log("Setting q2Button to 1");
         q2Button=1;
     }
+}
+
+function updateGenre(){
+    loadDistinctGenere("columnname");
+}
+
+function loadDistinctGenere(flowName) {
+    var sentData = createJSONStringDistinctGenre(flowName);
+    var xhttp = new XMLHttpRequest();
+    // debugger;
+    xhttp.onreadystatechange = function() {
+        if (this.readyState === 4 && this.status === 200) {
+            // debugger;
+            var responseArr = JSON.parse(this.responseText);
+            console.log("initializing table head and opening body tag");
+            var finalTable = fillDropdownFromResponse(responseArr);
+            fadeInTable(finalTable,"selq2");
+            // document.getElementById("responseheader").innerText = "the Following year was found:";
+            // debugger;
+            // hideDisplayofClass("tofade");
+            // hideDisplayofClass("querybutton");
+        }
+    };
+    xhttp.open("POST", "Generic", true);
+    xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    // debugger;
+    xhttp.send("data="+sentData);
+}
+
+function createJSONStringDistinctGenre(flowname) {
+    var x;
+    var jsonString = "{";
+    jsonString = addFlowNameJSON(jsonString,flowname);
+    jsonString = addparamsKeyforJSON(jsonString);
+    // debugger;
+    jsonString = addParamJSON(jsonString,"column","genere");
+    jsonString+=",";
+    jsonString = addParamJSON(jsonString,"tablename","songs");
+    jsonString += "]}";
+    // debugger;
+    console.log(jsonString);
+    return jsonString;
+}
+
+function fillDropdownFromResponse(responseArr) {
+    if(responseArr.isError == "true"){
+        return "<p>"+responseArr.errorMessage+"</p>"
+    }
+    var numofRows = responseArr.Results.length;
+    var finaltable ="";
+    for(var i=0;i<numofRows;i++){
+        finaltable+="<option>"+responseArr.Results[i]+"</option>"
+    }
+    return finaltable;
 }
 
