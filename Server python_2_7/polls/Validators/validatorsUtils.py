@@ -140,9 +140,10 @@ def validateGeneric(request):
     
 
     # request doesn't contain illegal characters - against sql injections
-#    if not (sqlInjectionChars(params)):
-#        print("sqlInjectionChars")
-#        return False
+    if(flowname != "pictureQuery"):
+        if not (sqlInjectionChars(params)):
+            print("sqlInjectionChars")
+            return False
     
     # speaciel validators:
     
