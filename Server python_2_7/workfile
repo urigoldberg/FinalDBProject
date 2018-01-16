@@ -1,11 +1,11 @@
-select t.title as 'Song Name',t.name as 'Artist Name', t.keyword as 'Keyword' from (select * from
+select t.keyword as 'Keyword',t.title as 'Song Name',t.name as 'Artist Name',t.media_url as 'Youtube Link' from (select * from
         (SELECT 
  inner_songs.title, art.name,
- inner_songs.num_occurrences, 'text' as keyword
+ inner_songs.num_occurrences, inner_songs.media_url, 'art' as keyword
 FROM (SELECT * FROM
 (SELECT song_id,
-((LENGTH(lyrics) - LENGTH(REPLACE(lyrics, 'text', '')))
-/ LENGTH('text'))
+((LENGTH(lyrics) - LENGTH(REPLACE(lyrics, 'art', '')))
+/ LENGTH('art'))
 AS num_occurrences FROM
 DbMysql12.temp_keywords) lyr
 INNER JOIN DbMysql12.Song son ON lyr.song_id = son.id)  inner_songs
@@ -16,11 +16,11 @@ LIMIT 6) as tbl0
 union all select * from
         (SELECT 
  inner_songs.title, art.name,
- inner_songs.num_occurrences, 'product' as keyword
+ inner_songs.num_occurrences, inner_songs.media_url, 'fictional character' as keyword
 FROM (SELECT * FROM
 (SELECT song_id,
-((LENGTH(lyrics) - LENGTH(REPLACE(lyrics, 'product', '')))
-/ LENGTH('product'))
+((LENGTH(lyrics) - LENGTH(REPLACE(lyrics, 'fictional character', '')))
+/ LENGTH('fictional character'))
 AS num_occurrences FROM
 DbMysql12.temp_keywords) lyr
 INNER JOIN DbMysql12.Song son ON lyr.song_id = son.id)  inner_songs
@@ -31,11 +31,11 @@ LIMIT 5) as tbl1
 union all select * from
         (SELECT 
  inner_songs.title, art.name,
- inner_songs.num_occurrences, 'font' as keyword
+ inner_songs.num_occurrences, inner_songs.media_url, 'organism' as keyword
 FROM (SELECT * FROM
 (SELECT song_id,
-((LENGTH(lyrics) - LENGTH(REPLACE(lyrics, 'font', '')))
-/ LENGTH('font'))
+((LENGTH(lyrics) - LENGTH(REPLACE(lyrics, 'organism', '')))
+/ LENGTH('organism'))
 AS num_occurrences FROM
 DbMysql12.temp_keywords) lyr
 INNER JOIN DbMysql12.Song son ON lyr.song_id = son.id)  inner_songs
@@ -46,11 +46,11 @@ LIMIT 4) as tbl2
 union all select * from
         (SELECT 
  inner_songs.title, art.name,
- inner_songs.num_occurrences, 'product design' as keyword
+ inner_songs.num_occurrences, inner_songs.media_url, 'fiction' as keyword
 FROM (SELECT * FROM
 (SELECT song_id,
-((LENGTH(lyrics) - LENGTH(REPLACE(lyrics, 'product design', '')))
-/ LENGTH('product design'))
+((LENGTH(lyrics) - LENGTH(REPLACE(lyrics, 'fiction', '')))
+/ LENGTH('fiction'))
 AS num_occurrences FROM
 DbMysql12.temp_keywords) lyr
 INNER JOIN DbMysql12.Song son ON lyr.song_id = son.id)  inner_songs
@@ -61,11 +61,11 @@ LIMIT 3) as tbl3
 union all select * from
         (SELECT 
  inner_songs.title, art.name,
- inner_songs.num_occurrences, 'area' as keyword
+ inner_songs.num_occurrences, inner_songs.media_url, 'illustration' as keyword
 FROM (SELECT * FROM
 (SELECT song_id,
-((LENGTH(lyrics) - LENGTH(REPLACE(lyrics, 'area', '')))
-/ LENGTH('area'))
+((LENGTH(lyrics) - LENGTH(REPLACE(lyrics, 'illustration', '')))
+/ LENGTH('illustration'))
 AS num_occurrences FROM
 DbMysql12.temp_keywords) lyr
 INNER JOIN DbMysql12.Song son ON lyr.song_id = son.id)  inner_songs

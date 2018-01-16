@@ -186,7 +186,7 @@ def generic(request):
     else:
         params = GenericBL.getDicOfParams(diclist,False)
 
-    print("params",params)
+#    print("params",params)
     if (flowname is None or params is None):
         return HttpResponse(ERROR_JSON)
     
@@ -230,7 +230,12 @@ def handleQueryResponse(flowname,param):
     if (flowname == "SucAlbums"):
         numOfSales, genre = str(param["numOfSales"]),str(param["genre"])
         ResultsArray = GenericBL.albumsOfGenreWithSales(numOfSales, genre)
+     
+    if (flowname == "mostviewedartist"):
+        ResultsArray = GenericBL.mostViewedArtist(param)
         
+    if (flowname == "updateyoutubelink"):
+        ResultsArray = GenericBL.updateYoutubeLink(param)
     # more ifs..
     
     # If ResultsArray == None, an error has occuered

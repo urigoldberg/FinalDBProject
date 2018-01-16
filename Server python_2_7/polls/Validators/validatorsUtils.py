@@ -54,10 +54,12 @@ def hasKeys(flow,dic):
     dicOfKeys["columnname"] = ["column","tablename"]
     dicOfKeys["youTubeLink"] = ["operation","artistname"]
     dicOfKeys["SucAlbums"] = ["numOfSales", "genre"]
+    dicOfKeys["mostviewedartist"] = ["location", "genre"]
+    dicOfKeys["updateyoutubelink"] = ["link","song_name","song_artist"]
     
     keys = [str(key) for key, value in dic.iteritems()]
-    print(keys)
-    print(dicOfKeys[flow])
+    print("keys",keys)
+    print("dicOfKeys[flow]",dicOfKeys[flow])
     # is subset
     return set(keys) == set(dicOfKeys[flow])
 
@@ -108,7 +110,7 @@ def validateGeoService(request):
 def validateGeneric(request):
     print("start validating")
     
-    flownames = ["pictureQuery", "geoService", "year","columnname","youTubeLink","SucAlbums"]
+    flownames = ["pictureQuery", "geoService", "year","columnname","youTubeLink","SucAlbums","mostviewedartist", "updateyoutubelink"]
     
     # request is ..
     if not (request.POST and "data" in request.POST.keys()):

@@ -167,7 +167,7 @@ where match(lyr.lyrics) against ('"""+keywords_for_full_text+"""' in natural lan
     con.close()
     print("finished creating table")
     
-    query = "select t.title as 'Song Name',t.name as 'Artist Name', t.keyword as 'Keyword' from ("
+    query = "select t.keyword as 'Keyword',t.title as 'Song Name',t.name as 'Artist Name',t.media_url as 'Youtube Link' from ("
     for index,keyword in enumerate(keywords):
         if not index == 0:
             query += "union all "
@@ -176,7 +176,7 @@ where match(lyr.lyrics) against ('"""+keywords_for_full_text+"""' in natural lan
         query += """select * from
         (SELECT 
  inner_songs.title, art.name,
- inner_songs.num_occurrences, '"""+str(keyword)+"""' as keyword
+ inner_songs.num_occurrences, inner_songs.media_url, '"""+str(keyword)+"""' as keyword
 FROM (SELECT * FROM
 (SELECT song_id,
 ((LENGTH(lyrics) - LENGTH(REPLACE(lyrics, '"""+str(keyword)+"""', '')))
@@ -193,10 +193,10 @@ LIMIT """+str(numOfAppear) +""") as tbl"""+str(index) +"""
     query += """) t where t.num_occurrences > 0 order by t.num_occurrences desc;
 """
     
-
-    f = open('workfile', 'w')
-    f.write(query)
-    f.close
+#
+#    f = open('workfile', 'w')
+#    f.write(query)
+#    f.close
     if (con.doSelectQuery(query) and con._rowsReturned > 0):
         print("finished googleAPI successfuly")
         con.close()   
@@ -307,3 +307,56 @@ ORDER BY Num_Of_Albums""".format(numOfSales,genre)
         con.close()
         return con._columns,con._results
     return None,None
+
+
+def mostViewedArtistDB(location,genre):
+    query = """
+    select * from
+(
+SELECT artists.name,artists.location, artists.genre,sum(album_views) as artist_views
+FROM artists, Album JOIN (SELECT album_id, sum(media_views) as album_views
+FROM Song
+WHERE media_url is NOT NULL
+GROUP BY album_id) as album_by_song
+on Album.id = album_by_song.album_id
+   WHERE Album.artist_id = artists.id
+GROUP BY artists.id, artists.name
+ORDER BY artist_views DESC
+) t """
+    
+    if(location != None):
+        query += """where t.location like '%"""+location+"""%'"""
+        if(genre != None):
+            query += """and t.genre like '%"""+genre+"""%'"""
+    elif(genre != None):
+        query += """where t.genre like '%"""+genre+"""%'"""
+    
+    print("query is",query)
+#    f = open('workfile', 'w')
+#    f.write(query)
+#    f.close()
+    print("wrote file")
+    con = DBconnection()
+    if (con.doSelectQuery(query) and con._rowsReturned > 0):
+        con.close()
+        return con._columns,con._results
+    return None,None    
+
+
+
+
+
+def updateYoutubeLinkDB(link,song_name,song_artist):
+    query = """
+    UPDATE  Song 
+SET     media_url = '"""+link+"""'
+where title = 'ASDFDA'
+and artist_id = 
+(
+select id from artists
+where name = '"""+song_artist+"""'
+)"""
+    con = DBconnection()
+    con.doQuery(query)
+    print("performed update successfully")
+    con.close()
