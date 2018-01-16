@@ -5,6 +5,11 @@ var filterTypesChosen = [];
 var filterWordsChosen = [];
 var additionalFiltersSelected ="";
 
+//for updateyoutube link
+var link_you =""
+var song_name="";
+var song_artist="";
+
 function encodeImageFileAsURL() {
     var filesSelected = document.getElementById("inputFileToLoad").files;
     if (filesSelected.length > 0) {
@@ -74,7 +79,6 @@ function insertButtonInTable(rowNumber){
 }
 
 function fillUpdateRow(rowNumber){
-    debugger;
     var t = document.getElementsByClassName("imagetable");
     var htmlTable = t[0];
     var rows = htmlTable.rows;
@@ -83,10 +87,72 @@ function fillUpdateRow(rowNumber){
     var specificcell = rowCells[3];
     document.getElementById("keyword").value = rowCells[0].innerText;
     document.getElementById("songname").value = rowCells[1].innerText;
+    song_name = rowCells[1].innerText;
     document.getElementById("artist").value = rowCells[2].innerText;
+    song_artist = rowCells[2].innerText;
     document.getElementById("youtubelink").value = "Please insert a link to update";
     document.getElementById("updaterow").style.visibility ="visible";
+}
 
+function updateYouTubeLinkTable(){
+    debugger;
+    link_you = document.getElementById("youtubelink").value;
+    loadDocSpecialQueryimagetotext("updateyoutubelink");
+}
+
+function loadDocSpecialQueryimagetotext(flowname) {
+    var sentData= createJSONStringforUpdate(flowname, "link", "song_name","song_artist");
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+        if (this.readyState === 4 && this.status === 200) {
+            if(this.responseText === "False"){
+                alert("Couldn't add youtube link! please try entering a valid link")
+            }else{
+                alert("successfully added youtube link!");
+            }
+        }
+    };
+    xhttp.open("POST", "Generic", true);
+    xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xhttp.send("data="+sentData);
+}
+
+function createJSONStringforUpdate(flowname,key1,key2,key3) {
+    var jsonString = "{";
+    jsonString = addFlowNameJSON(jsonString,flowname);
+    jsonString = addparamsKeyforJSON(jsonString);
+    jsonString = addParamJSON(jsonString,key1,link_you);
+    jsonString+=",";
+    jsonString = addParamJSON(jsonString,key2,song_name);
+    jsonString+=",";
+    jsonString = addParamJSON(jsonString,key3,song_artist);
+    jsonString += "]}";
+    debugger;
+    return jsonString;
+}
+
+function createJSONString(flowname, elementId, elementId2, keyString) {
+    var x;
+    var jsonString = "{";
+    jsonString = addFlowNameJSON(jsonString,flowname);
+    jsonString = addparamsKeyforJSON(jsonString);
+    if(elementId){
+        var num = document.getElementById(elementId).value;
+        jsonString = addParamJSON(jsonString,elementId,num);
+        jsonString+=",";
+    }
+    if(elementId2){
+        console.log(elementId2);
+        var genre = document.getElementById(elementId2).value;
+        jsonString = addParamJSON(jsonString,elementId2,genre);
+    }
+    if(keyString){
+        jsonString+=",";
+        x = document.getElementById("sel0").value === "Died" ? "1" : "0";
+        jsonString = addParamJSON(jsonString,keyString,x);
+    }
+    jsonString += "]}";
+    return jsonString;
 }
 
 function fadeInTable(finalTable, elementToReplaceByTable) {
