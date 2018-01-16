@@ -98,8 +98,7 @@ def LoginUserfunc(request):
     if not (validateLogin(request,message)):
         return SignInLoginFailed(message[0])
     
-    name, password,datebith,yesNo,genre,Country = request.GET['username'],request.GET['password'],request.GET['datebith'],request.GET['yesNo'],request.GET['genre'],request.GET['Country']
-
+    name, password = request.GET['username'],request.GET['password']
     # BL
     if (loginUser(name,password,)):
         resp = setCookieAndResponse("UiHomepage.html",name )
@@ -114,10 +113,10 @@ def SignInfunc(request):
     if not (validateSignIn(request,message)):
         return SignInLoginFailed(message[0])
     
-    name, password = request.GET['username'],request.GET['password']
+    name, password,datebith,yesNo,genre,Country = request.GET['username'],request.GET['password'],request.GET['datebith'],request.GET['yesNo'],request.GET['genre'],request.GET['Country']
     
     # BL
-    if (signNewUser(name,password)):
+    if (signNewUser(name, password,datebith,yesNo,genre,Country)):
         resp = setCookieAndResponse("UiHomepage.html",name )
     else:
         resp = SignInLoginFailed("user alreay exists")

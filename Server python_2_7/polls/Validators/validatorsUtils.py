@@ -75,7 +75,7 @@ def validateSignIn(request, message):
     
     username, password,datebith,yesNo,genre,Country = request.GET['username'],request.GET['password'],request.GET['datebith'],request.GET['yesNo'],request.GET['genre'],request.GET['Country']
     
-    if not validateLengthList([username,password,datebith,yesNo,genre,Country], 5, 20):
+    if not validateLengthList([username,password], 5, 20):
         message += ["username & password must contain at least 5 characters, and not more than 20"]
         return False
     

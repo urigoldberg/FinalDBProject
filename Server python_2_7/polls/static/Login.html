@@ -24,6 +24,11 @@ td
         alert("year must contains 4 digits..");
         return false;
     }
+	x = document.forms["modal-content animate sign"]["yesNo"].value;
+    if (x === 'yes' || x === 'no' ) {
+        alert("please enter yes \ no");
+        return false;
+    }
 }
 
 		function validateFormYes() {
@@ -95,13 +100,19 @@ td
 						<tr>
 						<td>
 						<label><b>Year Of Birth</b></label>
-                        <input type="text" placeholder="1900" onkeypress='return event.charCode >= 48 && event.charCode <= 57' name="datebith"  onsubmit="return validateForm()" required>
-						</td>
-						<td>
-						<label><b>Do you like you're songs longs?</b></label>
-                        <input type="text" placeholder="yes / no" name="yesNo"  onsubmit="return validateFormYes()" required>
+                        <input type="text" placeholder="1900" onkeypress='return event.charCode >= 48 && event.charCode <= 57' name="datebith" maxlength="4" required>
 						</td>
 						<td></td>
+						<td>
+						<label><b>Do you like you're songs longs?</b></label>
+						<select  class="form-control" name="yesNo" required>
+						
+						  <option value="volvo">yes</option>
+						  <option value="saab">no</option>
+						
+						</select>
+						</td>
+						
 						<td>
 					
 						<label style="align:left"><b>favorite genre</b></label>
@@ -125,7 +136,7 @@ td
 						</table>
 						
 
-                        <button type="submit" class="loginbutton">Sign In</button>
+                        <button type="submit" class="loginbutton" onclick="validateForm()">Sign In</button>
                     </div>
 
                 </form>
