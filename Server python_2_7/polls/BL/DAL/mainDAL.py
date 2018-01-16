@@ -1,5 +1,6 @@
 import MySQLdb
 import os
+import string
 
 ######CLASS###########
 
@@ -19,6 +20,7 @@ class DBconnection():
     _exception = None
     _open = False
     _columns = None
+    printable = set(string.printable)
 
     
     def connect(self):
