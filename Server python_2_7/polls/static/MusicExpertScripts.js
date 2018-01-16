@@ -1,4 +1,5 @@
 var DEADButton = 1;
+var q2Button = 1;
 
 function createTableFromResponse(responseArr) {
     if(responseArr.isError == "true"){
@@ -150,6 +151,19 @@ function switchDEAD(){
     else{
         document.getElementById("DEAD").innerHTML = "<button id=\"changeDEAD\" class =\"btn btn-default\" onclick=\"switchDEAD()\">open Death / Birth query</button>";
         DEADButton=1;
+    }
+}
+
+function switchq2() {
+    if(q2Button === 1){
+        document.getElementById("q2").innerHTML = ""+"<button id=\"changeq2\" class =\"btn btn-default\" onclick=\"switchq2()\">Close most viewed query</button>";
+        console.log("Setting q2Button to 0");
+        q2Button = 0;
+    }
+    else{
+        document.getElementById("q2").innerHTML = "<button id=\"changeq2\" class =\"btn btn-default\" onclick=\"switchq2()\">Open most viewed query</button>";
+        console.log("Setting q2Button to 1");
+        q2Button=1;
     }
 }
 
