@@ -236,7 +236,9 @@ def handleQueryResponse(flowname,param):
         
     if (flowname == "updateyoutubelink"):
         ResultsArray = GenericBL.updateYoutubeLink(param)
-    # more ifs..
+    
+    if (flowname == "add_liked_song"):
+        ResultsArray = GenericBL.addLikedSong(param)
     
     # If ResultsArray == None, an error has occuered
     # Otherwise, the function returned array for json

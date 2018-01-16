@@ -1,4 +1,4 @@
-from ..DAL.mainDAL import geographical_filtering, yearMostArtistDiedOrBornDB, getColumnValuesDB, youTubeLongestShortestLinkDB, albumsOfGenreWithSalesDB, mostViewedArtistDB, updateYoutubeLinkDB
+from ..DAL.mainDAL import geographical_filtering, yearMostArtistDiedOrBornDB, getColumnValuesDB, youTubeLongestShortestLinkDB, albumsOfGenreWithSalesDB, mostViewedArtistDB, updateYoutubeLinkDB, addLikedSongDB
 
 # return [{"nameOfColumn01":"value01","nameOfColumn02":"value02"....},{},{}]
 #in case of error - return None
@@ -90,10 +90,19 @@ def validate_link(link):
 def updateYoutubeLink(param):
     link,song_name,song_artist = str(param["link"]), str(param["song_name"]),str(param["song_artist"])
     if(validate_link(link)):
-        updateYoutubeLinkDB(link,song_name,song_artist)
+        return updateYoutubeLinkDB(link,song_name,song_artist)
     else:
-        return '{}'
+        return False
     
+
+def addLikedSong(param):
+    song_name,song_artist = str(param["song_name"]),str(param["song_artist"])
+    if(addLikedSongDB(song_name,artist_name):
+        print("finished adding song to liked songs")
+        return True
+    else:
+        return None
+
 
 def get_artists_in_requested_radius(json):
     
