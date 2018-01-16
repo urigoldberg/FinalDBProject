@@ -230,7 +230,9 @@ def handleQueryResponse(flowname,param):
     if (flowname == "SucAlbums"):
         numOfSales, genre = str(param["numOfSales"]),str(param["genre"])
         ResultsArray = GenericBL.albumsOfGenreWithSales(numOfSales, genre)
-        
+     
+    if (flowname == "mostviewedartist"):
+        ResultsArray = GenericBL.mostViewedArtist(param)
     # more ifs..
     
     # If ResultsArray == None, an error has occuered
