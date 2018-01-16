@@ -65,8 +65,11 @@ function loadDocSpecialQuery(flowname) {
     var sentData;
     if(flowname === "columnname"){
         sentData = createJSONStringforDistinctColumnName(flowname, "genre", "Song");
-    }else{
-        sentData = createJSONString(flowname)
+    }else if(flowname === "year"){
+        sentData = createJSONString(flowname, "num", "genre","dead");
+    }
+    else{
+        sentData = createJSONString(flowname, "location", "genre");
     }
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
@@ -74,6 +77,7 @@ function loadDocSpecialQuery(flowname) {
             var responseArr = JSON.parse(this.responseText);
             console.log("initializing table head and opening body tag");
             var finalTable = createTableFromResponse(responseArr);
+            debugger;
             fadeInTable(finalTable,"big");
             document.getElementById("responseheader").innerText = "the Following year was found:";
             hideDisplayofClass("tofade");
@@ -100,19 +104,26 @@ function addParamJSON(jsonString, keyString, valueString) {
     return jsonString;
 }
 
-function createJSONString(flowname) {
+function createJSONString(flowname, elementId, elementId2, keyString) {
     var x;
     var jsonString = "{";
     jsonString = addFlowNameJSON(jsonString,flowname);
     jsonString = addparamsKeyforJSON(jsonString);
-    var num = document.getElementById("num").value;
-    jsonString = addParamJSON(jsonString,"num",num);
-    jsonString+=",";
-    var genre = document.getElementById("genre").value;
-    jsonString = addParamJSON(jsonString,"genre",genre);
-    jsonString+=",";
-    x = document.getElementById("sel0").value === "Died" ? "1" : "0";
-    jsonString = addParamJSON(jsonString,"dead",x);
+    if(elementId){
+        var num = document.getElementById(elementId).value;
+        jsonString = addParamJSON(jsonString,elementId,num);
+        jsonString+=",";
+    }
+    if(elementId2){
+        console.log(elementId2);
+        var genre = document.getElementById(elementId2).value;
+        jsonString = addParamJSON(jsonString,elementId2,genre);
+    }
+    if(keyString){
+        jsonString+=",";
+        x = document.getElementById("sel0").value === "Died" ? "1" : "0";
+        jsonString = addParamJSON(jsonString,keyString,x);
+    }
     jsonString += "]}";
     return jsonString;
 }
@@ -154,15 +165,20 @@ function switchDEAD(){
 
 function switchq2() {
     if(q2Button === 1){
-        document.getElementById("q2").innerHTML = "<p>Most viewed artists on YouTube from Genre:</p>\n" +
+        document.getElementById("q2").innerHTML = "<p>Most viewed artists on YouTube with Genre:</p>\n" +
             "                    <form id=\"q2form\">\n" +
             "                        <div class=\"form-group\">\n" +
-            "                            <select class=\"form-control\" id=\"selq2\"></select>\n" +
+            "                            <select class=\"form-control\" id=\"genre\"></select>\n" +
             "                        </div>\n" +
             "                    </form>\n" +
+            "                    <p>From location:</p>\n" +
+            "                    <span class=\"form-group tofade\" >\n" +
+            "                    <input type=\"text\" class=\"form-control\" value=\"usa\" id=\"location\">\n" +
+            "                    </span>\n"+
+            "<button id=\"getmostviewed\" class =\"btn btn-default querybutton \" onclick=\"loadDocSpecialQuery('mostviewedartist')\">Query</button>\n"+
             "<button id=\"changeq2\" class =\"btn btn-default\" onclick=\"switchq2()\">Close most viewed query</button>";
         console.log("Setting q2Button to 0");
-        loadDistinctDropdown("columnname", "selq2", "genre", "Song");
+        loadDistinctDropdown("columnname", "genre", "genre", "Song");
         q2Button = 0;
     }
     else{
@@ -229,7 +245,7 @@ function fillDropdownFromResponse(responseArr,columnName) {
     }
     var numofRows = responseArr.Results.length;
     var finalDropDownOptions ="";
-    debugger;
+    // debugger;
     for(var i=0;i<numofRows;i++){
         if(columnName === "genre"){
             finalDropDownOptions+="<option>"+responseArr.Results[i].genre+"</option>";
