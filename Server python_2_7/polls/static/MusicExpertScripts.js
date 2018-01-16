@@ -174,19 +174,19 @@ function switchq2() {
 
 function switchq3() {
     if(q3Button === 1){
-        document.getElementById("q3").innerHTML = "<p>Most viewed artists on YouTube from Genre:</p>\n" +
+        document.getElementById("q3").innerHTML = "<p>Longest/shortest song on youtube of one of the following artists:</p>\n" +
             "                    <form id=\"q3form\">\n" +
             "                        <div class=\"form-group\">\n" +
             "                            <select class=\"form-control\" id=\"selq3\"></select>\n" +
             "                        </div>\n" +
             "                    </form>\n" +
-            "<button id=\"changeq3\" class =\"btn btn-default\" onclick=\"switchq3()\">Close most viewed query</button>";
+            "<button id=\"changeq3\" class =\"btn btn-default\" onclick=\"switchq3()\">Close YouTube link query</button>";
         console.log("Setting q3Button to 0");
         loadDistinctDropdown("columnname", "selq3", "name", "artists");
         q3Button = 0;
     }
     else{
-        document.getElementById("q3").innerHTML = "<button id=\"changeq3\" class =\"btn btn-default\" onclick=\"switchq3()\">Open most viewed query</button>";
+        document.getElementById("q3").innerHTML = "<button id=\"changeq3\" class =\"btn btn-default\" onclick=\"switchq3()\">open YouTube link query</button>";
         console.log("Setting q3Button to 1");
         q3Button=1;
     }
