@@ -383,7 +383,7 @@ WHERE
         AND c.name = '{1}'
         AND c.artist_id = b.id
         AND a.artist_id = c.artist_id
-        AND a.duration > 200000 * {2}
+        AND a.duration > 240000 * {2}
 LIMIT 40;""".format(genre,country,longness)
     print("query",query)
     con = DBconnection()
