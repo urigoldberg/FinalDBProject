@@ -4,3 +4,7 @@
 bin
 lib
 include
+Server python_2_7/polls/Validators/validatorsUtils.pyc
+Server python_2_7/polls/BL/GenericBL/GenericBL.pyc
+Server python_2_7/polls/BL/DAL/mainDAL.pyc
+Server python_2_7/mysite/settings.pyc
