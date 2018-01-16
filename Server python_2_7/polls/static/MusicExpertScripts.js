@@ -180,11 +180,10 @@ function loadDistinctGenere(flowName) {
             var responseArr = JSON.parse(this.responseText);
             console.log("initializing table head and opening body tag");
             var finalTable = fillDropdownFromResponse(responseArr);
-            fadeInTable(finalTable,"selq2");
-            // document.getElementById("responseheader").innerText = "the Following year was found:";
-            // debugger;
-            // hideDisplayofClass("tofade");
-            // hideDisplayofClass("querybutton");
+            // fadeInTable(finalTable,"selq2");
+            document.getElementById("selq2").style.visibility = "hidden";
+            document.getElementById("selq2").innerHTML = finalTable;
+            document.getElementById("selq2").style.visibility = "visible";
         }
     };
     xhttp.open("POST", "Generic", true);
@@ -199,12 +198,13 @@ function createJSONStringDistinctGenre(flowname) {
     jsonString = addFlowNameJSON(jsonString,flowname);
     jsonString = addparamsKeyforJSON(jsonString);
     // debugger;
-    jsonString = addParamJSON(jsonString,"column","genere");
+    jsonString = addParamJSON(jsonString,"column","genre");
     jsonString+=",";
-    jsonString = addParamJSON(jsonString,"tablename","songs");
+    jsonString = addParamJSON(jsonString,"tablename","Song");
     jsonString += "]}";
     // debugger;
     console.log(jsonString);
+    // debugger;
     return jsonString;
 }
 
@@ -213,10 +213,11 @@ function fillDropdownFromResponse(responseArr) {
         return "<p>"+responseArr.errorMessage+"</p>"
     }
     var numofRows = responseArr.Results.length;
-    var finaltable ="";
+    var finalDropDownOptions ="";
+    // debugger;
     for(var i=0;i<numofRows;i++){
-        finaltable+="<option>"+responseArr.Results[i]+"</option>"
+        finalDropDownOptions+="<option>"+responseArr.Results[i].genre+"</option>";
     }
-    return finaltable;
+    return finalDropDownOptions;
 }
 
