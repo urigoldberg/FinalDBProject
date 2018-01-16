@@ -35,12 +35,16 @@ def setCookieAndResponse(pageName, username, message = None):
 
 
 # sign in stuff
-def signNewUser (username, password):
+def signNewUser (name, password,datebith,yesNo,genre,Country):
     """Create a new user.
     This function checks if usersTable contains username with the same name.
     If the username available - add it to usersTable and return True, otherwise return False 
     """
-    if (addNewUserDAL(username,password)):
+    if (yesNo == "yes"):
+        yesNo = 1
+    else:
+        yesNo = 0
+    if (addNewUserDAL(name, password,datebith,yesNo,genre,Country)):
         return True
     return False
 
