@@ -199,7 +199,7 @@ def generic(request):
         return HttpResponse(ERROR_JSON)
     
     #create Json Response
-    responseJson = handleQueryResponse(flowname,params,userName)
+    responseJson = handleQueryResponse(flowname,params)
         
     # return to client
     print("we return ",responseJson," to flow",flowname)
