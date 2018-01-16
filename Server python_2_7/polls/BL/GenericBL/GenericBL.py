@@ -88,7 +88,8 @@ def mostViewedArtist(param):
     cols,result = mostViewedArtistDB(location, genre)
     return generateResFromRes(cols,result)
 
-def personalization(userName):
+def personalization(param):
+    userName = str(param["user"])
     username,password,birth,genre,country,longness = getUserDetailsDAL(userName)
     cols,result = personalizationDB(genre,country,longness)
     return generateResFromRes(cols,result)

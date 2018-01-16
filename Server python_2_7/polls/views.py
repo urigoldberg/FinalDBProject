@@ -93,11 +93,6 @@ def searchByGeoLocation(requests):
     return resp
 
 
-def personalization(requests):
-    if not basicSec(requests):
-        return redirect('Login.html')
-    return "aaaaaaaaaaa"
-
 ####################################
 ####### views functions POST #######
 ####################################
@@ -254,7 +249,7 @@ def handleQueryResponse(flowname,param):
         ResultsArray = GenericBL.addLikedSong(param)
         
     if (flowname == "personalization"):
-        ResultsArray = GenericBL.personalization(param["userName"])
+        ResultsArray = GenericBL.personalization(param)
     
     # If ResultsArray == None, an error has occuered
     # Otherwise, the function returned array for json
