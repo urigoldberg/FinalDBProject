@@ -182,6 +182,8 @@ def generic(request):
          return HttpResponse(ERROR_JSON)
     
     print ("generic passed validation")
+    
+    userName = requests.COOKIES['user']
      
     # Get / Create JSON query
     json = _json.loads(request.POST["data"])
@@ -198,13 +200,13 @@ def generic(request):
         return HttpResponse(ERROR_JSON)
     
     #create Json Response
-    responseJson = handleQueryResponse(flowname,params)
+    responseJson = handleQueryResponse(flowname,params,userName)
         
     # return to client
     print("we return ",responseJson," to flow",flowname)
     return HttpResponse(responseJson)
 
-def handleQueryResponse(flowname,param):
+def handleQueryResponse(flowname,param,userName):
     
     ResultsArray = None
 #    print("param in handle query response",param)
@@ -246,6 +248,9 @@ def handleQueryResponse(flowname,param):
     
     if (flowname == "add_liked_song"):
         ResultsArray = GenericBL.addLikedSong(param)
+        
+    if (flowname == "personalization"):
+        ResultsArray = GenericBL.personalization(userName)
     
     # If ResultsArray == None, an error has occuered
     # Otherwise, the function returned array for json

@@ -1,4 +1,4 @@
-from ..DAL.mainDAL import geographical_filtering, yearMostArtistDiedOrBornDB, getColumnValuesDB, youTubeLongestShortestLinkDB, albumsOfGenreWithSalesDB, mostViewedArtistDB, updateYoutubeLinkDB, addLikedSongDB
+from ..DAL.mainDAL import geographical_filtering,personalizationDB, yearMostArtistDiedOrBornDB, getColumnValuesDB, youTubeLongestShortestLinkDB, albumsOfGenreWithSalesDB, mostViewedArtistDB, updateYoutubeLinkDB, addLikedSongDB, getUserDetailsDAL
 
 # return [{"nameOfColumn01":"value01","nameOfColumn02":"value02"....},{},{}]
 #in case of error - return None
@@ -88,6 +88,10 @@ def mostViewedArtist(param):
     cols,result = mostViewedArtistDB(location, genre)
     return generateResFromRes(cols,result)
 
+def personalization(userName):
+    username,password,birth,genre,country,longness = getUserDetailsDAL(userName)
+    cols,result = personalizationDB(genre,country,longness)
+    return generateResFromRes(cols,result)
 
 def validate_link(link):
     import httplib

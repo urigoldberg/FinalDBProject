@@ -139,6 +139,14 @@ def getUserPasswordUsernameDAL(username):
         con.close()
         return con._results[0][0]
     return None
+
+def getUserDetailsDAL(username):
+    query = "select * from DbMysql12.users_table where user_name = '"+username+"';";
+    con = DBconnection()
+    if (con.doSelectQuery(query) and con._rowsReturned == 1):
+        con.close()
+        return con._results[0]
+    return None
  
 
     
@@ -360,6 +368,29 @@ where us.user_name = '"""+user_name+"""' and s.title = '"""+song_name+"""' and a
     con.close()
     return None;
 
+def personalizationDB(genre,country,longness):
+    query = """SELECT 
+    a.title AS Song_Name,
+    b.name AS Artist_Name,
+    a.genre AS Genre,
+    a.media_url AS URL
+FROM
+    DbMysql12.Song a,
+    DbMysql12.artists b,
+    DbMysql12.CountryArtists c
+WHERE
+    b.genre = '{0}'
+        AND c.name = '{1}'
+        AND c.artist_id = b.id
+        AND a.artist_id = c.artist_id
+        AND a.duration > 200000 * {2}
+LIMIT 40;""".format(genre,country,longness)
+    print("query",query)
+    con = DBconnection()
+    if (con.doSelectQuery(query) and con._rowsReturned > 0):
+        con.close()
+        return con._columns,con._results
+    return None,None
 
 def updateYoutubeLinkDB(link,song_name,song_artist):
     query = """
