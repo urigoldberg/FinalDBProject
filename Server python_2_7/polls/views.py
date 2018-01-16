@@ -225,7 +225,7 @@ def handleQueryResponse(flowname,param):
         
     if (flowname == "youTubeLink"):
         op, artistname = str(param["operation"]),str(param["artistname"])
-        ResultsArray = GenericBL.youTubeLongestShortestLink(op, artistname)
+        ResultsArray = GenericBL.youTubeLongestShortestLink(artistname,op)
         
     if (flowname == "SucAlbums"):
         numOfSales, genre = str(param["numOfSales"]),str(param["genre"])
