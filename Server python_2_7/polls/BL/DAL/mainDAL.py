@@ -217,7 +217,7 @@ def geographical_filtering(json):
         ORDER BY distance;"""
 
     con = DBconnection()
-    if (con.doSelectQuery(query)):
+    if (con.doSelectQuery(query) and con._rowsReturned > 0):
         con.close()
         return con._columns,con._results
     return None,None
@@ -238,7 +238,7 @@ HAVING numOfArts > {1}
 ORDER BY numOfArts DESC;""".format(dead,num,genre)
     print("query",query)
     con = DBconnection()
-    if (con.doSelectQuery(query)):
+    if (con.doSelectQuery(query) and con._rowsReturned > 0):
         con.close()
         return con._columns,con._results
     return None,None
@@ -281,7 +281,7 @@ WHERE
                 AND a.media_url IS NOT NULL);""".format(name,op)
     print("query",query)
     con = DBconnection()
-    if (con.doSelectQuery(query)):
+    if (con.doSelectQuery(query) and con._rowsReturned > 0):
         con.close()
         return con._columns,con._results
     return None,None
@@ -304,7 +304,7 @@ GROUP BY (b.id)
 ORDER BY Num_Of_Albums""".format(numOfSales,genre)
     print("query",query)
     con = DBconnection()
-    if (con.doSelectQuery(query)):
+    if (con.doSelectQuery(query) and con._rowsReturned > 0):
         con.close()
         return con._columns,con._results
     return None,None
@@ -338,38 +338,37 @@ ORDER BY artist_views DESC
 #    f.close()
     print("wrote file")
     con = DBconnection()
-    if (con.doSelectQuery(query)):
+    if (con.doSelectQuery(query) and con._rowsReturned > 0):
         con.close()
         return con._columns,con._results
     return None,None    
 
 
 def addLikedSongDB(song_name,artist_name):
-#    query = """
-#    UPDATE  Song 
-#SET     media_url = '"""+link+"""'
-#where title = 'ASDFDA'
-#and artist_id = 
-#(
-#select id from artists
-#where name = '"""+song_artist+"""'
-#)"""
-#    con = DBconnection()
-#    if(con.doQuery(query)):
-#        print("performed update successfully")
-#        con.close()
-#        return True;
-#    print("error in updateYoutubeLinkDB")
-#    con.close()
-#    return None;
+    query = """
+    UPDATE  Song 
+SET     media_url = '"""+link+"""'
+where title = 'ASDFDA'
+and artist_id = 
+(
+select id from artists
+where name = '"""+song_artist+"""'
+)"""
+    con = DBconnection()
+    if(con.doQuery(query)):
+        print("performed update successfully")
+        con.close()
+        return True;
+    print("error in updateYoutubeLinkDB")
+    con.close()
+    return None;
 
 
 def updateYoutubeLinkDB(link,song_name,song_artist):
     query = """
     UPDATE  Song 
 SET     media_url = '"""+link+"""'
-where title = '""" + song_name+
-"""and artist_id = 
+where title = '""" + song_name+"""and artist_id = 
 (
 select id from artists
 where name = '"""+song_artist+"""'
