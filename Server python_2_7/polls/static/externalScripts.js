@@ -259,7 +259,7 @@ function converNumToGroupBy(num){
         case "spec1":
             return "Groupbysongname";
         case "spec2":
-            return "Orderbysongname";
+            return "OrderbyArtist";
         case "spec3":
             return "Orderbysongname";
     }
