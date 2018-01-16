@@ -143,7 +143,7 @@ function switchDEAD(){
             "                    <!--added forms will be here-->\n" +
             "                    <div id=\"big\"></div>\n" +
             "\n" +
-            "                    <button id=\"getSongsButton\" class =\"btn btn-default querybutton \" onclick=\"loadDocSpecialQuery('year')\" >Query</button>\n"+
+            "                    <button id=\"getSongsButton\" class =\"btn btn-default querybutton \" onclick=\"loadDocSpecialQuery('year')\">Query</button>\n"+
         "<button id=\"changeDEAD\" class =\"btn btn-default tofade\" onclick=\"switchDEAD()\">close Death / Birth query</button>";
         DEADButton = 0;
     }
@@ -155,8 +155,15 @@ function switchDEAD(){
 
 function switchq2() {
     if(q2Button === 1){
-        document.getElementById("q2").innerHTML = ""+"<button id=\"changeq2\" class =\"btn btn-default\" onclick=\"switchq2()\">Close most viewed query</button>";
+        document.getElementById("q2").innerHTML = "<p>Most viewed artists on YouTube from Genre:</p>\n" +
+            "                    <form id=\"q2form\">\n" +
+            "                        <div class=\"form-group\">\n" +
+            "                            <select class=\"form-control\" id=\"selq2\"></select>\n" +
+            "                        </div>\n" +
+            "                    </form>\n" +
+            "<button id=\"changeq2\" class =\"btn btn-default\" onclick=\"switchq2()\">Close most viewed query</button>";
         console.log("Setting q2Button to 0");
+        updateGenre();
         q2Button = 0;
     }
     else{
