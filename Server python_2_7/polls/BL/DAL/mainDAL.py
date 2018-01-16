@@ -343,22 +343,19 @@ ORDER BY artist_views DESC
     return None,None    
 
 
-def addLikedSongDB(song_name,artist_name):
+def addLikedSongDB(song_name,artist_name,user_name):
     query = """
-    UPDATE  Song 
-SET     media_url = '"""+link+"""'
-where title = 'ASDFDA'
-and artist_id = 
-(
-select id from artists
-where name = '"""+song_artist+"""'
+insert into DbMysql12.UserInteraction (user_name,song_id,created_at)
+SELECT us.user_name as user_name, s.id as song_id , now() as created_at
+FROM DbMysql12.users_table us, DbMysql12.Song s, DbMysql12.artists art
+where us.user_name = '"""+user_name+"""' and s.title = '"""+song_name+"""' and art.name = '"""+artist_name+"""'
 )"""
     con = DBconnection()
     if(con.doQuery(query)):
         print("performed update successfully")
         con.close()
         return True;
-    print("error in updateYoutubeLinkDB")
+    print("error in addLikedSongDB")
     con.close()
     return None;
 
