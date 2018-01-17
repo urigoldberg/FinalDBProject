@@ -18,6 +18,7 @@ function getSongsForGeoLocation(){
             var responseArr = JSON.parse(this.responseText);
             var responseTable = responseArr = createTableFromResponseGeo(responseArr,"0");
             fadeInTableGeo(responseTable,"geoTable");
+            document.getElementById("returnpar").innerHTML= "The following artists were found";
         }
     };
     xhttp.open("POST", "Generic", true);
