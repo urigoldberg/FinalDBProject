@@ -48,14 +48,11 @@ function createTableFromResponse(responseArr,isSongTable) {
 }
 
 function likerow(rowNumber){
-    debugger;
     var t = document.getElementsByClassName("imagetable");
     var htmlTable = t[0];
     var rows = htmlTable.rows;
     var specificRow=rows[rowNumber];
     var rowCells = specificRow.cells;
-    // var specificcell = rowCells[3];
-    debugger;
     song_name = rowCells[0].innerText;
     song_artist = rowCells[1].innerText;
     user_name = getCookie("user");
@@ -65,10 +62,10 @@ function likerow(rowNumber){
         if (this.readyState === 4 && this.status === 200) {
             var responseArr = JSON.parse(this.responseText);
             if(responseArr.isError === "true"){
-                alert("Error liking this song!");
+                alert("Error liking this song! " + responseArr.errorMessage);
             }
             else{
-                alert("successfully liked this song");
+                alert("successfully liked this song!");
             }
         }
     };
@@ -176,7 +173,6 @@ function createJSONString(flowname, elementId, elementId2, keyString) {
 }
 
 function createJSONStringforLike(flowname, elementId, elementId2, elementId3) {
-    debugger;
     var jsonString = "{";
     jsonString = addFlowNameJSON(jsonString,flowname);
     jsonString = addparamsKeyforJSON(jsonString);
@@ -186,6 +182,7 @@ function createJSONStringforLike(flowname, elementId, elementId2, elementId3) {
     jsonString+=",";
     jsonString = addParamJSON(jsonString,elementId3,user_name);
     jsonString += "]}";
+    debugger;
     return jsonString;
 }
 

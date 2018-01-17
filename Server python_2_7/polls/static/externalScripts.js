@@ -39,7 +39,6 @@ function createJSONStringforImage(flowname, encoding) {
 }
 
 function createTableFromResponse(responseArr,isSongTable) {
-    debugger;
     if(responseArr.isError === "true"){
         return "<p>"+responseArr.errorMessage+"</p>"
     }
@@ -111,8 +110,6 @@ function loadDocSpecialQueryimagetotext(flowname) {
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
         if (this.readyState === 4 && this.status === 200) {
-            debugger;
-            // var responseArr = JSON.parse(this.responseText);
             if(this.responseText === "None"){
                 alert("Couldn't add youtube link! please try entering a valid link")
             }else{
