@@ -210,6 +210,7 @@ LIMIT """+str(numOfAppear) +""") as tbl"""+str(index) +"""
 
 ###########Geographical####################
 def geographical_filtering(longitude, latitude, radius):
+    print("in geo filtering")
     query = """SELECT DISTINCT a.name FROM DbMysql12.CountryArtists AS ca
     INNER JOIN DbMysql12.artists AS a ON ca.artist_id=a.id
     WHERE lower(ca.name) IN

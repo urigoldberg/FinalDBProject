@@ -186,7 +186,8 @@ def handleQueryResponse(flowname,param):
         print("sent picture to google")
         ResultsArray = get_songs_related_to_keywords(json)
     
-    if (flowname == "GeoService"):
+    if (flowname == "geoService"):
+        print("in flow geoservice, param is %s" % param)
         ResultsArray = get_artists_in_requested_radius(param)
         
     if (flowname == "Filterkeys"):
