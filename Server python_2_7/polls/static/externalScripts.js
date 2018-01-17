@@ -99,7 +99,11 @@ function likerowImageToMusic(rowNumber){
                 alert("Error liking this song! " + responseArr.errorMessage);
             }
             else{
-                alert("successfully liked this song!");
+                if(responseArr.Result === "false"){
+                    alert("already liked this song");
+                }else{
+                    alert("successfully liked this song!");
+                }
             }
         }
     };
