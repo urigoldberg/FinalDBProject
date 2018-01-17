@@ -92,12 +92,16 @@ def personalization(param):
     return generateResFromRes(cols,result)
 
 def validate_link(link):
-    import httplib
+    import urllib2
     if "youtube.com" not in link: 
         return False
-    c = httplib.HTTPConnection(link)
-    c.request("HEAD", '')
-    return c.getresponse().status == 200
+    try:
+        urllib2.urlopen(link)
+    except urllib2.HTTPError, e:
+        return False
+    except urllib2.URLError, e:
+        return False
+    return True
 
 def updateYoutubeLink(param):
     link,song_name,song_artist = str(param["link"]), str(param["song_name"]),str(param["song_artist"])
