@@ -219,12 +219,12 @@ function switchDEAD(){
             "                    <div id=\"big\"></div>\n" +
             "\n" +
             "                    <button id=\"getSongsButton\" class =\"btn btn-default querybutton \" onclick=\"loadDocSpecialQuery('year','big','the Following year was found:')\">Query</button>\n"+
-        "<button id=\"changeDEAD\" class =\"btn btn-default tofade\" onclick=\"switchDEAD()\">close Death / Birth query</button>";
+        "<button id=\"changeDEAD\" class =\"btn btn-default tofade\" onclick=\"switchDEAD()\">Close Death / Birth query</button>";
         loadDistinctDropdown("columnname", "genre", "genre", "Song");
         DEADButton = 0;
     }
     else{
-        document.getElementById("DEAD").innerHTML = "<button id=\"changeDEAD\" class =\"btn btn-default\" onclick=\"switchDEAD()\">open Death / Birth query</button>";
+        document.getElementById("DEAD").innerHTML = "<button id=\"changeDEAD\" class =\"btn btn-default\" onclick=\"switchDEAD()\">Open Death / Birth query</button>";
         DEADButton=1;
     }
 }
@@ -281,7 +281,7 @@ function switchYouTubeLink() {
         youTubeLinkButton = 0;
     }
     else{
-        document.getElementById("q3").innerHTML = "<button id=\"changeq3\" class =\"btn btn-default\" onclick=\"switchYouTubeLink()\">open YouTube link query</button>";
+        document.getElementById("q3").innerHTML = "<button id=\"changeq3\" class =\"btn btn-default\" onclick=\"switchYouTubeLink()\">Open YouTube link query</button>";
         console.log("Setting youTubeLinkButton to 1");
         youTubeLinkButton=1;
     }
@@ -311,7 +311,7 @@ function switchAlbumWithSales(){
         albumWithSalesButton = 0;
     }
     else{
-        document.getElementById("q4").innerHTML = "<button id=\"changeq4\" class =\"btn btn-default\" onclick=\"switchAlbumWithSales()\">open Album with sales query</button>";
+        document.getElementById("q4").innerHTML = "<button id=\"changeq4\" class =\"btn btn-default\" onclick=\"switchAlbumWithSales()\">Open Album with sales query</button>";
         console.log("Setting albumWithSalesButton to 1");
         albumWithSalesButton=1;
     }
@@ -326,7 +326,7 @@ function switchPerzonalize(){
         personalizeButton = 0;
     }
     else{
-        document.getElementById("q5").innerHTML = "<button id=\"changeq4\" class =\"btn btn-default\" onclick=\"switchPerzonalize()\">open Personalize query</button>";
+        document.getElementById("q5").innerHTML = "<button id=\"changeq4\" class =\"btn btn-default\" onclick=\"switchPerzonalize()\">Open Personalize query</button>";
         console.log("Setting personalizeButton to 1");
         personalizeButton=1;
     }
