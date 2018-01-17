@@ -7,6 +7,7 @@ if __name__ == "__main__":
     try:
         import pymysql
         pymysql.install_as_MySQLdb()
+        #import mysql
     except:
         pass #for localhost debug only
     try:

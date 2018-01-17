@@ -213,16 +213,18 @@ LIMIT """+str(numOfAppear) +""") as tbl"""+str(index) +"""
     return None
 
 ###########Geographical####################
-def geographical_filtering(json):
-
-    query = """SELECT 
-          artist_name as 'Artist Name', terms as 'Genre', latitude as 'Latitude', longitude as 'Longitude'
-           ( 3959 * acos( cos( radians("""+json['latitude']+""") ) * cos( radians( Seed.latitude ) ) 
-           * cos( radians(Seed.longitude) - radians("""+json['longitude']+""")) + sin(radians("""+json['latitude']+""")) 
-           * sin( radians(Seed.latitude)))) AS distance 
-        FROM Seed 
-        HAVING distance < """+json['radius']+""" 
-        ORDER BY distance;"""
+def geographical_filtering(longitude, latitude, radius):
+    query = """SELECT DISTINCT a.name FROM DbMysql12.CountryArtists AS ca
+    INNER JOIN DbMysql12.artists AS a ON ca.artist_id=a.id
+    WHERE lower(ca.name) IN
+    (SELECT lower(DbMysql12.Country.name) FROM DbMysql12.Country
+    WHERE
+     (111.111 *
+    DEGREES(ACOS(COS(RADIANS(Country.latitude))
+         * COS(RADIANS({1}))
+         * COS(RADIANS(Country.longitude - {0}))
+         + SIN(RADIANS(Country.latitude))
+         * SIN(RADIANS({1})))) )< {2})""".format(longitude, latitude, radius)
 
     con = DBconnection()
     if (con.doSelectQuery(query) and con._rowsReturned > 0):

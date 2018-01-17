@@ -49,7 +49,7 @@ def validateLengthList(lst, minLength, maxLength):
 def hasKeys(flow,dic):
     dicOfKeys = {}
     dicOfKeys["pictureQuery"] = ["photo"]
-    dicOfKeys["geoService"] = ["shit"]
+    dicOfKeys["geoService"] = ["longitude","latitude","radius"]
     dicOfKeys["year"] = ["dead","num","genre"]
     dicOfKeys["columnname"] = ["column","tablename"]
     dicOfKeys["youTubeLink"] = ["operation","artistname"]
