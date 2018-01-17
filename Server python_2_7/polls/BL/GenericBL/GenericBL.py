@@ -140,24 +140,24 @@ def getAllSongs(param):
         return '[{"no results were found. you are free to add songs you like via the Open YouTube or Image to Music queries": ""}]'
     return generateResFromRes(cols,result)
 
-def get_artists_in_requested_radius(json):
+# def get_artists_in_requested_radius(json):
     
-    try:
-        decoded = json.loads(json)        
-        cols,result = geographical_filtering(json)
-        if (cols is None or result is None):
-            return None
-        for row in result:
-            res += '{'
-            for col,val in zip(cols,row):
-               res += '"' + col + '":"' + val + '",'
-            res = res[:len(res)-1] + '},'
-        final = res[:len(res)-1] + ']}'
-        print (final)
-        return final
+#     try:
+#         decoded = json.loads(json)        
+#         cols,result = geographical_filtering(json)
+#         if (cols is None or result is None):
+#             return None
+#         for row in result:
+#             res += '{'
+#             for col,val in zip(cols,row):
+#                res += '"' + col + '":"' + val + '",'
+#             res = res[:len(res)-1] + '},'
+#         final = res[:len(res)-1] + ']}'
+#         print (final)
+#         return final
 
-    except (ValueError, KeyError, TypeError):
-        print ("JSON format error")
-        return None
+#     except (ValueError, KeyError, TypeError):
+#         print ("JSON format error")
+#         return None
     
-    return final
+#     return final

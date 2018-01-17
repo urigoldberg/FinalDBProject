@@ -207,6 +207,7 @@ LIMIT """+str(numOfAppear) +""") as tbl"""+str(index) +"""
 
 ###########Geographical####################
 def geographical_filtering(longitude, latitude, radius):
+    print("in geo filtering")
     query = """SELECT DISTINCT a.name FROM DbMysql12.CountryArtists AS ca
     INNER JOIN DbMysql12.artists AS a ON ca.artist_id=a.id
     WHERE lower(ca.name) IN
@@ -217,7 +218,7 @@ def geographical_filtering(longitude, latitude, radius):
          * COS(RADIANS({1}))
          * COS(RADIANS(Country.longitude - {0}))
          + SIN(RADIANS(Country.latitude))
-         * SIN(RADIANS({1})))) )< {2})""".format(longitude, latitude, radius)
+         * SIN(RADIANS({1})))) )< {2});""".format(longitude, latitude, radius)
 
     con = DBconnection()
     if (con.doSelectQuery(query)):
@@ -406,4 +407,16 @@ where name = '"""+song_artist+"""'
 
 
 def getAllSongsDB(user_name):
-	pass
+    query = """SELECT s.title, s.media_url, a.name  
+    FROM DbMysql12.UserInteraction as ui
+    inner join DbMysql12.Song as s on s.id = ui.song_id
+    inner join DbMysql12.Album as a on s.album_id=a.id""".format(user_name)
+   
+    con = DBconnection()
+    if(con.doQuery(query)):
+        print("performed update successfully")
+        con.close()
+        return "True";
+    print("error in updateYoutubeLinkDB")
+    con.close()
+    return None;

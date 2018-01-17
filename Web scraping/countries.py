@@ -7,7 +7,22 @@ from _mysql_exceptions import Error
 
 import MySQLdb
 import json
-from tqdm import tqdm
+
+convertions = {
+    'RUSSIA': 'RUSSIA',
+    'viet nam': 'VIETNAM',
+    'IRAN': 'IRAN',
+    'VIRGIN ISLANDS, BRITISH': 'BRITISH VIRGIN ISLANDS',
+    'VIRGIN ISLANDS, U.S.': 'BRITISH VIRGIN ISLANDS',
+    'BRUNEI DARUSSALAM': 'BRUNEI',
+    'KOREA, REPUBLIC OF': 'SOUTH KOREA',
+    'MACAO': 'MACAU',
+    'LAO PEOPLE': 'LAOS',
+    'MICRONESIA, FEDERATED STATES OF': 'MICRONESIA',
+    'SAINT MARTIN': 'SAINT MARTIN',
+    'SYRIA': 'SYRIA',
+    'TANZANIA': 'TANZANIA'
+}
 
 def insert_row(args):
     query = "INSERT INTO artists(db_id,name,label,formed_year,year_of_birth,year_of_death,disbanded," \
@@ -22,7 +37,6 @@ def insert_row(args):
         row_id = cursor.lastrowid
     except Error as error:
         print(error)
-        # print(args)
 
     finally:
         cursor.close()
@@ -88,9 +102,7 @@ def get_missing_artist_from_audb(artist):
     return row_id
 
 
-def search_for_artists(db_conn, artists , country):
-    res = []
-    missing_in_db = []
+def search_for_artists(db_conn, artists):
     q = "select name from artists WHERE LOWER(name) = LOWER(%s)"
     existing_artists = set()
     for artist in artists:
@@ -98,7 +110,6 @@ def search_for_artists(db_conn, artists , country):
             cursor = db_conn.cursor()
             cursor.execute(q, (artist,))
             record = cursor.fetchone()
-            # missing_in_db.append(record[1])
             record = record[0] if record is not None else ''
             existing_artists.add(record)
             cursor.close()
@@ -138,6 +149,13 @@ def get_existing_countries(db):
 
     return list(records)
 
+def rename_country(country):
+    best_name = country
+    for x in convertions.keys():
+        if x in country:
+            best_name = convertions[x]
+    return best_name
+
 
 db = MySQLdb.connect(host="127.0.0.1",  # your host
                      port=3305,
@@ -152,6 +170,7 @@ visited_countries = get_existing_countries(db)
 for country in list(iso3166.countries_by_name.keys()):
     if (country,) in visited_countries:
         continue
+    country = rename_country(country)
     artists = get_artists_by_country(country, URL)
     search_for_artists(db, artists, country)
     insert_country_artist(db, country, artists)

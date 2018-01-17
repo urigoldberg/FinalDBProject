@@ -3,6 +3,7 @@ var mostViewedButton = 1;
 var youTubeLinkButton = 1;
 var albumWithSalesButton = 1;
 var personalizeButton = 1;
+var songsILikedButton = 1;
 
 //for like song
 var song_name;
@@ -114,6 +115,9 @@ function loadDocSpecialQuery(flowname, elementToReplaceByTable, replayText) {
         sentData = createJSONString(flowname, "artistname", "operation");
         isSongTable = "1";
     }
+    else if(flowname === "SucAlbums"){
+        sentData = createJSONString(flowname, "genre", "numOfSales");
+    }
     else{
         sentData = createJSONString(flowname, "location", "genre");
     }
@@ -216,12 +220,12 @@ function switchDEAD(){
             "                    <div id=\"big\"></div>\n" +
             "\n" +
             "                    <button id=\"getSongsButton\" class =\"btn btn-default querybutton \" onclick=\"loadDocSpecialQuery('year','big','the Following year was found:')\">Query</button>\n"+
-        "<button id=\"changeDEAD\" class =\"btn btn-default tofade\" onclick=\"switchDEAD()\">close Death / Birth query</button>";
+        "<button id=\"changeDEAD\" class =\"btn btn-default tofade\" onclick=\"switchDEAD()\">Close Death / Birth query</button>";
         loadDistinctDropdown("columnname", "genre", "genre", "Song");
         DEADButton = 0;
     }
     else{
-        document.getElementById("DEAD").innerHTML = "<button id=\"changeDEAD\" class =\"btn btn-default\" onclick=\"switchDEAD()\">open Death / Birth query</button>";
+        document.getElementById("DEAD").innerHTML = "<button id=\"changeDEAD\" class =\"btn btn-default\" onclick=\"switchDEAD()\">Open Death / Birth query</button>";
         DEADButton=1;
     }
 }
@@ -278,7 +282,7 @@ function switchYouTubeLink() {
         youTubeLinkButton = 0;
     }
     else{
-        document.getElementById("q3").innerHTML = "<button id=\"changeq3\" class =\"btn btn-default\" onclick=\"switchYouTubeLink()\">open YouTube link query</button>";
+        document.getElementById("q3").innerHTML = "<button id=\"changeq3\" class =\"btn btn-default\" onclick=\"switchYouTubeLink()\">Open YouTube link query</button>";
         console.log("Setting youTubeLinkButton to 1");
         youTubeLinkButton=1;
     }
@@ -296,22 +300,19 @@ function switchAlbumWithSales(){
             "                    </form>\n" +
             "                    <p>with:</p>\n"+
             "                    <form class=\"tofade\">\n" +
-            "                        <div class=\"form-group\">\n" +
-            "                            <select class=\"form-control\" id=\"operation\">\n" +
-            "                                <option>max</option>\n" +
-            "                                <option>min</option>\n" +
-            "                            </select>\n" +
-            "                        </div>\n" +
+            "                    <span class=\"form-group tofade\" >\n" +
+            "                    <input type=\"text\" class=\"form-control\" value=\"2\" id=\"numOfSales\">\n" +
+            "                    </span>\n"+
             "                    </form>\n" +
             "                    <p> sales</p>\n"+
-            "<button id=\"getmostviewed\" class =\"btn btn-default querybutton \" onclick=\"loadDocSpecialQuery('youTubeLink','q4','the Following albums were found:')\">Query</button>\n"+
+            "<button id=\"getmostviewed\" class =\"btn btn-default querybutton \" onclick=\"loadDocSpecialQuery('SucAlbums','q4','the Following albums were found:')\">Query</button>\n"+
             "<button id=\"changeq4\" class =\"btn btn-default\" onclick=\"switchAlbumWithSales()\">Close Album with sales query</button>";
         console.log("Setting albumWithSalesButton to 0");
         loadDistinctDropdown("columnname", "genre", "genre", "Song");
         albumWithSalesButton = 0;
     }
     else{
-        document.getElementById("q4").innerHTML = "<button id=\"changeq4\" class =\"btn btn-default\" onclick=\"switchAlbumWithSales()\">open Album with sales query</button>";
+        document.getElementById("q4").innerHTML = "<button id=\"changeq4\" class =\"btn btn-default\" onclick=\"switchAlbumWithSales()\">Open Album with sales query</button>";
         console.log("Setting albumWithSalesButton to 1");
         albumWithSalesButton=1;
     }
@@ -321,15 +322,57 @@ function switchPerzonalize(){
     if(personalizeButton === 1){
         document.getElementById("q5").innerHTML = "<div id=\"responseheader\"></div>\n" +
             "<button id=\"person\" class =\"btn btn-default\" onclick=\"sendPerson()\">query</button>"+
-            "<button id=\"changeq4\" class =\"btn btn-default\" onclick=\"switchPerzonalize()\">Close Personalize query</button>";
+            "<button id=\"changeq5\" class =\"btn btn-default\" onclick=\"switchPerzonalize()\">Close Personalize query</button>";
         console.log("Setting personalizeButton to 0");
         personalizeButton = 0;
     }
     else{
-        document.getElementById("q5").innerHTML = "<button id=\"changeq4\" class =\"btn btn-default\" onclick=\"switchPerzonalize()\">open Personalize query</button>";
+        document.getElementById("q5").innerHTML = "<button id=\"changeq4\" class =\"btn btn-default\" onclick=\"switchPerzonalize()\">Open Personalize query</button>";
         console.log("Setting personalizeButton to 1");
         personalizeButton=1;
     }
+}
+
+function switchSongsILiked(){
+    if(songsILikedButton === 1){
+        document.getElementById("q6").innerHTML = "<div id=\"responseheader\"></div>\n" +
+            "<button id=\"person\" class =\"btn btn-default\" onclick=\"sendSongsILiked()\">query</button>"+
+            "<button id=\"changeq6\" class =\"btn btn-default\" onclick=\"switchSongsILiked()\">Close Songs i liked query</button>";
+        console.log("Setting songsILikedButton to 0");
+        songsILikedButton = 0;
+    }
+    else{
+        document.getElementById("q6").innerHTML = "<button id=\"changeq6\" class =\"btn btn-default\" onclick=\"switchSongsILiked()\">Open Songs i liked query</button>";
+        console.log("Setting songsILikedButton to 1");
+        songsILikedButton=1;
+    }
+}
+
+function sendSongsILiked(){
+    var xhttp = new XMLHttpRequest();
+    var jsonSent = createJSONStringforLikedSongs("get_all_songs","user_name");
+    xhttp.onreadystatechange = function() {
+        if (this.readyState === 4 && this.status === 200) {
+            var responseArr = JSON.parse(this.responseText);
+            console.log("initializing table head and opening body tag");
+            var finalTable = createTableFromResponse(responseArr,"0");
+            fadeInTable(finalTable,"q6");
+            hideDisplayofClass("tofade");
+        }
+    };
+    xhttp.open("POST", "Generic", true);
+    xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xhttp.send("data="+jsonSent);
+}
+
+function createJSONStringforLikedSongs(flowname, elementId, elementId2, elementId3) {
+    var jsonString = "{";
+    jsonString = addFlowNameJSON(jsonString,flowname);
+    jsonString = addparamsKeyforJSON(jsonString);
+    jsonString = addParamJSON(jsonString,elementId,getCookie("user"));
+    jsonString += "]}";
+    debugger;
+    return jsonString;
 }
 
 function sendPerson(){
