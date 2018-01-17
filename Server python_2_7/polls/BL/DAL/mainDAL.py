@@ -202,10 +202,6 @@ LIMIT """+str(numOfAppear) +""") as tbl"""+str(index) +"""
     query += """) t where t.num_occurrences > 0 order by t.num_occurrences desc;
 """
     
-#
-#    f = open('workfile', 'w')
-#    f.write(query)
-#    f.close
     if (con.doSelectQuery(query) and con._rowsReturned > 0):
         print("finished googleAPI successfuly")
         con.close()   
@@ -359,9 +355,9 @@ on s.artist_id = art.id
 where s.title = '"""+song_name+"""' and art.name = '"""+artist_name+"""'
 """
     
-    f = open('workfile', 'w')
-    f.write(query)
-    f.close()
+#    f = open('workfile', 'w')
+#    f.write(query)
+#    f.close()
     con = DBconnection()
     if(con.doQuery(query)):
         print("performed update successfully")
@@ -404,9 +400,7 @@ where title = '""" + song_name+"""' and artist_id =
 select id from artists
 where name = '"""+song_artist+"""'
 )"""
-#    f = open('workfile', 'w')
-#    f.write(query)
-#    f.close   
+   
     con = DBconnection()
     if(con.doQuery(query)):
         print("performed update successfully")
