@@ -22,7 +22,7 @@ function createTableFromResponse(responseArr,isSongTable) {
         }
     }
     var numofCols = columnNames.length;
-    var finaltable = "<table id='tabletolike' class=\"table table-striped imagetable\"><thead><tr>";
+    var finaltable = "<table class=\"table table-striped imagetable\"><thead><tr>";
     //insert column names in table
     for(var col in columnNames){
         finaltable += "<th>"+columnNames[col]+"</th>"
@@ -39,7 +39,7 @@ function createTableFromResponse(responseArr,isSongTable) {
             finaltable+="<th>"+val+"</th>";
         }
         if(isSongTable === "1"){
-            finaltable+="<th><button class='btn btn-default' onclick='likerow("+i+")'>Like song!</button></th>"
+            finaltable+="<th><button class='btn btn-default' onclick='likerow("+i+1+")'>Like song!</button></th>"
         }
         finaltable+="</tr>";
     }
@@ -49,7 +49,7 @@ function createTableFromResponse(responseArr,isSongTable) {
 
 function likerow(rowNumber){
     debugger;
-    var t = document.getElementsByClassName("tabletolike");
+    var t = document.getElementsByClassName("imagetable");
     var htmlTable = t[0];
     var rows = htmlTable.rows;
     var specificRow=rows[rowNumber];
@@ -59,6 +59,22 @@ function likerow(rowNumber){
     song_name = rowCells[0].innerText;
     song_artist = rowCells[1].innerText;
     user_name = getCookie("user");
+    var sentData = createJSONStringforLike("add_liked_song","song_name","song_artist","user_name");
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+        if (this.readyState === 4 && this.status === 200) {
+            var responseArr = JSON.parse(this.responseText);
+            if(responseArr.isError === "true"){
+                alert("Error liking this song!");
+            }
+            else{
+                alert("successfully liked this song");
+            }
+        }
+    };
+    xhttp.open("POST", "Generic", true);
+    xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xhttp.send("data="+sentData);
 }
 
 function fadeInTable(finalTable, elementToReplaceByTable) {
@@ -155,6 +171,20 @@ function createJSONString(flowname, elementId, elementId2, keyString) {
         x = document.getElementById("sel0").value === "Died" ? "1" : "0";
         jsonString = addParamJSON(jsonString,keyString,x);
     }
+    jsonString += "]}";
+    return jsonString;
+}
+
+function createJSONStringforLike(flowname, elementId, elementId2, elementId3) {
+    debugger;
+    var jsonString = "{";
+    jsonString = addFlowNameJSON(jsonString,flowname);
+    jsonString = addparamsKeyforJSON(jsonString);
+    jsonString = addParamJSON(jsonString,elementId,song_name);
+    jsonString+=",";
+    jsonString = addParamJSON(jsonString,elementId2,song_artist);
+    jsonString+=",";
+    jsonString = addParamJSON(jsonString,elementId3,user_name);
     jsonString += "]}";
     return jsonString;
 }
