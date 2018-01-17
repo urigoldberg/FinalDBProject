@@ -86,7 +86,6 @@ function likerowImageToMusic(rowNumber){
     var htmlTable = t[0];
     var rows = htmlTable.rows;
     var specificRow=rows[rowNumber];
-    // debugger;
     var rowCells = specificRow.cells;
     song_name = rowCells[0].innerText;
     song_artist = rowCells[1].innerText;
@@ -95,7 +94,6 @@ function likerowImageToMusic(rowNumber){
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
         if (this.readyState === 4 && this.status === 200) {
-            debugger;
             var responseArr = JSON.parse(this.responseText);
             if(responseArr.isError === "true"){
                 alert("Error liking this song! " + responseArr.errorMessage);
@@ -126,7 +124,6 @@ function createJSONStringforLike(flowname, elementId, elementId2, elementId3) {
     jsonString+=",";
     jsonString = addParamJSON(jsonString,elementId3,user_name);
     jsonString += "]}";
-    // debugger;
     return jsonString;
 }
 
