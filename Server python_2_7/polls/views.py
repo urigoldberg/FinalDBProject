@@ -213,6 +213,9 @@ def handleQueryResponse(flowname,param):
         
     if (flowname == "personalization"):
         ResultsArray = GenericBL.personalization(param)
+        
+    if (flowname == "get_all_songs"):
+        ResultsArray = GenericBL.getAllSongs(param)
     
     # If ResultsArray == None, an error has occuered
     # Otherwise, the function returned array for json

@@ -1,4 +1,4 @@
-from ..DAL.mainDAL import geographical_filtering,personalizationDB, yearMostArtistDiedOrBornDB, getColumnValuesDB, youTubeLongestShortestLinkDB, albumsOfGenreWithSalesDB, mostViewedArtistDB, updateYoutubeLinkDB, addLikedSongDB, getUserDetailsDAL
+from ..DAL.mainDAL import geographical_filtering,personalizationDB, yearMostArtistDiedOrBornDB, getColumnValuesDB, youTubeLongestShortestLinkDB, albumsOfGenreWithSalesDB, mostViewedArtistDB, updateYoutubeLinkDB, addLikedSongDB, getUserDetailsDAL, getAllSongsDB
 
 def addValuesForFromDic(dic,colum,table,key):
     cols,result = getColumnValuesDB(colum,table)
@@ -112,12 +112,18 @@ def updateYoutubeLink(param):
     
 
 def addLikedSong(param):
+    print("at addLikedSong")
     song_name,song_artist,user_name = str(param["song_name"]),str(param["song_artist"]), str(param["user_name"])
     if(addLikedSongDB(song_name,song_artist,user_name)):
         print("finished adding song to liked songs")
-        return True
+        return "True"
     else:
         return None
+
+def getAllSongs(param):
+    user_name = str(param["user_name"])
+    cols,result = getAllSongsDB(user_name)
+    return generateResFromRes(cols,result)
 
 def get_artists_in_requested_radius(json):
     
