@@ -2,9 +2,10 @@
 /*Geo Location*/
 
 #map-canvas {
-    width: 350px;
-    height: 350px;
+    width: 50%;
+    height: 50%;
 }
+
 #info {
     position: absolute;
     font-family: arial, sans-serif;
@@ -30,15 +31,6 @@
 .imagetable{
     max-width: 100%;
 }
-
-/*#map-canvas {*/
-    /*height: 70%;*/
-    /*width :50%;*/
-    /*margin-left:auto;*/
-    /*margin-right:auto;*/
-    /*horiz-align: center;*/
-/*}*/
-
 
 
 /* Full-width input fields */

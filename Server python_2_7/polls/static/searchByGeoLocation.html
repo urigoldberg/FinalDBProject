@@ -67,20 +67,24 @@
     <div class="container-fluid">
         <!-- inside this single row will be a side bar and another column for the main page-->
         <div class="row">
-            <div class="col-sm-12" align="middle">
+            <div class="col-sm-8">
                 <h4> please select locations from which to search from:</h4>
-                <!--
-                To use this code on your website, get a free API key from Google.
-                Read more at: https://www.w3schools.com/graphics/google_maps_basic.asp
-                -->
-                <!--<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyANLwIhKR5250mq9107j4R0hC1RG4T9J9c&libraries=drawing&callback=initMap" async defer></script>-->
-                <div id="map-canvas">
+                <div id="geoTable">
+                    <div id="map-canvas">
+                    </div>
+                    <div id="info">
+                    </div><br>
+                    <div class="btn btn-default" onclick="getSongsForGeoLocation()">get Songs from location</div>
                 </div>
-
-                <div id="info">
-                </div>
-
-                <!--<div class = "btn" onclick="loadDoc("GeoLocation",getParams(),"photo="+encodeURIComponent(photo.substring(photo.indexOf(",")+1)))";-->
+            </div>
+            <div class="col-sm-4">
+                <h3> Instructions:</h3>
+                <h4>Searching songs:</h4>
+                <ol>
+                    <li>Place the polygon at the are you want to search songs from</li>
+                    <li>Push "get songs from location"</li>
+                    <li>We'll find songs from that location</li>
+                </ol>
 
             </div>
         </div>
