@@ -414,4 +414,16 @@ where name = '"""+song_artist+"""'
 
 
 def getAllSongsDB(user_name):
-	pass
+    query = """SELECT s.title, s.media_url  
+    FROM DbMysql12.UserInteraction AS ui
+    INNER JOIN DbMysql12.Song AS s 
+    ON s.id = ui.song_id;""".format(user_name)
+   
+    con = DBconnection()
+    if(con.doQuery(query)):
+        print("performed update successfully")
+        con.close()
+        return "True";
+    print("error in updateYoutubeLinkDB")
+    con.close()
+    return None;
