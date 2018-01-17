@@ -4,8 +4,13 @@ var youTubeLinkButton = 1;
 var albumWithSalesButton = 1;
 var personalizeButton = 1;
 
+//for like song
+var song_name;
+var song_artist;
+var user_name;
 
-function createTableFromResponse(responseArr) {
+
+function createTableFromResponse(responseArr,isSongTable) {
     if(responseArr.isError == "true"){
         return "<p>"+responseArr.errorMessage+"</p>"
     }
@@ -17,10 +22,13 @@ function createTableFromResponse(responseArr) {
         }
     }
     var numofCols = columnNames.length;
-    var finaltable = "<table class=\"table table-striped imagetable\"><thead><tr>";
+    var finaltable = "<table id='tabletolike' class=\"table table-striped imagetable\"><thead><tr>";
     //insert column names in table
     for(var col in columnNames){
         finaltable += "<th>"+columnNames[col]+"</th>"
+    }
+    if(isSongTable === "1"){
+        finaltable+="<th>Like this song</th>"
     }
     //filling table rows
     finaltable+="</tr></thead></tbody>";
@@ -30,10 +38,27 @@ function createTableFromResponse(responseArr) {
             var val = responseArr.Results[i][columnNames[j]];
             finaltable+="<th>"+val+"</th>";
         }
+        if(isSongTable === "1"){
+            finaltable+="<th><button class='btn btn-default' onclick='likerow("+i+")'>Like song!</button></th>"
+        }
         finaltable+="</tr>";
     }
     finaltable += "</tbody></table>";
     return finaltable;
+}
+
+function likerow(rowNumber){
+    debugger;
+    var t = document.getElementsByClassName("tabletolike");
+    var htmlTable = t[0];
+    var rows = htmlTable.rows;
+    var specificRow=rows[rowNumber];
+    var rowCells = specificRow.cells;
+    // var specificcell = rowCells[3];
+    debugger;
+    song_name = rowCells[0].innerText;
+    song_artist = rowCells[1].innerText;
+    user_name = getCookie("user");
 }
 
 function fadeInTable(finalTable, elementToReplaceByTable) {
@@ -65,6 +90,7 @@ function hideDisplayofClass(classNames) {
 
 function loadDocSpecialQuery(flowname, elementToReplaceByTable) {
     var sentData;
+    var isSongTable = "0";
     if(flowname === "columnname"){
         sentData = createJSONStringforDistinctColumnName(flowname, "genre", "Song");
     }else if(flowname === "year"){
@@ -72,6 +98,7 @@ function loadDocSpecialQuery(flowname, elementToReplaceByTable) {
     }
     else if(flowname === "youTubeLink"){
         sentData = createJSONString(flowname, "artistname", "operation");
+        isSongTable = "1";
     }
     else{
         sentData = createJSONString(flowname, "location", "genre");
@@ -81,7 +108,7 @@ function loadDocSpecialQuery(flowname, elementToReplaceByTable) {
         if (this.readyState === 4 && this.status === 200) {
             var responseArr = JSON.parse(this.responseText);
             console.log("initializing table head and opening body tag");
-            var finalTable = createTableFromResponse(responseArr);
+            var finalTable = createTableFromResponse(responseArr,isSongTable);
             fadeInTable(finalTable,elementToReplaceByTable);
             document.getElementById("responseheader").innerText = "the Following year was found:";
             hideDisplayofClass("tofade");
@@ -271,7 +298,6 @@ function switchPerzonalize(){
 }
 
 function sendPerson(){
-    debugger;
     var xhttp = new XMLHttpRequest();
     var x = getCookie("user");
     var y = getCookie("bs");
@@ -320,7 +346,6 @@ function createJSONStringforDistinctColumnName(flowname, columnName, tablename) 
     jsonString = addParamJSON(jsonString,"tablename",tablename);
     jsonString += "]}";
     console.log(jsonString);
-    debugger;
     return jsonString;
 }
 
@@ -333,7 +358,6 @@ function createJSONStringforPersonalization(flowname, columnName, tablename) {
     jsonString = addParamJSON(jsonString,"bs",tablename);
     jsonString += "]}";
     console.log(jsonString);
-    debugger;
     return jsonString;
 }
 
