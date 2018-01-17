@@ -38,7 +38,7 @@ function createJSONStringforImage(flowname, encoding) {
     return jsonString;
 }
 
-function createTableFromResponse(responseArr) {
+function createTableFromResponse(responseArr,isSongTable) {
     if(responseArr.isError === "true"){
         return "<p>"+responseArr.errorMessage+"</p>"
     }
@@ -55,6 +55,9 @@ function createTableFromResponse(responseArr) {
     for(var col in columnNames){
         finaltable += "<th>"+columnNames[col]+"</th>"
     }
+    if(isSongTable === "1"){
+        finaltable+="<th>Like this song</th>"
+    }
     //filling table rows
     finaltable+="</tr></thead></tbody>";
 
@@ -67,6 +70,9 @@ function createTableFromResponse(responseArr) {
             }else{
                 finaltable+="<th>"+val+"</th>";
             }
+        }
+        if(isSongTable === "1"){
+            finaltable+="<th><button class='btn btn-default' onclick='likerow("+i+")'>Like song!</button></th>"
         }
         finaltable+="</tr>";
     }
@@ -95,7 +101,6 @@ function fillUpdateRow(rowNumber){
 }
 
 function updateYouTubeLinkTable(){
-    debugger;
     link_you = document.getElementById("youtubelink").value;
     loadDocSpecialQueryimagetotext("updateyoutubelink");
 }
@@ -105,10 +110,10 @@ function loadDocSpecialQueryimagetotext(flowname) {
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
         if (this.readyState === 4 && this.status === 200) {
-            if(this.responseText === "False"){
+            if(this.responseText === "None"){
                 alert("Couldn't add youtube link! please try entering a valid link")
             }else{
-                alert("successfully added youtube link!");
+                alert("successfully added youtube link! please query image again to see results");
             }
         }
     };
@@ -127,7 +132,6 @@ function createJSONStringforUpdate(flowname,key1,key2,key3) {
     jsonString+=",";
     jsonString = addParamJSON(jsonString,key3,song_artist);
     jsonString += "]}";
-    debugger;
     return jsonString;
 }
 
@@ -185,7 +189,7 @@ function loadDataForImageToMusic(postUrl) {
         if (this.readyState === 4 && this.status === 200) {
             var responseArr = JSON.parse(this.responseText);
             console.log("initializing table head and opening body tag");
-            var finalTable = createTableFromResponse(responseArr);
+            var finalTable = createTableFromResponse(responseArr,"1");
             fadeInTable(finalTable);
             document.getElementById("imageToTextHeader").innerText = "By extracting the keyword "+responseArr.keyword+" the Following songs were found:";
             fadeOutButtons("browsebutton", "loadbutton", "loadingsign");

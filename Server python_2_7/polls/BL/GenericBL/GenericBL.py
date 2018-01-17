@@ -1,4 +1,4 @@
-from ..DAL.mainDAL import geographical_filtering,personalizationDB, yearMostArtistDiedOrBornDB, getColumnValuesDB, youTubeLongestShortestLinkDB, albumsOfGenreWithSalesDB, mostViewedArtistDB, updateYoutubeLinkDB, addLikedSongDB, getUserDetailsDAL
+from ..DAL.mainDAL import geographical_filtering,personalizationDB, yearMostArtistDiedOrBornDB, getColumnValuesDB, youTubeLongestShortestLinkDB, albumsOfGenreWithSalesDB, mostViewedArtistDB, updateYoutubeLinkDB, addLikedSongDB, getUserDetailsDAL, getAllSongsDB
 
 def addValuesForFromDic(dic,colum,table,key):
     cols,result = getColumnValuesDB(colum,table)
@@ -92,12 +92,16 @@ def personalization(param):
     return generateResFromRes(cols,result)
 
 def validate_link(link):
-    import httplib
+    import urllib2
     if "youtube.com" not in link: 
         return False
-    c = httplib.HTTPConnection(link)
-    c.request("HEAD", '')
-    return c.getresponse().status == 200
+    try:
+        urllib2.urlopen(link)
+    except urllib2.HTTPError, e:
+        return False
+    except urllib2.URLError, e:
+        return False
+    return True
 
 def updateYoutubeLink(param):
     link,song_name,song_artist = str(param["link"]), str(param["song_name"]),str(param["song_artist"])
@@ -108,12 +112,18 @@ def updateYoutubeLink(param):
     
 
 def addLikedSong(param):
+    print("at addLikedSong")
     song_name,song_artist,user_name = str(param["song_name"]),str(param["song_artist"]), str(param["user_name"])
     if(addLikedSongDB(song_name,song_artist,user_name)):
         print("finished adding song to liked songs")
-        return True
+        return "True"
     else:
         return None
+
+def getAllSongs(param):
+    user_name = str(param["user_name"])
+    cols,result = getAllSongsDB(user_name)
+    return generateResFromRes(cols,result)
 
 def get_artists_in_requested_radius(json):
     

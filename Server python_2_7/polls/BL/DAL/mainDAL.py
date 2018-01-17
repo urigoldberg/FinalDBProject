@@ -357,10 +357,16 @@ ORDER BY artist_views DESC
 def addLikedSongDB(song_name,artist_name,user_name):
     query = """
 insert into DbMysql12.UserInteraction (user_name,song_id,created_at)
-SELECT us.user_name as user_name, s.id as song_id , now() as created_at
-FROM DbMysql12.users_table us, DbMysql12.Song s, DbMysql12.artists art
-where us.user_name = '"""+user_name+"""' and s.title = '"""+song_name+"""' and art.name = '"""+artist_name+"""'
-)"""
+select '"""+user_name+"""' as user_name,s.id as song_id, now()
+from DbMysql12.Song s
+inner join DbMysql12.artists art
+on s.artist_id = art.id
+where s.title = '"""+song_name+"""' and art.name = '"""+artist_name+"""'
+"""
+    
+    f = open('workfile', 'w')
+    f.write(query)
+    f.close()
     con = DBconnection()
     if(con.doQuery(query)):
         print("performed update successfully")
@@ -398,16 +404,24 @@ def updateYoutubeLinkDB(link,song_name,song_artist):
     query = """
     UPDATE  Song 
 SET     media_url = '"""+link+"""'
-where title = '""" + song_name+"""and artist_id = 
+where title = '""" + song_name+"""' and artist_id = 
 (
 select id from artists
 where name = '"""+song_artist+"""'
 )"""
+#    f = open('workfile', 'w')
+#    f.write(query)
+#    f.close   
     con = DBconnection()
     if(con.doQuery(query)):
         print("performed update successfully")
         con.close()
-        return True;
+        return "True";
     print("error in updateYoutubeLinkDB")
     con.close()
     return None;
+
+
+
+def getAllSongsDB(user_name):
+    
