@@ -414,10 +414,10 @@ where name = '"""+song_artist+"""'
 
 
 def getAllSongsDB(user_name):
-    query = """SELECT s.title, s.media_url  
-    FROM DbMysql12.UserInteraction AS ui
-    INNER JOIN DbMysql12.Song AS s 
-    ON s.id = ui.song_id;""".format(user_name)
+    query = """SELECT s.title, s.media_url, a.name  
+    FROM DbMysql12.UserInteraction as ui
+    inner join DbMysql12.Song as s on s.id = ui.song_id
+    inner join DbMysql12.Album as a on s.album_id=a.id""".format(user_name)
    
     con = DBconnection()
     if(con.doQuery(query)):
