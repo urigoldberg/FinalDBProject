@@ -22,6 +22,8 @@ def get_songs_related_to_keywords(jsons):
         keywords = list(OrderedDict.fromkeys(array))[:5]
         cols,rows = googleApiSearchSongsByKeyWord(keywords)
         print("returned from google api query. rows",rows)
+        if(cols == None):
+            return '[{"no results were found. you are welcome to try entering a new picture": ""}]'
         return generateResFromRes(cols,rows)
 #        for row in rows:
 #            song_name = str.format('"%s"' % row[0])

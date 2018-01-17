@@ -1,5 +1,6 @@
 from ..DAL.mainDAL import geographical_filtering,personalizationDB, yearMostArtistDiedOrBornDB, getColumnValuesDB, youTubeLongestShortestLinkDB, albumsOfGenreWithSalesDB, mostViewedArtistDB, updateYoutubeLinkDB, addLikedSongDB, getUserDetailsDAL, getAllSongsDB
 
+
 def addValuesForFromDic(dic,colum,table,key):
     cols,result = getColumnValuesDB(colum,table)
     op = """<option value="{0}">{0}</option>"""
@@ -123,17 +124,20 @@ def updateYoutubeLink(param):
 
 def addLikedSong(param):
     song_name,song_artist,user_name = str(param["song_name"]),str(param["song_artist"]), str(param["user_name"])
-    if(addLikedSongDB(song_name,song_artist,user_name)):
+    res = addLikedSongDB(song_name,song_artist,user_name)
+    if(res == True):
         print("finished adding song to liked songs")
         return '"True"'
     else:
-        return None
+        if "1062" in res: #meaning it's because of a duplicate
+            return '"False"'
+        return res
 
 def getAllSongs(param):
     user_name = str(param["user_name"])
     cols,result = getAllSongsDB(user_name)
     if (cols == None):
-        return '[{"no results were found. you are to add songs you like via the Open YouTube or Image to Music queries": ""}]'
+        return '[{"no results were found. you are free to add songs you like via the Open YouTube or Image to Music queries": ""}]'
     return generateResFromRes(cols,result)
 
 def get_artists_in_requested_radius(json):

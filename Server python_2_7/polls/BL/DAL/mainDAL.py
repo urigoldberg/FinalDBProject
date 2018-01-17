@@ -61,7 +61,6 @@ class DBconnection():
         # fail
         except Exception as e:
             self._exception = (e.message)
-            print("exception has occurred in doSelectQuery")
             return False
         
     def doQuery(self, query):  
@@ -82,11 +81,9 @@ class DBconnection():
             return True
         
         # fail
-        except Exception as e:
-            self._exception = (e.message)
-            print("exception has occurred in doQuery")
+        except (MySQLdb.Error, MySQLdb.Warning) as e:
+            self._exception = e
             return False
-        
         
         
     def insertQuery(self, query):
@@ -99,7 +96,7 @@ class DBconnection():
         self._results = None
         self._exception = None
         
-        # succed
+        # succedd
         try:
             self._rowsReturned = self.cursor.execute(query)
             self._db.commit()
@@ -355,17 +352,14 @@ on s.artist_id = art.id
 where s.title = '"""+song_name+"""' and art.name = '"""+artist_name+"""'
 """
     
-#    f = open('workfile', 'w')
-#    f.write(query)
-#    f.close()
     con = DBconnection()
     if(con.doQuery(query)):
         print("performed update successfully")
         con.close()
         return True;
-    print("error in addLikedSongDB")
+    error = con._exception
     con.close()
-    return None;
+    return str(error);
 
 def personalizationDB(genre,country,longness):
     query = """SELECT 
@@ -384,7 +378,6 @@ WHERE
         AND a.artist_id = c.artist_id
         AND a.duration > 240000 * {2}
 LIMIT 40;""".format(genre,country,longness)
-    print("query",query)
     con = DBconnection()
     if (con.doSelectQuery(query)):
         con.close()
