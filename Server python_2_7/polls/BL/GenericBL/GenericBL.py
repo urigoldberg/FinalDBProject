@@ -11,7 +11,7 @@ def addValuesForFromDic(dic,colum,table,key):
     print("addGenreToDic", value)
 
 def generateResFromRes(cols,result):
-    print ("generateResFromRes - cols",cols, "result",result )
+#    print ("generateResFromRes - cols",cols, "result",result )
     res = '[' 
     try:        
         if (cols is None or result is None):
@@ -129,7 +129,9 @@ def addLikedSong(param):
         print("finished adding song to liked songs")
         return '"True"'
     else:
-        if "1062" in res: #meaning it's because of a duplicate
+        print("else",res)
+        if '1062' in res: #meaning it's because of a duplicate
+            print("false")
             return '"False"'
         return res
 
