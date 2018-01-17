@@ -111,11 +111,12 @@ function loadDocSpecialQueryimagetotext(flowname) {
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
         if (this.readyState === 4 && this.status === 200) {
-            var responseArr = JSON.parse(this.responseText);
-            if(responseArr.isError === "true"){
+            debugger;
+            // var responseArr = JSON.parse(this.responseText);
+            if(this.responseText === "None"){
                 alert("Couldn't add youtube link! please try entering a valid link")
             }else{
-                alert("successfully added youtube link!");
+                alert("successfully added youtube link! please query image again to see results");
             }
         }
     };
