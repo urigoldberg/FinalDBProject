@@ -38,6 +38,8 @@ def yearMostArtistDiedOrBorn(dead,num,genre):
         return None
     
     cols,result = yearMostArtistDiedOrBornDB(dead,num,genre)
+    if (cols == None):
+        return '[{"no results were found. you are welcome to try a new query": ""}]'
     return generateResFromRes(cols,result)
 
 def getColumnValues(column, tablename):
@@ -50,12 +52,16 @@ def youTubeLongestShortestLink(name,op):
     else:
         op = ">"
     cols,result = youTubeLongestShortestLinkDB(name,op)
+    if (cols == None):
+        return '{}'
     return generateResFromRes(cols,result)
 
 def albumsOfGenreWithSales(numOfSales, genre):
     if not (numOfSales.isdigit()):
         return None
     cols,result = albumsOfGenreWithSalesDB(numOfSales, genre)
+    if (cols == None):
+        return '[{"no results were found. you are welcome to try a new query": ""}]'
     return generateResFromRes(cols,result)
     
 ########### GENERAL UTILS ##############
@@ -83,12 +89,16 @@ def getDicOfParams(diclist, isUnique):
 def mostViewedArtist(param):
     location, genre = str(param["location"]),str(param["genre"])
     cols,result = mostViewedArtistDB(location, genre)
+    if (cols == None):
+        return '[{"no results were found. you are welcome to try a new query": ""}]'
     return generateResFromRes(cols,result)
 
 def personalization(param):
     userName = str(param["user"])
     username,password,birth,longness,genre,country = getUserDetailsDAL(userName)
     cols,result = personalizationDB(genre,country,longness)
+    if (cols == None):
+        return '[{"no results were found. you are welcome to try a new query": ""}]'
     return generateResFromRes(cols,result)
 
 def validate_link(link):
@@ -122,6 +132,8 @@ def addLikedSong(param):
 def getAllSongs(param):
     user_name = str(param["user_name"])
     cols,result = getAllSongsDB(user_name)
+    if (cols == None):
+        return '[{"no results were found. you are to add songs you like via the Open YouTube or Image to Music queries": ""}]'
     return generateResFromRes(cols,result)
 
 def get_artists_in_requested_radius(json):

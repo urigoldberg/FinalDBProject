@@ -18,7 +18,7 @@ from polls.Validators.validatorsUtils import *
 
 from polls.BL.GoogleVisionApiBL.googleVisionSendPost import *
 from polls.BL.GoogleVisionApiBL.getSongsByKeywordFromGoogleApi import *
-from polls.BL.GeoBL.GeoServiceBL import get_json_from_request, get_artists_in_requested_radius
+from polls.BL.GeoBL.GeoServiceBL import get_artists_in_requested_radius
 from polls.BL.GoogleVisionApiBL.googleVisionSendPost import sendGoogleQuery
 from polls.BL.GoogleVisionApiBL.getSongsByKeywordFromGoogleApi import get_songs_related_to_keywords
 from polls.BL.sqlQueryBuilderBL import queriesBuilder,mockResponse
@@ -29,7 +29,7 @@ from polls.BL.loginManageBL.loginFunctions import *
 ############### consts #############
 ####################################
 
-ERROR_JSON = '{ "isError" : "true", "errorMessage": "An error had occuered", "Results": [] }'
+ERROR_JSON = '{ "isError" : "true", "errorMessage": "An error had occurred", "Results": [] }'
 
 
 ####################################
