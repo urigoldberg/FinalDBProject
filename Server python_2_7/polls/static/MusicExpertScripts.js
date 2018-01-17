@@ -234,7 +234,7 @@ function switchMostViewed() {
             "                            <select class=\"form-control\" id=\"genre\"></select>\n" +
             "                        </div>\n" +
             "                    </form>\n" +
-            "                    <p>From location:</p>\n" +
+            "                    <p>From location:</p>" +
             "                    <span class=\"form-group tofade\" >\n" +
             "                    <input type=\"text\" class=\"form-control\" value=\"usa\" id=\"location\">\n" +
             "                    </span>\n"+
@@ -253,13 +253,7 @@ function switchMostViewed() {
 
 function switchYouTubeLink() {
     if(youTubeLinkButton === 1){
-        document.getElementById("q3").innerHTML = "<h4 class=\"tofade\">Youtube Link query:</h4>\n"+
-            "<p>Longest/shortest song on youtube of one of the following artists:</p>\n" +
-            "                    <form id=\"q3form\">\n" +
-            "                        <div class=\"form-group\">\n" +
-            "                            <select class=\"form-control\" id=\"artistname\"></select>\n" +
-            "                        </div>\n" +
-            "                    </form>\n" +
+        document.getElementById("q3").innerHTML = "<h4 class=\"tofade\">Youtube Link query:</h4>\n" +
             "                    <form class=\"tofade\">\n" +
             "                        <div class=\"form-group\">\n" +
             "                            <select class=\"form-control\" id=\"operation\">\n" +
@@ -268,6 +262,12 @@ function switchYouTubeLink() {
             "                            </select>\n" +
             "                        </div>\n" +
             "                    </form>\n" +
+            "                    <p>length song on youtube of one of the following artists:</p>\n" +
+            "                    <form id=\"q3form\">\n" +
+            "                        <div class=\"form-group\">\n" +
+            "                            <select class=\"form-control\" id=\"artistname\"></select>\n" +
+            "                        </div>\n" +
+            "                    </form>" +
             "<button id=\"getmostviewed\" class =\"btn btn-default querybutton \" onclick=\"loadDocSpecialQuery('youTubeLink','q3')\">Query</button>\n"+
             "<button id=\"changeq3\" class =\"btn btn-default\" onclick=\"switchYouTubeLink()\">Close YouTube link query</button>";
         console.log("Setting youTubeLinkButton to 0");
