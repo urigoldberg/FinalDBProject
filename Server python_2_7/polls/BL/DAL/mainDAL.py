@@ -341,12 +341,7 @@ ORDER BY artist_views DESC
             query += """and t.genre like '%"""+genre+"""%'"""
     elif(genre != None):
         query += """where t.genre like '%"""+genre+"""%'"""
-    
-    print("query is",query)
-#    f = open('workfile', 'w')
-#    f.write(query)
-#    f.close()
-    print("wrote file")
+  
     con = DBconnection()
     if (con.doSelectQuery(query) and con._rowsReturned > 0):
         con.close()
