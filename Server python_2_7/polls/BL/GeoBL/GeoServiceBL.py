@@ -4,7 +4,7 @@ def get_json_from_request(request):
 
 
 def get_artists_in_requested_radius(json):
-    longitude, latitude, radius = str(json["longitude"]),str(json["latitude"]),str(json["latiradiustude"])
+    longitude, latitude, radius = str(json["longitude"]),str(json["latitude"]),str(json["radius"])
     cols,result = geographical_filtering(longitude, latitude, radius)
     return generateResFromRes(cols,result)
     # try:

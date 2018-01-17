@@ -1,3 +1,13 @@
+CREATE TABLE `DbMysql12`.`artists` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `db_id` VARCHAR(45) NOT NULL,
+  `name` VARCHAR(128) NULL,
+  `hotness` FLOAT NULL,
+  `mbtags` VARCHAR(128) NULL,
+  `mb_tags_count` INT NULL,
+  `genre` VARCHAR(128) NULL,
+  PRIMARY KEY (`id`));
+
 CREATE TABLE if NOT EXISTS Album(
   db_id INT NOT NULL UNIQUE,
   artist_db_id INT,

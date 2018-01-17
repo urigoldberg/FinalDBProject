@@ -224,7 +224,7 @@ def geographical_filtering(longitude, latitude, radius):
          * COS(RADIANS({1}))
          * COS(RADIANS(Country.longitude - {0}))
          + SIN(RADIANS(Country.latitude))
-         * SIN(RADIANS({1})))) )< {2})""".format(longitude, latitude, radius)
+         * SIN(RADIANS({1})))) )< {2});""".format(longitude, latitude, radius)
 
     con = DBconnection()
     if (con.doSelectQuery(query) and con._rowsReturned > 0):
