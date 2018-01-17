@@ -401,9 +401,9 @@ where title = '""" + song_name+"""' and artist_id =
 select id from artists
 where name = '"""+song_artist+"""'
 )"""
-    f = open('workfile', 'w')
-    f.write(query)
-    f.close   
+#    f = open('workfile', 'w')
+#    f.write(query)
+#    f.close   
     con = DBconnection()
     if(con.doQuery(query)):
         print("performed update successfully")
