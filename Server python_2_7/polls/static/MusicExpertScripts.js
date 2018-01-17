@@ -369,7 +369,7 @@ function createJSONStringforLikedSongs(flowname, elementId, elementId2, elementI
     var jsonString = "{";
     jsonString = addFlowNameJSON(jsonString,flowname);
     jsonString = addparamsKeyforJSON(jsonString);
-    jsonString = addParamJSON(jsonString,elementId,geoCircle.center.lat());
+    jsonString = addParamJSON(jsonString,elementId,getCookie("user"));
     jsonString += "]}";
     debugger;
     return jsonString;
