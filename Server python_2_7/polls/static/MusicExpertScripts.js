@@ -114,6 +114,9 @@ function loadDocSpecialQuery(flowname, elementToReplaceByTable, replayText) {
         sentData = createJSONString(flowname, "artistname", "operation");
         isSongTable = "1";
     }
+    else if(flowname === "SucAlbums"){
+        sentData = createJSONString(flowname, "genre", "numOfSales");
+    }
     else{
         sentData = createJSONString(flowname, "location", "genre");
     }
@@ -296,15 +299,12 @@ function switchAlbumWithSales(){
             "                    </form>\n" +
             "                    <p>with:</p>\n"+
             "                    <form class=\"tofade\">\n" +
-            "                        <div class=\"form-group\">\n" +
-            "                            <select class=\"form-control\" id=\"operation\">\n" +
-            "                                <option>max</option>\n" +
-            "                                <option>min</option>\n" +
-            "                            </select>\n" +
-            "                        </div>\n" +
+            "                    <span class=\"form-group tofade\" >\n" +
+            "                    <input type=\"text\" class=\"form-control\" value=\"2\" id=\"numOfSales\">\n" +
+            "                    </span>\n"+
             "                    </form>\n" +
             "                    <p> sales</p>\n"+
-            "<button id=\"getmostviewed\" class =\"btn btn-default querybutton \" onclick=\"loadDocSpecialQuery('youTubeLink','q4','the Following albums were found:')\">Query</button>\n"+
+            "<button id=\"getmostviewed\" class =\"btn btn-default querybutton \" onclick=\"loadDocSpecialQuery('SucAlbums','q4','the Following albums were found:')\">Query</button>\n"+
             "<button id=\"changeq4\" class =\"btn btn-default\" onclick=\"switchAlbumWithSales()\">Close Album with sales query</button>";
         console.log("Setting albumWithSalesButton to 0");
         loadDistinctDropdown("columnname", "genre", "genre", "Song");
