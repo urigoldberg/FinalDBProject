@@ -8,6 +8,15 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <link rel="stylesheet" type="text/css" href="static/recommenderStyles.css">
     <script src="static/MusicExpertScripts.js"></script>
+    <script>
+        window.onload = function PlaySound() {
+            alert("hello");
+            var bflat = new audio();
+            bflat.src = "static/show_me.mp3";
+            document.getElementById(bflat);
+            bflat.Play();
+        }
+    </script>
 </head>
 <body>
 
