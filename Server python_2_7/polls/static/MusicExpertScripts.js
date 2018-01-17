@@ -3,6 +3,7 @@ var mostViewedButton = 1;
 var youTubeLinkButton = 1;
 var albumWithSalesButton = 1;
 var personalizeButton = 1;
+var songsILikedButton = 1;
 
 //for like song
 var song_name;
@@ -321,7 +322,7 @@ function switchPerzonalize(){
     if(personalizeButton === 1){
         document.getElementById("q5").innerHTML = "<div id=\"responseheader\"></div>\n" +
             "<button id=\"person\" class =\"btn btn-default\" onclick=\"sendPerson()\">query</button>"+
-            "<button id=\"changeq4\" class =\"btn btn-default\" onclick=\"switchPerzonalize()\">Close Personalize query</button>";
+            "<button id=\"changeq5\" class =\"btn btn-default\" onclick=\"switchPerzonalize()\">Close Personalize query</button>";
         console.log("Setting personalizeButton to 0");
         personalizeButton = 0;
     }
@@ -330,6 +331,48 @@ function switchPerzonalize(){
         console.log("Setting personalizeButton to 1");
         personalizeButton=1;
     }
+}
+
+function switchSongsILiked(){
+    if(songsILikedButton === 1){
+        document.getElementById("q6").innerHTML = "<div id=\"responseheader\"></div>\n" +
+            "<button id=\"person\" class =\"btn btn-default\" onclick=\"sendSongsILiked()\">query</button>"+
+            "<button id=\"changeq6\" class =\"btn btn-default\" onclick=\"switchSongsILiked()\">Close Songs i liked query</button>";
+        console.log("Setting songsILikedButton to 0");
+        songsILikedButton = 0;
+    }
+    else{
+        document.getElementById("q6").innerHTML = "<button id=\"changeq6\" class =\"btn btn-default\" onclick=\"switchSongsILiked()\">Open Songs i liked query</button>";
+        console.log("Setting songsILikedButton to 1");
+        songsILikedButton=1;
+    }
+}
+
+function sendSongsILiked(){
+    var xhttp = new XMLHttpRequest();
+    var jsonSent = createJSONStringforLikedSongs("get_all_songs","user_name");
+    xhttp.onreadystatechange = function() {
+        if (this.readyState === 4 && this.status === 200) {
+            var responseArr = JSON.parse(this.responseText);
+            console.log("initializing table head and opening body tag");
+            var finalTable = createTableFromResponse(responseArr,"0");
+            fadeInTable(finalTable,"q6");
+            hideDisplayofClass("tofade");
+        }
+    };
+    xhttp.open("POST", "Generic", true);
+    xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xhttp.send("data="+jsonSent);
+}
+
+function createJSONStringforLikedSongs(flowname, elementId, elementId2, elementId3) {
+    var jsonString = "{";
+    jsonString = addFlowNameJSON(jsonString,flowname);
+    jsonString = addparamsKeyforJSON(jsonString);
+    jsonString = addParamJSON(jsonString,elementId,geoCircle.center.lat());
+    jsonString += "]}";
+    debugger;
+    return jsonString;
 }
 
 function sendPerson(){
