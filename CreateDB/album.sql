@@ -63,6 +63,7 @@ CREATE TABLE if NOT EXISTS CountryArtists(
   id INT NOT NULL AUTO_INCREMENT,
   PRIMARY KEY (id),
   FOREIGN KEY (artist_id) REFERENCES artists(id),
+  FOREIGN KEY (name) REFERENCES Country(name),
   INDEX CountryArtists(name) USING BTREE,
   UNIQUE unique_index (name, artist_id)
 );
@@ -81,18 +82,6 @@ CREATE TABLE if NOT EXISTS Country(
   INDEX lon(longitude)
 );
 
-CREATE TABLE if NOT EXISTS UserInteraction(
-  user_name VARCHAR(20),
-  song_id INT,
-  created_at TIMESTAMP,
-  id INT,
-  PRIMARY KEY (id),
-  FOREIGN KEY (user_name) REFERENCES users_table(user_name),
-  FOREIGN KEY (song_id) REFERENCES Song(id),
-  UNIQUE (user_name, song_id),
-  INDEX (user_name)
-);
-
 CREATE TABLE if NOT EXISTS users_table(
   user_name VARCHAR(21) NOT NULL UNIQUE,
   password VARCHAR(21) UNIQUE,
@@ -101,4 +90,16 @@ CREATE TABLE if NOT EXISTS users_table(
   genre VARCHAR(128),
   counrty VARCHAR(128),
   PRIMARY KEY(user_name)
+);
+
+CREATE TABLE if NOT EXISTS UserInteraction(
+  user_name VARCHAR(20),
+  song_id INT,
+  created_at TIMESTAMP,
+  id INT NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (id),
+  FOREIGN KEY (user_name) REFERENCES users_table(user_name),
+  FOREIGN KEY (song_id) REFERENCES Song(id),
+  UNIQUE (user_name, song_id),
+  INDEX (user_name)
 );
