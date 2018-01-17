@@ -105,7 +105,8 @@ function loadDocSpecialQueryimagetotext(flowname) {
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
         if (this.readyState === 4 && this.status === 200) {
-            if(this.responseText === "False"){
+            var responseArr = JSON.parse(this.responseText);
+            if(responseArr.isError === "true"){
                 alert("Couldn't add youtube link! please try entering a valid link")
             }else{
                 alert("successfully added youtube link!");
