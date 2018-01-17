@@ -60,6 +60,7 @@ function likerow(rowNumber){
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
         if (this.readyState === 4 && this.status === 200) {
+            debugger;
             var responseArr = JSON.parse(this.responseText);
             if(responseArr.isError === "true"){
                 alert("Error liking this song! " + responseArr.errorMessage);
@@ -74,11 +75,11 @@ function likerow(rowNumber){
     xhttp.send("data="+sentData);
 }
 
-function fadeInTable(finalTable, elementToReplaceByTable) {
-    elementToReplaceByTable = elementToReplaceByTable || "imgTest";
-    document.getElementById(elementToReplaceByTable).style.display = "none";
-    document.getElementById(elementToReplaceByTable).innerHTML = finalTable;
-    $("#"+elementToReplaceByTable).fadeIn(1500);
+function fadeInTable(finalTable, elementIDToReplaceByTable) {
+    elementIDToReplaceByTable = elementIDToReplaceByTable || "imgTest";
+    document.getElementById(elementIDToReplaceByTable).style.display = "none";
+    document.getElementById(elementIDToReplaceByTable).innerHTML = finalTable;
+    $("#"+elementIDToReplaceByTable).fadeIn(1500);
 }
 
 function fadeOutButtons(elementId, elementId2, elementId3) {
@@ -331,8 +332,12 @@ function sendPerson(){
     var jsonSent = createJSONStringforPersonalization("personalization",x,y);
     xhttp.onreadystatechange = function() {
         if (this.readyState === 4 && this.status === 200) {
-            alert(this.responseText);
-            alert("ok!");
+            // debugger;
+            var responseArr = JSON.parse(this.responseText);
+            console.log("initializing table head and opening body tag");
+            var finalTable = createTableFromResponse(responseArr,"0");
+            fadeInTable(finalTable,"q5");
+            hideDisplayofClass("tofade");
         }
     };
     xhttp.open("POST", "Generic", true);
