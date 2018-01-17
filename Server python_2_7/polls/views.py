@@ -80,6 +80,12 @@ def imageToMusic(requests):
     user, resp = getCookieAndResponse(requests, "imageToMusic.html")
     return resp
 
+def PersonalQueries(requests):
+    if not basicSec(requests):
+        return redirect('Login.html')
+    user, resp = getCookieAndResponse(requests, "PersonalQueries.html")
+    return resp
+
 def searchByKeywords(requests):
     if not basicSec(requests):
         return redirect('Login.html')
