@@ -74,11 +74,11 @@ function likerow(rowNumber){
     xhttp.send("data="+sentData);
 }
 
-function fadeInTable(finalTable, elementToReplaceByTable) {
-    elementToReplaceByTable = elementToReplaceByTable || "imgTest";
-    document.getElementById(elementToReplaceByTable).style.display = "none";
-    document.getElementById(elementToReplaceByTable).innerHTML = finalTable;
-    $("#"+elementToReplaceByTable).fadeIn(1500);
+function fadeInTable(finalTable, elementIDToReplaceByTable) {
+    elementIDToReplaceByTable = elementIDToReplaceByTable || "imgTest";
+    document.getElementById(elementIDToReplaceByTable).style.display = "none";
+    document.getElementById(elementIDToReplaceByTable).innerHTML = finalTable;
+    $("#"+elementIDToReplaceByTable).fadeIn(1500);
 }
 
 function fadeOutButtons(elementId, elementId2, elementId3) {
@@ -101,7 +101,8 @@ function hideDisplayofClass(classNames) {
     }
 }
 
-function loadDocSpecialQuery(flowname, elementToReplaceByTable) {
+function loadDocSpecialQuery(flowname, elementToReplaceByTable, replayText) {
+    replayText = replayText || "the Following year was found:";
     var sentData;
     var isSongTable = "0";
     if(flowname === "columnname"){
@@ -123,7 +124,9 @@ function loadDocSpecialQuery(flowname, elementToReplaceByTable) {
             console.log("initializing table head and opening body tag");
             var finalTable = createTableFromResponse(responseArr,isSongTable);
             fadeInTable(finalTable,elementToReplaceByTable);
-            document.getElementById("responseheader").innerText = "the Following year was found:";
+            if(flowname === "year"){
+                document.getElementById("responseheader").innerText = replayText;
+            }
             hideDisplayofClass("tofade");
             hideDisplayofClass("querybutton");
         }
@@ -182,7 +185,6 @@ function createJSONStringforLike(flowname, elementId, elementId2, elementId3) {
     jsonString+=",";
     jsonString = addParamJSON(jsonString,elementId3,user_name);
     jsonString += "]}";
-    debugger;
     return jsonString;
 }
 
@@ -213,7 +215,7 @@ function switchDEAD(){
             "                    <!--added forms will be here-->\n" +
             "                    <div id=\"big\"></div>\n" +
             "\n" +
-            "                    <button id=\"getSongsButton\" class =\"btn btn-default querybutton \" onclick=\"loadDocSpecialQuery('year','big')\">Query</button>\n"+
+            "                    <button id=\"getSongsButton\" class =\"btn btn-default querybutton \" onclick=\"loadDocSpecialQuery('year','big','the Following year was found:')\">Query</button>\n"+
         "<button id=\"changeDEAD\" class =\"btn btn-default tofade\" onclick=\"switchDEAD()\">close Death / Birth query</button>";
         loadDistinctDropdown("columnname", "genre", "genre", "Song");
         DEADButton = 0;
@@ -226,18 +228,19 @@ function switchDEAD(){
 
 function switchMostViewed() {
     if(mostViewedButton === 1){
-        document.getElementById("q2").innerHTML = "<h4 class=\"tofade\">Most viewed query:</h4>\n" +
+        document.getElementById("q2").innerHTML = "<div id=\"responseheader\"></div>\n" +
+            "                    <h4 class=\"tofade\">Most viewed query:</h4>\n" +
             "                    <p>Most viewed artists on YouTube with Genre:</p>\n" +
             "                    <form id=\"q2form\">\n" +
             "                        <div class=\"form-group\">\n" +
             "                            <select class=\"form-control\" id=\"genre\"></select>\n" +
             "                        </div>\n" +
             "                    </form>\n" +
-            "                    <p>From location:</p>\n" +
+            "                    <p>From location:</p>" +
             "                    <span class=\"form-group tofade\" >\n" +
             "                    <input type=\"text\" class=\"form-control\" value=\"usa\" id=\"location\">\n" +
             "                    </span>\n"+
-            "<button id=\"getmostviewed\" class =\"btn btn-default querybutton \" onclick=\"loadDocSpecialQuery('mostviewedartist','q2')\">Query</button>\n"+
+            "<button id=\"getmostviewed\" class =\"btn btn-default querybutton \" onclick=\"loadDocSpecialQuery('mostviewedartist','q2','the Following Artists were found:')\">Query</button>\n"+
             "<button id=\"changeq2\" class =\"btn btn-default\" onclick=\"switchMostViewed()\">Close most viewed query</button>";
         console.log("Setting mostViewedButton to 0");
         loadDistinctDropdown("columnname", "genre", "genre", "Song");
@@ -252,13 +255,8 @@ function switchMostViewed() {
 
 function switchYouTubeLink() {
     if(youTubeLinkButton === 1){
-        document.getElementById("q3").innerHTML = "<h4 class=\"tofade\">Youtube Link query:</h4>\n"+
-            "<p>Longest/shortest song on youtube of one of the following artists:</p>\n" +
-            "                    <form id=\"q3form\">\n" +
-            "                        <div class=\"form-group\">\n" +
-            "                            <select class=\"form-control\" id=\"artistname\"></select>\n" +
-            "                        </div>\n" +
-            "                    </form>\n" +
+        document.getElementById("q3").innerHTML = "<div id=\"responseheader\"></div>\n" +
+            "                    <h4 class=\"tofade\">Youtube Link query:</h4>\n" +
             "                    <form class=\"tofade\">\n" +
             "                        <div class=\"form-group\">\n" +
             "                            <select class=\"form-control\" id=\"operation\">\n" +
@@ -267,7 +265,13 @@ function switchYouTubeLink() {
             "                            </select>\n" +
             "                        </div>\n" +
             "                    </form>\n" +
-            "<button id=\"getmostviewed\" class =\"btn btn-default querybutton \" onclick=\"loadDocSpecialQuery('youTubeLink','q3')\">Query</button>\n"+
+            "                    <p>length song on youtube of one of the following artists:</p>\n" +
+            "                    <form id=\"q3form\">\n" +
+            "                        <div class=\"form-group\">\n" +
+            "                            <select class=\"form-control\" id=\"artistname\"></select>\n" +
+            "                        </div>\n" +
+            "                    </form>" +
+            "<button id=\"getmostviewed\" class =\"btn btn-default querybutton \" onclick=\"loadDocSpecialQuery('youTubeLink','q3','the Following songs were found:')\">Query</button>\n"+
             "<button id=\"changeq3\" class =\"btn btn-default\" onclick=\"switchYouTubeLink()\">Close YouTube link query</button>";
         console.log("Setting youTubeLinkButton to 0");
         loadDistinctDropdown("columnname", "artistname", "name", "artists");
@@ -282,13 +286,15 @@ function switchYouTubeLink() {
 
 function switchAlbumWithSales(){
     if(albumWithSalesButton === 1){
-        document.getElementById("q4").innerHTML = "<h4 class=\"tofade\">Album with sales query:</h4>\n"+
+        document.getElementById("q4").innerHTML = "<div id=\"responseheader\"></div>\n" +
+            "<h4 class=\"tofade\">Album with sales query:</h4>\n"+
             "<p>Albums of the genre:</p>\n" +
             "                    <form id=\"q4form\">\n" +
             "                        <div class=\"form-group\">\n" +
             "                            <select class=\"form-control\" id=\"genre\"></select>\n" +
             "                        </div>\n" +
             "                    </form>\n" +
+            "                    <p>with:</p>\n"+
             "                    <form class=\"tofade\">\n" +
             "                        <div class=\"form-group\">\n" +
             "                            <select class=\"form-control\" id=\"operation\">\n" +
@@ -297,7 +303,8 @@ function switchAlbumWithSales(){
             "                            </select>\n" +
             "                        </div>\n" +
             "                    </form>\n" +
-            "<button id=\"getmostviewed\" class =\"btn btn-default querybutton \" onclick=\"loadDocSpecialQuery('youTubeLink','q4')\">Query</button>\n"+
+            "                    <p> sales</p>\n"+
+            "<button id=\"getmostviewed\" class =\"btn btn-default querybutton \" onclick=\"loadDocSpecialQuery('youTubeLink','q4','the Following albums were found:')\">Query</button>\n"+
             "<button id=\"changeq4\" class =\"btn btn-default\" onclick=\"switchAlbumWithSales()\">Close Album with sales query</button>";
         console.log("Setting albumWithSalesButton to 0");
         loadDistinctDropdown("columnname", "genre", "genre", "Song");
@@ -312,7 +319,8 @@ function switchAlbumWithSales(){
 
 function switchPerzonalize(){
     if(personalizeButton === 1){
-        document.getElementById("q5").innerHTML = "<button id=\"person\" class =\"btn btn-default\" onclick=\"sendPerson()\">query</button>"+
+        document.getElementById("q5").innerHTML = "<div id=\"responseheader\"></div>\n" +
+            "<button id=\"person\" class =\"btn btn-default\" onclick=\"sendPerson()\">query</button>"+
             "<button id=\"changeq4\" class =\"btn btn-default\" onclick=\"switchPerzonalize()\">Close Personalize query</button>";
         console.log("Setting personalizeButton to 0");
         personalizeButton = 0;
@@ -331,8 +339,11 @@ function sendPerson(){
     var jsonSent = createJSONStringforPersonalization("personalization",x,y);
     xhttp.onreadystatechange = function() {
         if (this.readyState === 4 && this.status === 200) {
-            alert(this.responseText);
-            alert("ok!");
+            var responseArr = JSON.parse(this.responseText);
+            console.log("initializing table head and opening body tag");
+            var finalTable = createTableFromResponse(responseArr,"0");
+            fadeInTable(finalTable,"q5");
+            hideDisplayofClass("tofade");
         }
     };
     xhttp.open("POST", "Generic", true);

@@ -1,5 +1,5 @@
 user:DbMysql12
 db:DbMysql12
 passwd:DbMysql12
-host:mysqlsrv.cs.tau.ac.il
-port:3306
+host:localhost
+port:3305

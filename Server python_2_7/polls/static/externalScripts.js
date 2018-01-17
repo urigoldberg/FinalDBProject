@@ -72,12 +72,59 @@ function createTableFromResponse(responseArr,isSongTable) {
             }
         }
         if(isSongTable === "1"){
-            finaltable+="<th><button class='btn btn-default' onclick='likerow("+i+")'>Like song!</button></th>"
+            finaltable+="<th><button class='btn btn-default' onclick='likerowImageToMusic("+(i+1)+")'>Like song!</button></th>";
         }
         finaltable+="</tr>";
     }
     finaltable += "</tbody></table>";
     return finaltable;
+}
+
+
+function likerowImageToMusic(rowNumber){
+    var t = document.getElementsByClassName("imagetable");
+    var htmlTable = t[0];
+    var rows = htmlTable.rows;
+    var specificRow=rows[rowNumber];
+    var rowCells = specificRow.cells;
+    song_name = rowCells[0].innerText;
+    song_artist = rowCells[1].innerText;
+    user_name = getCookieImageToMusic("user");
+    var sentData = createJSONStringforLike("add_liked_song","song_name","song_artist","user_name");
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+        if (this.readyState === 4 && this.status === 200) {
+            var responseArr = JSON.parse(this.responseText);
+            if(responseArr.isError === "true"){
+                alert("Error liking this song! " + responseArr.errorMessage);
+            }
+            else{
+                alert("successfully liked this song!");
+            }
+        }
+    };
+    xhttp.open("POST", "Generic", true);
+    xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xhttp.send("data="+sentData);
+}
+
+function getCookieImageToMusic(name) {
+    var value = "; " + document.cookie;
+    var parts = value.split("; " + name + "=");
+    if (parts.length == 2) return parts.pop().split(";").shift();
+}
+
+function createJSONStringforLike(flowname, elementId, elementId2, elementId3) {
+    var jsonString = "{";
+    jsonString = addFlowNameJSON(jsonString,flowname);
+    jsonString = addparamsKeyforJSON(jsonString);
+    jsonString = addParamJSON(jsonString,elementId,song_name);
+    jsonString+=",";
+    jsonString = addParamJSON(jsonString,elementId2,song_artist);
+    jsonString+=",";
+    jsonString = addParamJSON(jsonString,elementId3,user_name);
+    jsonString += "]}";
+    return jsonString;
 }
 
 function insertButtonInTable(rowNumber){

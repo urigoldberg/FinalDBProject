@@ -53,7 +53,8 @@ class DBconnection():
             self._succ = True
             self._results = self.cursor.fetchall()
             print("done fetching results, description is", self.cursor.description)
-            self._columns = [str(i[0]) for i in self.cursor.description]
+            if(self._rowsReturned > 0):
+                self._columns = [str(i[0]) for i in self.cursor.description]
             print("columns are",self._columns)
             return True
         
@@ -175,7 +176,6 @@ where match(lyr.lyrics) against ('"""+keywords_for_full_text+"""' in natural lan
     con.doQuery(create_search_table_query)
     con.close()
     print("finished creating table")
-    
     query = "select t.keyword as 'Keyword',t.title as 'Song Name',t.name as 'Artist Name',t.media_url as 'Youtube Link' from ("
     for index,keyword in enumerate(keywords):
         if not index == 0:
@@ -202,11 +202,7 @@ LIMIT """+str(numOfAppear) +""") as tbl"""+str(index) +"""
     query += """) t where t.num_occurrences > 0 order by t.num_occurrences desc;
 """
     
-#
-#    f = open('workfile', 'w')
-#    f.write(query)
-#    f.close
-    if (con.doSelectQuery(query) and con._rowsReturned > 0):
+    if (con.doSelectQuery(query)):
         print("finished googleAPI successfuly")
         con.close()   
         return con._columns, con._results 
@@ -227,7 +223,7 @@ def geographical_filtering(longitude, latitude, radius):
          * SIN(RADIANS({1})))) )< {2});""".format(longitude, latitude, radius)
 
     con = DBconnection()
-    if (con.doSelectQuery(query) and con._rowsReturned > 0):
+    if (con.doSelectQuery(query)):
         con.close()
         return con._columns,con._results
     return None,None
@@ -248,7 +244,7 @@ HAVING numOfArts > {1}
 ORDER BY numOfArts DESC;""".format(dead,num,genre)
     print("query",query)
     con = DBconnection()
-    if (con.doSelectQuery(query) and con._rowsReturned > 0):
+    if (con.doSelectQuery(query)):
         con.close()
         return con._columns,con._results
     return None,None
@@ -291,7 +287,7 @@ WHERE
                 AND a.media_url IS NOT NULL);""".format(name,op)
     print("query",query)
     con = DBconnection()
-    if (con.doSelectQuery(query) and con._rowsReturned > 0):
+    if (con.doSelectQuery(query)):
         con.close()
         return con._columns,con._results
     return None,None
@@ -314,7 +310,7 @@ GROUP BY (b.id)
 ORDER BY Num_Of_Albums""".format(numOfSales,genre)
     print("query",query)
     con = DBconnection()
-    if (con.doSelectQuery(query) and con._rowsReturned > 0):
+    if (con.doSelectQuery(query)):
         con.close()
         return con._columns,con._results
     return None,None
@@ -341,14 +337,9 @@ ORDER BY artist_views DESC
             query += """and t.genre like '%"""+genre+"""%'"""
     elif(genre != None):
         query += """where t.genre like '%"""+genre+"""%'"""
-    
-    print("query is",query)
-#    f = open('workfile', 'w')
-#    f.write(query)
-#    f.close()
-    print("wrote file")
+  
     con = DBconnection()
-    if (con.doSelectQuery(query) and con._rowsReturned > 0):
+    if (con.doSelectQuery(query)):
         con.close()
         return con._columns,con._results
     return None,None    
@@ -364,9 +355,9 @@ on s.artist_id = art.id
 where s.title = '"""+song_name+"""' and art.name = '"""+artist_name+"""'
 """
     
-    f = open('workfile', 'w')
-    f.write(query)
-    f.close()
+#    f = open('workfile', 'w')
+#    f.write(query)
+#    f.close()
     con = DBconnection()
     if(con.doQuery(query)):
         print("performed update successfully")
@@ -395,7 +386,7 @@ WHERE
 LIMIT 40;""".format(genre,country,longness)
     print("query",query)
     con = DBconnection()
-    if (con.doSelectQuery(query) and con._rowsReturned > 0):
+    if (con.doSelectQuery(query)):
         con.close()
         return con._columns,con._results
     return None,None
@@ -409,9 +400,7 @@ where title = '""" + song_name+"""' and artist_id =
 select id from artists
 where name = '"""+song_artist+"""'
 )"""
-#    f = open('workfile', 'w')
-#    f.write(query)
-#    f.close   
+   
     con = DBconnection()
     if(con.doQuery(query)):
         print("performed update successfully")
@@ -424,4 +413,4 @@ where name = '"""+song_artist+"""'
 
 
 def getAllSongsDB(user_name):
-    
+	pass

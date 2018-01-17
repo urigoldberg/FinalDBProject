@@ -7,11 +7,9 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <link rel="stylesheet" type="text/css" href="static/recommenderStyles.css">
-    <script src="static/geoLocationScripts.js"></script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyANLwIhKR5250mq9107j4R0hC1RG4T9J9c&callback=myMap"></script>
-    <script src="static/externalScripts.js"></script>
+    <script src="static/MusicExpertScripts.js"></script>
 </head>
-<body onload="initialize()">
+<body>
 
     <!-- HEADER -->
     <div class="jumbotron bg-1 text-center">
@@ -39,10 +37,9 @@
                         <h4 class="list-group-item-heading">Image to Music</h4>
                     </a>
                 </li>
-                <li class="active">
+                <li>
                     <a href="searchByGeoLocation.html">
-                        <h4 class="list-group-item-heading">Search by Geo Location</h4>
-                        <small>Search for music far away!</small>
+                        <h4 class="list-group-item-heading">search By Geo Location</h4>
                     </a>
                 </li>
                 <li>
@@ -50,9 +47,10 @@
                         <h4 class="list-group-item-heading">Music expert</h4>
                     </a>
                 </li>
-                <li>
+                <li class = "active">
                     <a href="PersonalQueries.html">
                         <h4 class="list-group-item-heading">Personal Queries</h4>
+                        <small>Queries about you</small>
                     </a>
                 </li>
                 <li>
@@ -67,27 +65,27 @@
     <div class="container-fluid">
         <!-- inside this single row will be a side bar and another column for the main page-->
         <div class="row">
-            <div class="col-sm-12" align="middle">
-                <h4> please select locations from which to search from:</h4>
-                <!--
-                To use this code on your website, get a free API key from Google.
-                Read more at: https://www.w3schools.com/graphics/google_maps_basic.asp
-                -->
-                <!--<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyANLwIhKR5250mq9107j4R0hC1RG4T9J9c&libraries=drawing&callback=initMap" async defer></script>-->
-                <div id="map-canvas">
-                </div>
+            <div class="col-sm-8">
 
-                <div id="info">
-                </div>
+                <div id ="q5">
+                    <button id="changeq5" class ="btn btn-default tofade" onclick="switchPerzonalize()">open Personalize query</button>
+                </div><br>
 
-                <!--<div class = "btn" onclick="loadDoc("GeoLocation",getParams(),"photo="+encodeURIComponent(photo.substring(photo.indexOf(",")+1)))";-->
+                <button id="clearAll" class ="btn btn-default" onclick="window.location.href='musicExpert.html'">Clear all</button>
 
+            </div>
+
+            <!--side bar-->
+            <div class="col-sm-4">
+                <h4> Instructions:</h4>
+                <ol>
+                    <li>Select a button to open special query</li>
+                    <li>Fill in data in wanted query</li>
+                    <li>Select query button in wanted query</li>
+                </ol>
             </div>
         </div>
     </div>
-
-
-
 
 </body>
 </html>

@@ -29,7 +29,8 @@ urlpatterns = [
     url(r'^searchByGeoLocation.html',views.searchByGeoLocation),
     url(r'^filterSongs.html',views.filterSongs),
     url(r'^musicExpert.html',views.musicExpert),
-    
+    url(r'^PersonalQueries.html', views.PersonalQueries),
+
     # services
     url(r'^SignIn*',views.SignInfunc),
     url(r'^LoginUser*',views.LoginUserfunc),
