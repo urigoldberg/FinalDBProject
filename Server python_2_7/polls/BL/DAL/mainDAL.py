@@ -396,16 +396,19 @@ def updateYoutubeLinkDB(link,song_name,song_artist):
     query = """
     UPDATE  Song 
 SET     media_url = '"""+link+"""'
-where title = '""" + song_name+"""and artist_id = 
+where title = '""" + song_name+"""' and artist_id = 
 (
 select id from artists
 where name = '"""+song_artist+"""'
 )"""
+    f = open('workfile', 'w')
+    f.write(query)
+    f.close   
     con = DBconnection()
     if(con.doQuery(query)):
         print("performed update successfully")
         con.close()
-        return True;
+        return "True";
     print("error in updateYoutubeLinkDB")
     con.close()
     return None;
