@@ -375,7 +375,6 @@ function createJSONStringforLikedSongs(flowname, elementId, elementId2, elementI
     jsonString = addparamsKeyforJSON(jsonString);
     jsonString = addParamJSON(jsonString,elementId,getCookie("user"));
     jsonString += "]}";
-    debugger;
     return jsonString;
 }
 

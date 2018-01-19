@@ -90,7 +90,6 @@ function createJSONStringforGeo(flowname, elementId, elementId2, elementId3) {
     jsonString+=",";
     jsonString = addParamJSON(jsonString,elementId3,geoCircle.radius);
     jsonString += "]}";
-    debugger;
     return jsonString;
 }
 
