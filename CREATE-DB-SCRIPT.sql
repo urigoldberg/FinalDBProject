@@ -1,12 +1,33 @@
-CREATE TABLE `DbMysql12`.`artists` (
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `db_id` VARCHAR(45) NOT NULL,
-  `name` VARCHAR(128) NULL,
-  `hotness` FLOAT NULL,
-  `mbtags` VARCHAR(128) NULL,
-  `mb_tags_count` INT NULL,
-  `genre` VARCHAR(128) NULL,
-  PRIMARY KEY (`id`));
+CREATE DATABASE if NOT EXISTS DbMysql12;
+use DbMysql12;
+
+create table if NOT EXISTS artists(
+  id int not null auto_increment
+    primary key,
+  db_id int not null,
+  name varchar(128) not null,
+  label varchar(128) ,
+  formed_year int ,
+  year_of_birth int,
+  year_of_death int,
+  disbanded varchar(5),
+  mood varchar(45),
+  style varchar(45),
+  genre varchar(45),
+  website varchar(128),
+  facebook varchar(128),
+  twitter varchar(128),
+  biography varchar(4096),
+  gender varchar(16),
+  members int,
+  location varchar(45),
+  image varchar(128),
+  logo varchar(128),
+  constraint id_UNIQUE
+  unique (id),
+  constraint db_id_UNIQUE
+  unique (db_id)
+);
 
 CREATE TABLE if NOT EXISTS Album(
   db_id INT NOT NULL UNIQUE,
@@ -39,8 +60,7 @@ CREATE TABLE if NOT EXISTS Song(
   db_id INT NOT NULL UNIQUE,
   artist_db_id INT,
   album_db_id INT,
-  lyrics TEXT(5000),
-  title VARCHAR(128) NOT NULL ,
+  title VARCHAR(128) NOT NULL,
   duration TEXT(4096),
   genre VARCHAR(128),
   media_url VARCHAR(255),
@@ -57,17 +77,6 @@ CREATE TABLE if NOT EXISTS Song(
   FOREIGN KEY (album_id) REFERENCES Album(id)
 );
 
-CREATE TABLE if NOT EXISTS CountryArtists(
-  name VARCHAR(255),
-  artist_id INT NOT NULL,
-  id INT NOT NULL AUTO_INCREMENT,
-  PRIMARY KEY (id),
-  FOREIGN KEY (artist_id) REFERENCES artists(id),
-  FOREIGN KEY (name) REFERENCES Country(name),
-  INDEX CountryArtists(name) USING BTREE,
-  UNIQUE unique_index (name, artist_id)
-);
-
 CREATE TABLE if NOT EXISTS Country(
   name VARCHAR(255) UNIQUE NOT NULL,
   latitude DOUBLE,
@@ -80,6 +89,17 @@ CREATE TABLE if NOT EXISTS Country(
   PRIMARY KEY (id),
   INDEX lat(latitude),
   INDEX lon(longitude)
+);
+
+CREATE TABLE if NOT EXISTS CountryArtists(
+  name VARCHAR(255),
+  artist_id INT NOT NULL,
+  id INT NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (id),
+  FOREIGN KEY (artist_id) REFERENCES artists(id),
+  FOREIGN KEY (name) REFERENCES Country(name),
+  INDEX CountryArtists(name) USING BTREE,
+  UNIQUE unique_index (name, artist_id)
 );
 
 CREATE TABLE if NOT EXISTS users_table(

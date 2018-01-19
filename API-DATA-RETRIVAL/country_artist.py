@@ -4,9 +4,8 @@ import urllib
 import urllib.error
 import urllib.request
 from _mysql_exceptions import Error
-
-import MySQLdb
 import json
+from db import DBconnection
 
 convertions = {
     'RUSSIA': 'RUSSIA',
@@ -23,6 +22,7 @@ convertions = {
     'SYRIA': 'SYRIA',
     'TANZANIA': 'TANZANIA'
 }
+
 
 def insert_row(args):
     query = "INSERT INTO artists(db_id,name,label,formed_year,year_of_birth,year_of_death,disbanded," \
@@ -157,12 +157,7 @@ def rename_country(country):
     return best_name
 
 
-db = MySQLdb.connect(host="127.0.0.1",  # your host
-                     port=3305,
-                     user="DbMysql12",       # username
-                     password="DbMysql12",
-                     db="DbMysql12")   # name of the database
-
+db = DBconnection().connect()
 cur = db.cursor()
 URL = 'http://ws.audioscrobbler.com/2.0/?method=geo.gettopartists&country={}&api_key=c8c6ea9f0b8ccb1a4cbf60296706e87e&format=json'
 visited_countries = get_existing_countries(db)
@@ -172,6 +167,6 @@ for country in list(iso3166.countries_by_name.keys()):
         continue
     country = rename_country(country)
     artists = get_artists_by_country(country, URL)
-    search_for_artists(db, artists, country)
+    search_for_artists(db, artists)
     insert_country_artist(db, country, artists)
 

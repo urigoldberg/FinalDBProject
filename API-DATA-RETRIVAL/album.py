@@ -1,15 +1,10 @@
 import json
-
-import MySQLdb
 import urllib.request
 from _mysql_exceptions import Error
-from tqdm import tqdm
+from db import DBconnection
 
-db = MySQLdb.connect(host="127.0.0.1",  # your host
-                     port=3305,
-                     user="DbMysql12",  # username
-                     password="DbMysql12",
-                     db="DbMysql12")  # name of the database
+
+db = DBconnection().connect()
 
 cur = db.cursor()
 
@@ -87,7 +82,7 @@ ids = set()
 
 file = '/Users/orrbarkat/repos/sql_project/Web scraping/albums.csv'
 
-for artist in tqdm(cur.fetchall(), desc="artist"):
+for artist in cur.fetchall():
     artist_albums = get_albums_for_artist(*artist)
     albums.extend(artist_albums)
     cnt = insert_albums_per_artist(db, artist_albums)
