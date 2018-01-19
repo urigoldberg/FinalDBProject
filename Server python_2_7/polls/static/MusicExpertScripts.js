@@ -280,13 +280,13 @@ function switchYouTubeLink() {
             "                        </div>\n" +
             "                    </form>" +
             "<button id=\"getmostviewed\" class =\"btn btn-default querybutton \" onclick=\"loadDocSpecialQuery('youTubeLink','q3','the Following songs were found:')\">Query</button>\n"+
-            "<button id=\"changeq3\" class =\"btn btn-default\" onclick=\"switchYouTubeLink()\">Close YouTube link query</button>";
+            "<button id=\"changeq3\" class =\"btn btn-default\" onclick=\"switchYouTubeLink()\">Close Longest/Shortest YouTube video query</button>";
         console.log("Setting youTubeLinkButton to 0");
         loadDistinctDropdown("columnname", "artistname", "name", "artists");
         youTubeLinkButton = 0;
     }
     else{
-        document.getElementById("q3").innerHTML = "<button id=\"changeq3\" class =\"btn btn-default\" onclick=\"switchYouTubeLink()\">Open YouTube link query</button>";
+        document.getElementById("q3").innerHTML = "<button id=\"changeq3\" class =\"btn btn-default\" onclick=\"switchYouTubeLink()\">Open Longest/Shortest YouTube video query</button>";
         console.log("Setting youTubeLinkButton to 1");
         youTubeLinkButton=1;
     }
@@ -326,12 +326,12 @@ function switchPerzonalize(){
     if(personalizeButton === 1){
         document.getElementById("q5").innerHTML = "<div id=\"responseheader\"></div>\n" +
             "<button id=\"person\" class =\"btn btn-default\" onclick=\"sendPerson()\">query</button>"+
-            "<button id=\"changeq5\" class =\"btn btn-default\" onclick=\"switchPerzonalize()\">Close Personalize query</button>";
+            "<button id=\"changeq5\" class =\"btn btn-default\" onclick=\"switchPerzonalize()\">Close Song recommendations for you query</button>";
         console.log("Setting personalizeButton to 0");
         personalizeButton = 0;
     }
     else{
-        document.getElementById("q5").innerHTML = "<button id=\"changeq4\" class =\"btn btn-default\" onclick=\"switchPerzonalize()\">Open Personalize query</button>";
+        document.getElementById("q5").innerHTML = "<button id=\"changeq4\" class =\"btn btn-default\" onclick=\"switchPerzonalize()\">Open Song recommendations for you query</button>";
         console.log("Setting personalizeButton to 1");
         personalizeButton=1;
     }
