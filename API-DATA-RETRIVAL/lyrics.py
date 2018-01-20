@@ -11,12 +11,12 @@ def url_for_record(record):
     url = 'https://api.lyrics.ovh/v1/{}/{}'.format(parsed[0], parsed[1])
     return url
 
-def insert_lyrics(db_conn, lyrics):
+def insert_lyrics(db_conn, lyric):
     sql = "INSERT INTO Lyrics(lyrics, song_id) VALUES (%s, %s)"
     number_of_rows = 0
     try:
         cursur = db_conn.cursor()
-        number_of_rows = cur.executemany(sql, lyrics)
+        number_of_rows = cur.executemany(sql, lyric)
 
         if cursur.lastrowid:
             print('last insert id', cursur.lastrowid)
@@ -41,7 +41,8 @@ cur.execute("SELECT artists.name, title, Song.id "
             "FROM Song, artists "
             "WHERE Song.artist_id = artists.id "
             "and Song.id != ALL ("
-            "SELECT song_id FROM Lyrics)")
+            "SELECT song_id FROM Lyrics)"
+            "ORDER BY Song.id DESC")
 lyrics = []
 no_lyrics = []
 count = 0
@@ -58,9 +59,9 @@ for record in tqdm(cur.fetchall(), desc='Lyrics'):
         else:
             print("record: ", record)
             raise err
-    if len( lyrics ) % 10 == 0:
-        insert_lyrics(db, lyrics[-10:])
+    if len( lyrics ) % 10 == 0 and len(lyrics) > count:
+        insert_lyrics(db, lyrics[count:])
+        count = len(lyrics)
 
-idx = len( lyrics ) % 10
-insert_lyrics(db, lyrics[-idx:])
+insert_lyrics(db, lyrics[count:])
 

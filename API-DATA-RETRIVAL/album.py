@@ -2,7 +2,7 @@ import json
 import urllib.request
 from _mysql_exceptions import Error
 from db import DBconnection
-
+from tqdm import tqdm
 
 db = DBconnection().connect()
 
@@ -76,13 +76,12 @@ def insert_albums_per_artist(db, albums):
 
 URL = 'http://www.theaudiodb.com/api/v1/json/1/album.php?i={}'
 
-# artists = [(1, "111822"), (2, "1234534355")]
 albums = []
 ids = set()
 
 file = '/Users/orrbarkat/repos/sql_project/Web scraping/albums.csv'
 
-for artist in cur.fetchall():
+for artist in tqdm(cur.fetchall(), desc='Artist'):
     artist_albums = get_albums_for_artist(*artist)
     albums.extend(artist_albums)
     cnt = insert_albums_per_artist(db, artist_albums)

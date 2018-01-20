@@ -2,14 +2,7 @@ import json
 from db import DBconnection
 import urllib.request
 from _mysql_exceptions import Error
-
-URL = 'http://www.theaudiodb.com/api/v1/json/1/track.php?m={}'
-
-db = DBconnection().connect()
-
-cur = db.cursor()
-
-cur.execute("SELECT DISTINCT id, db_id  FROM Album where Album.db_id not in (SELECT DISTINCT album_db_id FROM Song)")
+from tqdm import tqdm
 
 
 def get_songs_for_album(album_id, album_api_id):
@@ -24,7 +17,6 @@ def get_songs_for_album(album_id, album_api_id):
                 if "idAlbum" in media:
                     media["album_id"] = str(album_id)
                     songs.append(media)
-
     except urllib.error.HTTPError as err:
         print("record: ", album_id)
         raise err
@@ -60,20 +52,25 @@ def insert_media_per_artist(db_connection, albums):
                 print('last insert id', cursur.lastrowid)
             else:
                 print('last insert id not found')
-
         except Error as error:
             print(error)
-
         finally:
             cursur.close()
             db_connection.commit()
     return count
 
 
+URL = 'http://www.theaudiodb.com/api/v1/json/1/track.php?m={}'
+
+db = DBconnection().connect()
+
+cur = db.cursor()
+
+cur.execute("SELECT DISTINCT id, db_id  FROM Album where Album.db_id not in (SELECT DISTINCT album_db_id FROM Song)")
 
 media = []
 
-for album in cur.fetchall():
+for album in tqdm(cur.fetchall(), desc='Album'):
     artist_albums = get_songs_for_album(*album)
     media.extend(artist_albums)
     cnt = insert_media_per_artist(db, artist_albums)
