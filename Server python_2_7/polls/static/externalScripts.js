@@ -87,8 +87,8 @@ function likerowImageToMusic(rowNumber){
     var rows = htmlTable.rows;
     var specificRow=rows[rowNumber];
     var rowCells = specificRow.cells;
-    song_name = rowCells[0].innerText;
-    song_artist = rowCells[1].innerText;
+    song_name = rowCells[1].innerText;
+    song_artist = rowCells[2].innerText;
     user_name = getCookieImageToMusic("user");
     var sentData = createJSONStringforLike("add_liked_song","song_name","song_artist","user_name");
     var xhttp = new XMLHttpRequest();
@@ -115,7 +115,7 @@ function likerowImageToMusic(rowNumber){
 function getCookieImageToMusic(name) {
     var value = "; " + document.cookie;
     var parts = value.split("; " + name + "=");
-    if (parts.length == 2) return parts.pop().split(";").shift();
+    if (parts.length === 2) return parts.pop().split(";").shift();
 }
 
 function createJSONStringforLike(flowname, elementId, elementId2, elementId3) {
