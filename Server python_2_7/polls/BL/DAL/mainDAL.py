@@ -178,15 +178,16 @@ where match(lyr.lyrics) against ('"""+keywords_for_full_text+"""' in natural lan
         if not index == 0:
             query += "union all "
         numOfAppear = 5 - index + 1
+        str_keyword = str(keyword)
         # TO DO - DUPLICATED ROWS
         query += """select * from
         (SELECT 
  inner_songs.title, art.name,
- inner_songs.num_occurrences, inner_songs.media_url, '"""+str(keyword)+"""' as keyword
+ inner_songs.num_occurrences, inner_songs.media_url, '"""+str_keyword+"""' as keyword
 FROM (SELECT * FROM
 (SELECT song_id,
-((LENGTH(lyrics) - LENGTH(REPLACE(lyrics, '"""+str(keyword)+"""', '')))
-/ LENGTH('"""+str(keyword)+"""'))
+((LENGTH(lyrics) - LENGTH(REPLACE(lyrics, '"""+str_keyword+"""', '')))
+/ LENGTH('"""+str_keyword+"""'))
 AS num_occurrences FROM
 DbMysql12.temp_keywords) lyr
 INNER JOIN DbMysql12.Song son ON lyr.song_id = son.id)  inner_songs
@@ -226,7 +227,7 @@ def geographical_filtering(longitude, latitude, radius):
         return con._columns,con._results
     return None,None
 
-###########maigc years####################
+###########magic years####################
 def yearMostArtistDiedOrBornDB(dead,num,genre):
     query = """SELECT 
     t.genre, t.{0}, COUNT(t.genre) AS numOfArts
@@ -352,7 +353,7 @@ inner join DbMysql12.artists art
 on s.artist_id = art.id
 where s.title = '"""+song_name+"""' and art.name = '"""+artist_name+"""'
 """
-    
+
     con = DBconnection()
     if(con.doQuery(query)):
         print("performed update successfully")
@@ -410,13 +411,14 @@ def getAllSongsDB(user_name):
     query = """SELECT s.title, s.media_url, a.name  
     FROM DbMysql12.UserInteraction as ui
     inner join DbMysql12.Song as s on s.id = ui.song_id
-    inner join DbMysql12.Album as a on s.album_id=a.id""".format(user_name)
+    inner join DbMysql12.Album as a on s.album_id=a.id
+    where ui.user_name = '{0}'""".format(user_name)
    
     con = DBconnection()
-    if(con.doQuery(query)):
+    if(con.doSelectQuery(query)):
         print("performed update successfully")
         con.close()
-        return "True";
+        return con._columns,con._results;
     print("error in updateYoutubeLinkDB")
     con.close()
-    return None;
+    return None,None;
