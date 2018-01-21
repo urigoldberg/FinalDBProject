@@ -209,7 +209,7 @@ LIMIT """+str(numOfAppear) +""") as tbl"""+str(index) +"""
 ###########Geographical####################
 def geographical_filtering(longitude, latitude, radius):
     print("in geo filtering")
-    query = """SELECT DISTINCT a.name FROM DbMysql12.CountryArtists AS ca
+    query = """SELECT DISTINCT a.name as 'Artist Name',ca.name as 'Country Name' FROM DbMysql12.CountryArtists AS ca
     INNER JOIN DbMysql12.artists AS a ON ca.artist_id=a.id
     WHERE lower(ca.name) IN
     (SELECT lower(DbMysql12.Country.name) FROM DbMysql12.Country
@@ -219,7 +219,7 @@ def geographical_filtering(longitude, latitude, radius):
          * COS(RADIANS({1}))
          * COS(RADIANS(Country.longitude - {0}))
          + SIN(RADIANS(Country.latitude))
-         * SIN(RADIANS({1})))) )< {2});""".format(longitude, latitude, radius)
+         * SIN(RADIANS({1})))) )< ({2}/100)) order by a.name desc limit 20;""".format(longitude, latitude,  radius)
 
     con = DBconnection()
     if (con.doSelectQuery(query)):
