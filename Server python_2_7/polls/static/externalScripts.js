@@ -256,7 +256,9 @@ function loadDataForImageToMusic(postUrl) {
             console.log("initializing table head and opening body tag");
             var finalTable = createTableFromResponse(responseArr,"1");
             fadeInTable(finalTable);
-            document.getElementById("imageToTextHeader").innerText = "By extracting the keyword "+responseArr.keyword+" the Following songs were found:";
+            if(responseArr.keyword){
+                document.getElementById("imageToTextHeader").innerText = "By extracting the keyword "+responseArr.keyword+" the Following songs were found:";
+            }
             fadeOutButtons("browsebutton", "loadbutton", "loadingsign");
         }
     };
