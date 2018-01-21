@@ -12,14 +12,20 @@ var user_name;
 
 
 function createTableFromResponse(responseArr,isSongTable) {
+    var urlcolumnNum;
     if(responseArr.isError == "true"){
         return "<p>"+responseArr.errorMessage+"</p>"
     }
     var numofRows = responseArr.Results.length;
     var columnNames = [];
+    var tempUrlColumnNum = 0;
     for (var colName in responseArr.Results[0]) {
         if (colName) {
             columnNames.push(colName);
+            if(colName === "URL"||colName ==="Youtube Link"  ||colName === "media_url"){
+                urlcolumnNum = tempUrlColumnNum;
+            }
+            tempUrlColumnNum++;
         }
     }
     var numofCols = columnNames.length;
@@ -37,7 +43,11 @@ function createTableFromResponse(responseArr,isSongTable) {
         finaltable+="<tr>";
         for(var j=0;j<numofCols;j++){
             var val = responseArr.Results[i][columnNames[j]];
-            finaltable+="<th>"+val+"</th>";
+            if( j === urlcolumnNum && val !== "" && val!== "None"){
+                finaltable+= "<th>"+linkToYouTube(val)+"</th>";
+            }else{
+                finaltable+="<th>"+val+"</th>";
+            }
         }
         if(isSongTable === "1"){
             finaltable+="<th><button class='btn btn-default' onclick='likerow("+i+1+")'>Like song!</button></th>"
@@ -46,6 +56,10 @@ function createTableFromResponse(responseArr,isSongTable) {
     }
     finaltable += "</tbody></table>";
     return finaltable;
+}
+
+function linkToYouTube(link){
+    return "<a href="+link+" target=\"_blank\">Open YouTube Video</a>" ;
 }
 
 function likerow(rowNumber){

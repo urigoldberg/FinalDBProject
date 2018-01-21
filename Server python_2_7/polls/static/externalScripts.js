@@ -39,14 +39,21 @@ function createJSONStringforImage(flowname, encoding) {
 }
 
 function createTableFromResponse(responseArr,isSongTable) {
+    var urlcolumnNum;
+    debugger;
     if(responseArr.isError === "true"){
         return "<p>"+responseArr.errorMessage+"</p>"
     }
     var numOfRows = responseArr.Results.length;
     var columnNames = [];
+    var tempUrlColumnNum = 0;
     for (var colName in responseArr.Results[0]) {
         if (colName) {
             columnNames.push(colName);
+            if(colName === "URL"||colName ==="Youtube Link"){
+                urlcolumnNum = tempUrlColumnNum;
+            }
+            tempUrlColumnNum++;
         }
     }
     var numofCols = columnNames.length;
@@ -65,9 +72,12 @@ function createTableFromResponse(responseArr,isSongTable) {
         finaltable+="<tr>";
         for(var j=0;j<numofCols;j++){
             var val = responseArr.Results[i][columnNames[j]];
-            if(val === "None"){
+            if(val === "None" || val ===""){
                 finaltable+="<th>"+insertButtonInTable(i+1)+"</th>";
-            }else{
+            }else if( j === urlcolumnNum && val !== ""){
+                finaltable+= "<th>"+linkToYouTube(val)+"</th>";
+            }
+            else{
                 finaltable+="<th>"+val+"</th>";
             }
         }
@@ -78,6 +88,10 @@ function createTableFromResponse(responseArr,isSongTable) {
     }
     finaltable += "</tbody></table>";
     return finaltable;
+}
+
+function linkToYouTube(link){
+    return "<a href="+link+" target=\"_blank\">Open YouTube Video</a>" ;
 }
 
 
