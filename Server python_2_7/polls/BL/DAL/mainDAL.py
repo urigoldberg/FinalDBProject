@@ -219,7 +219,7 @@ def geographical_filtering(longitude, latitude, radius):
          * COS(RADIANS({1}))
          * COS(RADIANS(Country.longitude - {0}))
          + SIN(RADIANS(Country.latitude))
-         * SIN(RADIANS({1})))) )< ({2}/100)) order by a.name desc limit 50;""".format(longitude, latitude,  radius)
+         * SIN(RADIANS({1})))) )< ({2}/100)) order by a.name limit 50;""".format(longitude, latitude,  radius)
 
     con = DBconnection()
     if (con.doSelectQuery(query)):
