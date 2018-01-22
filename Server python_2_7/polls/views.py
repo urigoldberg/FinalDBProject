@@ -124,7 +124,8 @@ def SignInfunc(request):
     # validate
     message = []
     if not (validateSignIn(request,message)):
-        return SignInLoginFailed(message[0])
+        return redirect('Login.html')
+        #return SignInLoginFailed(message[0])
     
     name, password,datebith,yesNo,genre,Country = request.GET['username'],request.GET['password'],request.GET['datebith'],request.GET['yesNo'],request.GET['genre'],request.GET['Country']
     
@@ -132,7 +133,8 @@ def SignInfunc(request):
     if (signNewUser(name, password,datebith,yesNo,genre,Country)):
         resp = setCookieAndResponse("UiHomepage.html",name )
     else:
-        resp = SignInLoginFailed("user alreay exists")
+        return redirect('Login.html')
+    #resp = SignInLoginFailed("user alreay exists")
     return resp
 
 
