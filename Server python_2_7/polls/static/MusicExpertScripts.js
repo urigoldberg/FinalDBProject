@@ -296,7 +296,7 @@ function switchYouTubeLink() {
             "<button id=\"getmostviewed\" class =\"btn btn-default querybutton \" onclick=\"loadDocSpecialQuery('youTubeLink','q3','the Following songs were found:')\">Query</button>\n"+
             "<button id=\"changeq3\" class =\"btn btn-default\" onclick=\"switchYouTubeLink()\">Close Longest/Shortest YouTube video query</button>";
         console.log("Setting youTubeLinkButton to 0");
-        loadDistinctDropdown("columnname", "artistname", "name", "artists");
+        loadDistinctDropdown("columnname", "artistname", "name", "Artist");
         youTubeLinkButton = 0;
     }
     else{

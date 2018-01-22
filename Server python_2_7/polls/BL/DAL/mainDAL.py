@@ -119,7 +119,7 @@ class DBconnection():
     
 def addNewUserDAL(name, password,datebith,yesNo,genre,Country):
     
-    query = """insert into DbMysql12.users_table values ('{0}','{1}','{2}','{3}','{4}','{5}');""".format(name, password,datebith,yesNo,genre,Country)
+    query = """insert into DbMysql12.User values ('{0}','{1}','{2}','{3}','{4}','{5}');""".format(name, password,datebith,yesNo,genre,Country)
     con = DBconnection()
     print("addNewUserDAL", query)
     if (con.insertQuery(query)):
@@ -131,7 +131,7 @@ def addNewUserDAL(name, password,datebith,yesNo,genre,Country):
 
 
 def getUserPasswordUsernameDAL(username):
-    query = "select password from DbMysql12.users_table where user_name = '"+username+"';";
+    query = "select password from DbMysql12.User where user_name = '"+username+"';";
     con = DBconnection()
     if (con.doSelectQuery(query) and con._rowsReturned == 1):
         con.close()
@@ -139,7 +139,7 @@ def getUserPasswordUsernameDAL(username):
     return None
 
 def getUserDetailsDAL(username):
-    query = "select * from DbMysql12.users_table where user_name = '"+username+"';";
+    query = "select * from DbMysql12.User where user_name = '"+username+"';";
     con = DBconnection()
     if (con.doSelectQuery(query) and con._rowsReturned == 1):
         con.close()
@@ -192,7 +192,7 @@ AS num_occurrences FROM
 DbMysql12.temp_keywords) lyr
 INNER JOIN DbMysql12.Song son ON lyr.song_id = son.id)  inner_songs
 INNER JOIN
-DbMysql12.artists art ON art.db_id = inner_songs.artist_db_id
+DbMysql12.Artist art ON art.db_id = inner_songs.artist_db_id
 ORDER BY num_occurrences DESC
 LIMIT """+str(numOfAppear) +""") as tbl"""+str(index) +""" 
 """
@@ -210,7 +210,7 @@ LIMIT """+str(numOfAppear) +""") as tbl"""+str(index) +"""
 def geographical_filtering(longitude, latitude, radius):
     print("in geo filtering")
     query = """SELECT DISTINCT a.name as 'Artist Name',ca.name as 'Country Name' FROM DbMysql12.CountryArtists AS ca
-    INNER JOIN DbMysql12.artists AS a ON ca.artist_id=a.id
+    INNER JOIN DbMysql12.Artist AS a ON ca.artist_id=a.id
     WHERE lower(ca.name) IN
     (SELECT lower(DbMysql12.Country.name) FROM DbMysql12.Country
     WHERE
@@ -232,7 +232,7 @@ def yearMostArtistDiedOrBornDB(dead,num,genre):
     query = """SELECT 
     t.genre, t.{0}, COUNT(t.genre) AS numOfArts
 FROM
-    DbMysql12.artists t
+    DbMysql12.Artist t
 WHERE
     t.{0} IS NOT NULL
     AND t.genre = '{2}'
@@ -270,7 +270,7 @@ def youTubeLongestShortestLinkDB(name,op):
     a.title as song_name, b.name as artist_name, a.media_url as URL 
 FROM
     DbMysql12.Song a,
-    DbMysql12.artists b
+    DbMysql12.Artist b
 WHERE
     a.artist_id = b.id
         AND b.name = '{0}'
@@ -279,7 +279,7 @@ WHERE
             a.duration
         FROM
             DbMysql12.Song a,
-            DbMysql12.artists b
+            DbMysql12.Artist b
         WHERE
             a.artist_db_id = b.db_id
                 AND b.name = '{0}'
@@ -300,7 +300,7 @@ def albumsOfGenreWithSalesDB(numOfSales,genre):
 FROM
     DbMysql12.Song a,
     DbMysql12.Album b,
-    DbMysql12.artists c
+    DbMysql12.Artist c
 WHERE
     b.id = a.album_id AND a.album_id = c.id
         AND b.sales > {0}
@@ -319,14 +319,14 @@ def mostViewedArtistDB(location,genre):
     query = """
     select * from
 (
-SELECT artists.name,artists.location, artists.genre,sum(album_views) as artist_views
-FROM artists, Album JOIN (SELECT album_id, sum(media_views) as album_views
+SELECT Artist.name,Artist.location, Artist.genre,sum(album_views) as artist_views
+FROM Artist, Album JOIN (SELECT album_id, sum(media_views) as album_views
 FROM Song
 WHERE media_url is NOT NULL
 GROUP BY album_id) as album_by_song
 on Album.id = album_by_song.album_id
-   WHERE Album.artist_id = artists.id
-GROUP BY artists.id, artists.name
+   WHERE Album.artist_id = Artist.id
+GROUP BY Artist.id, Artist.name
 ORDER BY artist_views DESC
 ) t """
     
@@ -349,7 +349,7 @@ def addLikedSongDB(song_name,artist_name,user_name):
 insert into DbMysql12.UserInteraction (user_name,song_id,created_at)
 select '"""+user_name+"""' as user_name,s.id as song_id, now()
 from DbMysql12.Song s
-inner join DbMysql12.artists art
+inner join DbMysql12.Artist art
 on s.artist_id = art.id
 where s.title = '"""+song_name+"""' and art.name = '"""+artist_name+"""'
 """
@@ -371,7 +371,7 @@ def personalizationDB(genre,country,longness):
     a.media_url AS URL
 FROM
     DbMysql12.Song a,
-    DbMysql12.artists b,
+    DbMysql12.Artist b,
     DbMysql12.CountryArtists c
 WHERE
     b.genre = '{0}'
@@ -392,7 +392,7 @@ def updateYoutubeLinkDB(link,song_name,song_artist):
 SET     media_url = '"""+link+"""'
 where title = '""" + song_name+"""' and artist_id = 
 (
-select id from artists
+select id from Artist
 where name = '"""+song_artist+"""'
 )"""
    
