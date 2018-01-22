@@ -43,7 +43,7 @@ def Login(request):
     context = Context(dic)
     
     # replace for form values, which came from db
-    GenericBL.addValuesForFromDic(dic,"genre", "artists","allGenre")
+    GenericBL.addValuesForFromDic(dic,"genre", "Artist","allGenre")
     GenericBL.addValuesForFromDic(dic,"name", "CountryArtists","allCountries")
     obj = obj.replace("{{allGenre}}",dic["allGenre"]).replace("{{allCountries}}",dic["allCountries"])
 
