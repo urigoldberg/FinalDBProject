@@ -1,5 +1,20 @@
 from ..DAL.mainDAL import geographical_filtering,personalizationDB, yearMostArtistDiedOrBornDB, getColumnValuesDB, youTubeLongestShortestLinkDB, albumsOfGenreWithSalesDB, mostViewedArtistDB, updateYoutubeLinkDB, addLikedSongDB, getUserDetailsDAL, getAllSongsDB
 
+def handleAndInGenre(genre):
+#    dicOfKeys = {}
+#    dicOfKeys["pictureQuery"] = ["photo"]
+#    dicOfKeys["geoService"] = ["longitude","latitude","radius"]
+#    dicOfKeys["year"] = ["dead","num","genre"]
+#    dicOfKeys["columnname"] = ["column","tablename"]
+#    dicOfKeys["youTubeLink"] = ["operation","artistname"]
+#    dicOfKeys["SucAlbums"] = ["numOfSales", "genre"]
+#    dicOfKeys["mostviewedartist"] = ["location", "genre"]
+#    dicOfKeys["updateyoutubelink"] = ["link","song_name","song_artist"]
+#    dicOfKeys["add_liked_song"] = ["song_name", "song_artist","user_name"]
+#    dicOfKeys["personalization"] = ["user", "bs"]
+     if '_AND_' in genre:
+         res = genre.replace("_AND_","&")
+     return res
 
 def addValuesForFromDic(dic,colum,table,key):
     cols,result = getColumnValuesDB(colum,table)
@@ -31,6 +46,7 @@ def generateResFromRes(cols,result):
     
 
 def yearMostArtistDiedOrBorn(dead,num,genre):
+    genre = handleAndInGenre(genre)
     if (dead == "0"):
         dead = "year_of_birth"
     else:
@@ -58,6 +74,7 @@ def youTubeLongestShortestLink(name,op):
     return generateResFromRes(cols,result)
 
 def albumsOfGenreWithSales(numOfSales, genre):
+    genre = handleAndInGenre(genre)
     if not (numOfSales.isdigit()):
         return None
     cols,result = albumsOfGenreWithSalesDB(numOfSales, genre)
@@ -89,6 +106,7 @@ def getDicOfParams(diclist, isUnique):
     
 def mostViewedArtist(param):
     location, genre = str(param["location"]),str(param["genre"])
+    genre = handleAndInGenre(genre)
     cols,result = mostViewedArtistDB(location, genre)
     if (cols == None):
         return '[{"no results were found. you are welcome to try a new query": ""}]'
