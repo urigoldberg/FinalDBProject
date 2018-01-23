@@ -25,10 +25,7 @@ SECRET_KEY = '8bqodq3po+b#!lgrn_=y+b&jj)v6d&63nxchwkjtr51=@ql_fr'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = [
-'delta-tomcat-vm',
-'localhost'
-]
+ALLOWED_HOSTS = []
 
 
 # Application definition
