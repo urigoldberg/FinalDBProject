@@ -40,7 +40,6 @@ function createJSONStringforImage(flowname, encoding) {
 
 function createTableFromResponse(responseArr,isSongTable) {
     var urlcolumnNum;
-    debugger;
     if(responseArr.isError === "true"){
         return "<p>"+responseArr.errorMessage+"</p>"
     }
