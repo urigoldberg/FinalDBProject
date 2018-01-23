@@ -102,7 +102,7 @@ CREATE TABLE if NOT EXISTS CountryArtists(
   UNIQUE unique_index (name, artist_id)
 );
 
-CREATE TABLE if NOT EXISTS users_table(
+CREATE TABLE if NOT EXISTS User(
   user_name VARCHAR(21) NOT NULL UNIQUE,
   password VARCHAR(21) UNIQUE,
   birth_year YEAR(4),
