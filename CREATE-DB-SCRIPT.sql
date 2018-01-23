@@ -45,7 +45,7 @@ CREATE TABLE if NOT EXISTS Album(
   artist_id INT,
   id INT NOT NULL AUTO_INCREMENT,
   PRIMARY KEY(id),
-  FOREIGN KEY (artist_id) REFERENCES artists(id)
+  FOREIGN KEY (artist_id) REFERENCES Artist(id)
 );
 
 CREATE TABLE if NOT EXISTS Lyrics(
@@ -73,7 +73,7 @@ CREATE TABLE if NOT EXISTS Song(
   album_id INT,
   id INT NOT NULL AUTO_INCREMENT,
   PRIMARY KEY(id),
-  FOREIGN KEY (artist_id) REFERENCES artists(id),
+  FOREIGN KEY (artist_id) REFERENCES Artist(id),
   FOREIGN KEY (album_id) REFERENCES Album(id)
 );
 
@@ -96,7 +96,7 @@ CREATE TABLE if NOT EXISTS CountryArtists(
   artist_id INT NOT NULL,
   id INT NOT NULL AUTO_INCREMENT,
   PRIMARY KEY (id),
-  FOREIGN KEY (artist_id) REFERENCES artists(id),
+  FOREIGN KEY (artist_id) REFERENCES Artist(id),
   FOREIGN KEY (name) REFERENCES Country(name),
   INDEX CountryArtists(name) USING BTREE,
   UNIQUE unique_index (name, artist_id)
