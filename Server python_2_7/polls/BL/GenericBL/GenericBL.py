@@ -5,7 +5,7 @@ def addValuesForFromDic(dic,colum,table,key):
     cols,result = getColumnValuesDB(colum,table)
     op = """<option value="{0}">{0}</option>"""
     value = ""
-    if (result not None):
+    if (result != None):
         for row in result:
             value = value + op.format(str(row)[3:-3])
     dic[key] = value
