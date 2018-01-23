@@ -8,7 +8,7 @@ db = DBconnection().connect()
 
 cur = db.cursor()
 
-cur.execute("SELECT DISTINCT id, db_id  FROM artists where db_id not in (SELECT DISTINCT artist_db_id FROM Album)")
+cur.execute("SELECT DISTINCT id, db_id  FROM Artist where db_id not in (SELECT DISTINCT artist_db_id FROM Album)")
 
 
 def get_albums_for_artist(artist_id, artist_api_id):

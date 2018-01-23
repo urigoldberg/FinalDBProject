@@ -25,7 +25,7 @@ convertions = {
 
 
 def insert_row(args):
-    query = "INSERT INTO artists(db_id,name,label,formed_year,year_of_birth,year_of_death,disbanded," \
+    query = "INSERT INTO Artist(db_id,name,label,formed_year,year_of_birth,year_of_death,disbanded," \
             "mood,style,genre,website,facebook,twitter,biography,gender,members,location,image,logo)" \
             " VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
     row_id = 0
@@ -103,7 +103,7 @@ def get_missing_artist_from_audb(artist):
 
 
 def search_for_artists(db_conn, artists):
-    q = "select name from artists WHERE LOWER(name) = LOWER(%s)"
+    q = "select name from Artist WHERE LOWER(name) = LOWER(%s)"
     existing_artists = set()
     for artist in artists:
         try:
@@ -123,7 +123,7 @@ def search_for_artists(db_conn, artists):
 
 def insert_country_artist(conn, country, artists):
     q =  ("INSERT INTO CountryArtists(name, artist_id) \n"
-          "VALUES (%s, (SELECT  id from artists where LOWER(artists.name) = LOWER(%s) limit 1))")
+          "VALUES (%s, (SELECT  id from Artist where LOWER(Artist.name) = LOWER(%s) limit 1))")
     for artist in artists:
         try:
             cursor = conn.cursor()

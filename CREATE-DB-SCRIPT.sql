@@ -1,7 +1,7 @@
 CREATE DATABASE if NOT EXISTS DbMysql12;
 use DbMysql12;
 
-create table if NOT EXISTS artists(
+create table if NOT EXISTS Artist(
   id int not null auto_increment
     primary key,
   db_id int not null,

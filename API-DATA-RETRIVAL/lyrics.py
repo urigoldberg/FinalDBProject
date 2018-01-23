@@ -37,9 +37,9 @@ db = DBconnection().connect()
 
 cur = db.cursor()
 
-cur.execute("SELECT artists.name, title, Song.id "
-            "FROM Song, artists "
-            "WHERE Song.artist_id = artists.id "
+cur.execute("SELECT Artist.name, title, Song.id "
+            "FROM Song, Artist "
+            "WHERE Song.artist_id = Artist.id "
             "and Song.id != ALL ("
             "SELECT song_id FROM Lyrics)"
             "ORDER BY Song.id DESC")

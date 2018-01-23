@@ -40,7 +40,7 @@ def insert_media_per_artist(db_connection, albums):
     sql = (
         "INSERT INTO Song(db_id, artist_db_id, album_db_id, title, duration, genre, media_url, media_views, media_likes, order_in_album, score, score_votes, album_id, artist_id) \n"
         "    VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s,"
-        "(SELECT id from artists where db_id = %s))")
+        "(SELECT id from Artist where db_id = %s))")
 
     for album in albums:
         try:
