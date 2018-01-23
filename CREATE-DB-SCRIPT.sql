@@ -118,7 +118,7 @@ CREATE TABLE if NOT EXISTS UserInteraction(
   created_at TIMESTAMP,
   id INT NOT NULL AUTO_INCREMENT,
   PRIMARY KEY (id),
-  FOREIGN KEY (user_name) REFERENCES users_table(user_name),
+  FOREIGN KEY (user_name) REFERENCES User(user_name),
   FOREIGN KEY (song_id) REFERENCES Song(id),
   UNIQUE (user_name, song_id),
   INDEX (user_name)
