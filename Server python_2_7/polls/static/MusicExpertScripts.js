@@ -180,12 +180,14 @@ function createJSONString(flowname, elementId, elementId2, keyString) {
     jsonString = addparamsKeyforJSON(jsonString);
     if(elementId){
         var num = document.getElementById(elementId).value;
+        num = num.replace("&","_AND_");
         jsonString = addParamJSON(jsonString,elementId,num);
         jsonString+=",";
     }
     if(elementId2){
         console.log(elementId2);
         var genre = document.getElementById(elementId2).value;
+        genre = genre.replace("&","_AND_");
         jsonString = addParamJSON(jsonString,elementId2,genre);
     }
     if(keyString){

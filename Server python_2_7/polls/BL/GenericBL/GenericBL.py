@@ -20,15 +20,16 @@ def addValuesForFromDic(dic,colum,table,key):
     cols,result = getColumnValuesDB(colum,table)
     op = """<option value="{0}">{0}</option>"""
     value = ""
-    for row in result:
-        value = value + op.format(str(row)[3:-3])
+    if (result != None):
+        for row in result:
+            value = value + op.format(str(row)[3:-3])
     dic[key] = value
     print("addGenreToDic", value)
 
 def generateResFromRes(cols,result):
 #    print ("generateResFromRes - cols",cols, "result",result )
-    res = '[' 
-    try:        
+    res = '['
+    try:
         if (cols is None or result is None):
             return None
         for row in result:
@@ -39,11 +40,11 @@ def generateResFromRes(cols,result):
         final = res[:len(res)-1] + ']'
         print(final)
         return final
-        
+
     except Exception as e:
         print (e.message)
         return None
-    
+
 
 def yearMostArtistDiedOrBorn(dead,num,genre):
     genre = handleAndInGenre(genre)
@@ -53,7 +54,7 @@ def yearMostArtistDiedOrBorn(dead,num,genre):
         dead = "year_of_death"
     if not (num.isdigit()):
         return None
-    
+
     cols,result = yearMostArtistDiedOrBornDB(dead,num,genre)
     if (cols == None):
         return '[{"no results were found. you are welcome to try a new query": ""}]'
@@ -81,7 +82,7 @@ def albumsOfGenreWithSales(numOfSales, genre):
     if (cols == None):
         return '[{"no results were found. you are welcome to try a new query": ""}]'
     return generateResFromRes(cols,result)
-    
+
 ########### GENERAL UTILS ##############
 def getDicOfParams(diclist, isUnique):
     try:
@@ -103,7 +104,7 @@ def getDicOfParams(diclist, isUnique):
     except Exception as e:
         print ("getDicOfParams errore ",e.message)
         return None
-    
+
 def mostViewedArtist(param):
     location, genre = str(param["location"]),str(param["genre"])
     genre = handleAndInGenre(genre)
@@ -122,7 +123,7 @@ def personalization(param):
 
 def validate_link(link):
     import urllib2
-    if "youtube.com" not in link: 
+    if "youtube.com" not in link:
         return False
     try:
         urllib2.urlopen(link)
@@ -138,7 +139,7 @@ def updateYoutubeLink(param):
         return updateYoutubeLinkDB(link,song_name,song_artist)
     else:
         return None
-    
+
 
 def addLikedSong(param):
     song_name,song_artist,user_name = str(param["song_name"]),str(param["song_artist"]), str(param["user_name"])
@@ -161,9 +162,9 @@ def getAllSongs(param):
     return generateResFromRes(cols,result)
 
 # def get_artists_in_requested_radius(json):
-    
+
 #     try:
-#         decoded = json.loads(json)        
+#         decoded = json.loads(json)
 #         cols,result = geographical_filtering(json)
 #         if (cols is None or result is None):
 #             return None
@@ -179,5 +180,5 @@ def getAllSongs(param):
 #     except (ValueError, KeyError, TypeError):
 #         print ("JSON format error")
 #         return None
-    
+
 #     return final
